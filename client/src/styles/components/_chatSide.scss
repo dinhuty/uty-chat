@@ -1,0 +1,184 @@
+.chat-side {
+    height: 100%;
+    width: 100%;
+    background-color: #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+
+
+    @include min-sm {
+        width: 360px;
+    }
+
+    &__top {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        width: 100%;
+        z-index: 22;
+        background-color: #e2e8f0;
+        padding: 12px 14px 0px 14px;
+
+        @include min-sm {
+            width: 360px;
+        }
+
+        .title {
+            font-size: 30px;
+            font-weight: 700;
+        }
+
+        .search-box {
+            box-shadow: 0 3px 20px rgba(0, 0, 0, .043137254901960784);
+            background-color: $secondary-color;
+            border-radius: 5px;
+
+            input {
+                padding: 10px 12px;
+                width: 100%;
+            }
+        }
+
+        .chat-side__title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+    }
+
+    &__user-potantial {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        width: 100%;
+        height: 80px;
+        overflow-x: hidden;
+
+        .user-potantial__item {
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+
+            img {
+                width: 50px;
+                height: 50px;
+            }
+
+            div {
+                width: 50px;
+                font-size: 12px;
+            }
+
+            .user__name {
+                padding: 0 5px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                color: rgba(113, 128, 150);
+                font-weight: 600;
+            }
+        }
+
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        gap: 15px;
+        padding: 0 14px;
+
+        &::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: transparent;
+
+        }
+
+
+
+
+        .chat-list__item {
+            display: flex;
+            cursor: pointer;
+            width: 100%;
+            overflow: hidden;
+            padding: 30px 12px;
+            background-color: $secondary-color;
+            box-shadow: 0 3px 20px rgba(0, 0, 0, .043137254901960784);
+            border-radius: 5px;
+            transition: all .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            @include flex-between;
+
+            &.active {
+                transform: scale(1.03);
+                background-color: $primary-color;
+                color: $secondary-color;
+
+            }
+
+            &:hover {
+                transform: scale(1.03);
+                background-color: $primary-color;
+                color: $secondary-color;
+
+
+            }
+
+            .item__left {
+                @include flex-start;
+                gap: 10px;
+                width: calc(100% - 55px);
+
+                .avatar {
+                    @include flex-center;
+                    width: 45px;
+                    height: 45px;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+
+                .desc {
+                    width: calc(100% - 55px);
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+                    padding-right: 10px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+
+                    &__name {
+                        font-weight: 600;
+                        font-size: 14px;
+                    }
+
+                    &-message--recent {
+                        font-size: 12px;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+
+                    }
+                }
+            }
+
+            .item__right {
+                align-self: start;
+                text-align: end;
+                font-size: 11px;
+                font-weight: 600;
+                width: 55px;
+
+            }
+        }
+    }
+}

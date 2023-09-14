@@ -1,0 +1,184 @@
+.app-login {
+    height: 100vh;
+    width: 100%;
+    font-size: 14px;
+    background-color: $primary-bg-color;
+    display: flex;
+
+    .login__left {
+        width: 100%;
+        background: #FFF;
+        box-shadow: 24.23343px 0px 50.48632px 0px rgba(0, 0, 0, 0.05);
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+        padding-bottom: 40px;
+        overflow-y: auto;
+
+        @include min-sm {
+            width: 400px;
+        }
+
+        .logo__container {
+            padding-top: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 24px;
+            font-size: 12px;
+
+            .logo__img {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 16px;
+
+                img {
+                    height: 60px;
+                    width: auto;
+                }
+
+                span {
+                    font-size: 32px;
+                    font-weight: 700;
+                    color: $primary-color;
+                    text-shadow: 2px 7px 5px rgba(230, 83, 64, 0.3),
+                        0px -4px 10px rgba(158, 47, 3, 0.3);
+                }
+            }
+
+            .subtitle {
+                font-weight: 600;
+            }
+
+        }
+
+        .login__form {
+            form {
+                display: flex;
+                flex-direction: column;
+                gap: 24px;
+                padding: 0 20px;
+
+                .form__input {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 12px;
+
+                    label {
+                        font-size: 16px;
+                        font-weight: 600;
+                    }
+
+                    input {
+                        font-size: 14px;
+                        padding: 10px 12px;
+                        background-color: #F1F3F6;
+                        border-radius: 5px;
+
+                        &::placeholder {
+                            font-size: 12px;
+                        }
+                    }
+                }
+
+                .form__submit {
+                    width: 100%;
+                    height: 45px;
+                    background-color: $primary-color;
+                    color: #fff;
+                    font-weight: 600;
+                    margin-top: 12px;
+                    border-radius: 5px;
+                    box-shadow: 0px 12.11672px 24.23343px 0px rgba(253, 116, 1, 0.30);
+
+                    &:hover {
+                        opacity: .8;
+                    }
+                }
+
+            }
+        }
+
+        .login__sub {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            width: 100%;
+            padding: 0 20px;
+
+            .login__password-fg {
+                cursor: pointer;
+                width: auto;
+                color: rgb(0, 85, 255);
+                text-decoration: underline;
+                font-size: 12px;
+                padding: 5px 0;
+
+                &:hover {
+                    opacity: .8;
+                }
+            }
+
+            .login__register-btn {
+                @include flex-center;
+                width: 100%;
+                height: 45px;
+                background-color: #fff;
+                color: $primary-color;
+                border: 2px solid $primary-color;
+                font-weight: 600;
+                border-radius: 5px;
+                transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+                &:hover {
+                    background-color: $primary-color;
+                    color: #fff;
+                }
+            }
+
+            .login__line {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                span {
+                    &:nth-child(2) {
+                        width: 40px;
+                        color: #C2C2C2;
+                        text-align: center;
+                    }
+
+                    &:nth-child(1),
+                    &:nth-child(3) {
+                        width: calc(50% - 20px);
+                        height: 1px;
+                        background-color: #C2C2C2;
+                    }
+                }
+            }
+        }
+    }
+
+    .login__right {
+        width: calc(100% - 400px);
+        background-color: #F1F3F6;
+        display: none;
+
+        @include min-sm {
+            display: block;
+        }
+        &__img{
+            width: 100%;
+            height: 100%;
+            @include flex-center;
+        }
+        img {
+            height: 400px;
+            width: 400px;
+            margin: auto;
+
+        }
+    }
+}

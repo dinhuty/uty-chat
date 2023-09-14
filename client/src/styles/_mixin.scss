@@ -1,0 +1,44 @@
+$sm: 768px;
+$lg: 1024px;
+$xl: 1200px;
+
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin flex-between{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@mixin flex-start{
+    display: flex;
+    align-items: center;
+}
+@mixin flex-end{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+
+@mixin min-xl {
+  @media screen and (min-width: $xl) {
+    @content;
+  }
+}
+
+@mixin min-lg {
+  @media screen and (min-width: $lg) {
+    @content;
+  }
+}
+
+@mixin min-sm {
+  @media (min-width: $sm) {
+    @content;
+  }
+}

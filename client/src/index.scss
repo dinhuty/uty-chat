@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "./styles/styles.scss";
+
+* {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  text-decoration: none;
+  box-sizing: border-box;
+  outline: none;
+}
+
+
+html {
+  width: 100%;
+  min-height: 100vh;
+  font-size: 14px;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif !important;
+}

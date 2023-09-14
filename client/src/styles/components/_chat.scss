@@ -1,0 +1,82 @@
+.app-chat {
+    height: 100vh;
+    color: $third-color;
+    .chat__header {
+        height: 65px;
+        background-color: #fff;
+        padding: 0px 20px;
+        box-shadow: 0 3px 15px rgba(0, 0, 0, .07058823529411765);
+        @include flex-between;
+        &.dark {
+            background-color: $primary-bg-color;
+            color: #fff;
+        }
+
+        .header__logo {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: center;
+
+            img {
+                height: 40px;
+            }
+
+            span {
+                font-size: 15px;
+                font-weight: 700;
+                color: $primary-color;
+                text-shadow: 2px 2px 2px rgba(230, 83, 64, 0.3),
+                    0px -2px 2px rgba(158, 47, 3, 0.3);
+            }
+        }
+
+        .header__right {
+            @include flex-center;
+            height: 100%;
+
+            &>div {
+                @include flex-center;
+                height: 100%;
+                padding: 0 25px;
+            }
+
+            &__noti {
+                img {
+                    height: 20px;
+                }
+
+                border-left: 1px solid #e2e8f0;
+                border-right: 1px solid #e2e8f0;
+            }
+
+
+            &__user {
+                display: flex;
+                gap: 12px;
+
+                .user__info {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+
+                    .user__name {
+                        font-size: 14px;
+                        font-weight: 600;
+                    }
+
+                    .user__desc {
+                        font-size: 11px;
+                        font-weight: 400;
+                    }
+                }
+            }
+        }
+    }
+
+    .chat__main {
+        height: calc(100% - 65px);
+        display: flex;
+    }
+
+}
