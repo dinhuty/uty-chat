@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom"
-import Container from '../../../common/Container'
 import Logo from '../../../../assets/login-logo.svg'
 import Av from '../../../../assets/login-bg.svg'
+import { login } from '../../../../services/Api/auth'
+import { AuthContext } from '../../../Context/AuthContext'
 
 const Login = () => {
-
+  const { setUserCurrent } = useContext(AuthContext)
   const navigate = useNavigate();
   const [data, setData] = useState({
     email: "",
@@ -15,7 +16,19 @@ const Login = () => {
   const handleChange = (event) => {
     setData({ ...data, [event.target.name]: event.target.value });
   };
-  console.log(data)
+  // Login Page
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    if (!data.email || !data.password) {
+      return;
+    }
+    const userLogin = await login(data);
+    console.log(userLogin.user)
+    localStorage.setItem('user', JSON.stringify(userLogin.user));
+    localStorage.setItem('token', userLogin.token);
+    setUserCurrent(userLogin.user)
+    navigate('/')
+  }
   return (
     <div className='app-login'>
       <div className="login__left">
@@ -29,7 +42,7 @@ const Login = () => {
           </div>
         </div>
         <div className="login__form">
-          <form action="">
+          <form action="" onSubmit={handleLogin}>
             <div className="form__input">
               <label htmlFor="email">Email</label>
               <input

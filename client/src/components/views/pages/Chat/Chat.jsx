@@ -1,13 +1,17 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Logo from "../../../../assets/login-logo.svg"
 import { faBell } from "@fortawesome/free-regular-svg-icons"
 import SideMenu from './SideMenu/SideMenu'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ChatSide from './ChatSide/ChatSide'
 import ChatWindow from './ChatWindow/ChatWindow'
+import avatar from "../../../../assets/avatar-boy.svg"
+import { AuthContext } from '../../../Context/AuthContext'
 
 const Chat = () => {
   const [checked, setChecked] = useState(false)
+  const { userCurrent } = useContext(AuthContext);
+
   return (
     <div className='app-chat'>
       <div className={`${!checked ? "chat__header" : "chat__header dark"}`}>
@@ -26,13 +30,14 @@ const Chat = () => {
             <FontAwesomeIcon icon={faBell} />
           </div>
           <div className="header__right__user">
-            <img className="w-10 h-10 rounded-full" src="https://i.pinimg.com/1200x/df/be/0c/dfbe0cc954454f9a68e095631e114ba8.jpg" alt="Rounded avatar" />
+            <img className="w-10 h-10 rounded-full" src={avatar} alt="Rounded avatar" />
             <div className="user__info">
               <div className="user__name">
-                Dinh Tran
+                <span>{userCurrent.lastName}</span>
+                <span>{userCurrent.firstName}</span>
               </div>
               <div className="user__desc">
-                Active
+                {userCurrent.email}
               </div>
             </div>
           </div>

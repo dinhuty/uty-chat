@@ -54,8 +54,33 @@ const userProfile = async (req, res, next) => {
     }
     res.status(200).send(req.user)
 }
+const findUserByEmail = async (req, res, next) => {
+    try {
+        const email = req.params.email;
+        const user = await User.findOne({ email });
+        res.status(200).json(user);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Lỗi không xác định" });
+    }
+};
+const findUsersByEmailKeyword = async (req, res, next) => {
+    try {
+        const keyword = req.query.keyword; 
+        const users = await User.find({ email: { $regex: keyword, $options: 'i' } }); 
+
+        res.status(200).json(users);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Lỗi không xác định" });
+    }
+};
 
 
-
-
-module.exports = { signin, signup, userProfile }
+module.exports = {
+    signin,
+    signup,
+    userProfile,
+    findUserByEmail,
+    findUsersByEmailKeyword
+}

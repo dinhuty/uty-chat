@@ -1,11 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useNavigate } from "react-router-dom"
 import Container from '../../../common/Container'
 import Logo from '../../../../assets/login-logo.svg'
 import Av from '../../../../assets/login-bg.svg'
+import { AuthContext } from '../../../Context/AuthContext'
+
 
 const Register = () => {
   const navigate = useNavigate();
+
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
@@ -13,7 +16,6 @@ const Register = () => {
     password: "",
     address: ""
   });
-
   const handleChange = (event) => {
     setData({ ...data, [event.target.name]: event.target.value });
   };

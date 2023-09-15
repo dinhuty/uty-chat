@@ -1,12 +1,14 @@
 .app-chat {
     height: 100vh;
     color: $third-color;
+
     .chat__header {
         height: 65px;
         background-color: #fff;
         padding: 0px 20px;
         box-shadow: 0 3px 15px rgba(0, 0, 0, .07058823529411765);
         @include flex-between;
+
         &.dark {
             background-color: $primary-bg-color;
             color: #fff;
@@ -34,6 +36,8 @@
         .header__right {
             @include flex-center;
             height: 100%;
+            cursor: pointer;
+            
 
             &>div {
                 @include flex-center;
@@ -63,6 +67,8 @@
                     .user__name {
                         font-size: 14px;
                         font-weight: 600;
+                        display: flex;
+                        gap: 5px;
                     }
 
                     .user__desc {

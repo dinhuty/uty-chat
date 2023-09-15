@@ -18,10 +18,12 @@ const createMessage = async (req, res) => {
             sender: senderId,
             chat: chatId,
         });
-
+        chat.lastUpdated = Date.now();
+        await chat.save();
         const savedMessage = await message.save();
+        await savedMessage.populate('sender', 'firstName lastName');
 
-        res.status(201).json({ status: 'Success', message: savedMessage });
+        res.status(201).json({ message: savedMessage });
     } catch (error) {
         console.error(error);
         res.status(500).json({ status: 'Error' });
@@ -33,7 +35,7 @@ const getMessagesInChat = async (req, res) => {
 
         const messages = await messageModel.find({ chat: chatId }).populate('sender', 'firstName lastName');
 
-        res.status(200).json({ status: 'Success', messages });
+        res.status(200).json({ messages });
     } catch (error) {
         console.error(error);
         res.status(500).json({ status: 'Error' });
