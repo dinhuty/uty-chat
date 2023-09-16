@@ -28,6 +28,7 @@ io.on("connection", (socket) => {
         if (listUser?.length > 0) {
             listUser.forEach(user => {
                 io.to(user.socketId).emit("getMessage", message.newMessage);
+                console.log("user.socketId", user.socketId,"newMessage", message.newMessage)
             });
             console.log("done")
         }

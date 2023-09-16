@@ -18,6 +18,7 @@ const createMessage = async (req, res) => {
             sender: senderId,
             chat: chatId,
         });
+        chat.messages.push(message._id);
         chat.lastUpdated = Date.now();
         await chat.save();
         const savedMessage = await message.save();

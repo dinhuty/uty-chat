@@ -17,9 +17,8 @@ const ChatSide = () => {
     const { listChatForUser, setIdChatCurrent, onlineUsers, setListChatForUser } = useContext(ChatContext);
     const { userCurrent } = useContext(AuthContext)
     const { idChatCurrent } = useContext(ChatContext)
-    console.log("id chat current ",idChatCurrent)
 
-
+    console.log("id@ChatSide", idChatCurrent)
     useEffect(() => {
         if (!keyword.trim()) {
             setListNewUser([])
@@ -142,43 +141,44 @@ const ChatSide = () => {
             </div>
 
             <div className="chat-side__list">
-                {listChatForUser ? listChatForUser.sort(compareByLastUpdatedDesc).map((item, index) => (
-                    <div className={item._id === idChatCurrent? "chat-list__item active" : "chat-list__item"}
-                        key={item._id}
-                        onClick={() => setIdChatCurrent(item._id)}
-                    >
-                        {console.log(item)}
-                        <div className="item__left">
-                            <div className="avatar">
-                                <img className="w-10 h-10 rounded-full" src={avatar} alt="Rounded avatar" />
+                {listChatForUser ? listChatForUser.sort(compareByLastUpdatedDesc).map((item, index) => {
+                    return (
+                        <div className={item._id === idChatCurrent ? "chat-list__item active" : "chat-list__item"}
+                            key={item._id}
+                            onClick={() => setIdChatCurrent(item._id)}
+                        >
+                            <div className="item__left">
+                                <div className="avatar">
+                                    <img className="w-10 h-10 rounded-full" src={avatar} alt="Rounded avatar" />
 
-                                {checkOnlineStatus(item.participants[0]._id) && <div className="avatar-status">
+                                    {checkOnlineStatus(item.participants[0]._id) && <div className="avatar-status">
 
-                                </div>}
-                            </div>
-                            <div className="desc">
-                                {item.isGroup ? <div className="desc__name">
-                                    {item.participants.slice(0, 2).map((user) => (
-                                        <span key={user._id}>{user.lastName},</span>
-                                    ))}
-                                    <span>{userCurrent.lastName}...</span>
-                                </div> :
-                                    <div className="desc__name">
-                                        <span>{item.participants[0].firstName}</span>
-                                        <span>{item.participants[0].lastName}</span>
+                                    </div>}
+                                </div>
+                                <div className="desc">
+                                    {item.isGroup ? <div className="desc__name">
+                                        {item.participants.slice(0, 2).map((user) => (
+                                            <span key={user._id}>{user.lastName},</span>
+                                        ))}
+                                        <span>{userCurrent.lastName}...</span>
+                                    </div> :
+                                        <div className="desc__name">
+                                            <span>{item.participants[0].firstName}</span>
+                                            <span>{item.participants[0].lastName}</span>
+                                        </div>
+                                    }
+
+                                    <div className="desc-message--recent">
+                                        {item.messages.length > 0 && <span>{item?.messages[item.messages.length - 1].sender.firstName}:</span>}<span>{item?.messages[item.messages.length - 1]?.content}</span>
                                     </div>
-                                }
-
-                                <div className="desc-message--recent">
-                                    {userCurrent.lastName}: Hello Lorem, ipsum dolor sit amet consectetur adipisicing elit. Delectus veritatis ad ex quae nihil. Repellat
                                 </div>
                             </div>
+                            <div className="item__right">
+                                10:15 AM
+                            </div>
                         </div>
-                        <div className="item__right">
-                            10:15 AM
-                        </div>
-                    </div>
-                ))
+                    )
+                })
                     :
                     <div className="chat-list__item">
                         No Convervation

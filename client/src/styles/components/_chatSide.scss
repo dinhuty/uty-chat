@@ -242,9 +242,15 @@
 
                     &-message--recent {
                         font-size: 12px;
+                        line-height: 15px;
                         white-space: nowrap;
                         overflow: hidden;
                         text-overflow: ellipsis;
+                        display: flex;
+                        gap: 5px;
+                        span{
+                            object-fit: contain;
+                        }
 
                     }
                 }

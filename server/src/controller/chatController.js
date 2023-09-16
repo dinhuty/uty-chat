@@ -1,5 +1,6 @@
 
 const ChatModel = require('../models/chatModel')
+const MessageModel = require('../models/messageModel')
 
 
 // Tạo cuộc trò chuyện giữa hai người
@@ -111,6 +112,12 @@ const getChatsForUser = async (req, res) => {
         const populatedChats = await Promise.all(chats.map(async (chat) => {
             const participantsWithoutSelf = chat.participants.filter(participant => participant.toString() !== userId);
             const populatedChat = await ChatModel.populate(chat, { path: 'participants', select: 'firstName lastName email', match: { _id: { $in: participantsWithoutSelf } } });
+
+            const messages = await MessageModel.find({ chat: chat._id }).lean().populate({
+                path: 'sender',
+                select: 'firstName lastName',
+            });;
+            populatedChat.messages = messages;
             return populatedChat;
         }));
         res.status(200).json({ chats: populatedChats });

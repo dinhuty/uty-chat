@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { faList, faPaperPlane, faPhone } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClock } from '@fortawesome/free-regular-svg-icons'
@@ -15,6 +15,7 @@ const ChatWindow = () => {
         socket,
         listChatForUser,
         setListChatForUser,
+        sentRef,
         sent,
         setSent
     } = useContext(ChatContext)
@@ -25,6 +26,8 @@ const ChatWindow = () => {
         setNewMessage
     } = useContext(MessageContext)
     const [contentMessage, setContentMessage] = useState('')
+    let lastSenderId = null;
+
 
     const handleSendMessgae = async (e) => {
         e.preventDefault()
@@ -36,32 +39,45 @@ const ChatWindow = () => {
         setContentMessage('')
         setNewMessage(messageData.message)
         setListMessageInChat((prev => [...prev, messageData.message]))
-        setSent(!sent)
+        sentRef.current = !sentRef.current
+        setSent(sentRef.current)
     }
 
     console.log(infoChatCurrent)
     useEffect(() => {
         if (socket === null) return
         const recipientIds = infoChatCurrent?.participants
-        console.log(recipientIds)
         socket.emit("sendMessage", { newMessage, recipientIds })
     }, [newMessage])
 
     // recipient Message
     useEffect(() => {
-        console.log("NHận tin nhắn nè")
         if (socket === null) return
         socket.on("getMessage", res => {
-            setSent(!sent)
-            if (idChatCurrent !== res.chat) {
-                return
+            // if (idChatCurrent !== res.chat) {
+            //     return
+            // }
+            // console.log(res)
+            // setListMessageInChat((prev => [...prev, res]))
+            // setSent(!sent)
+            console.log("1@", idChatCurrent)
+            console.log("2@", res.chat)
+            if (idChatCurrent === res.chat) {
+                setListMessageInChat((prev => [...prev, res]))
+
+            } else {
+                console.log("Bố mày vẫn phải gọi")
             }
-            setListMessageInChat((prev => [...prev, res]))
+            sentRef.current = !sentRef.current
+            setSent(sentRef.current)
+            console.log("windowSend", sent)
+            console.log("windowRef", sentRef.current)
         })
         return () => {
             socket.off("getMessage")
         }
-    }, [socket])
+    }, [socket, idChatCurrent])
+
     return (
         <div className='chat-window'>
             {idChatCurrent ?
@@ -92,15 +108,27 @@ const ChatWindow = () => {
                         </div>
                     </div>
                     {listMessageInChat?.length > 0 ? <div className="chat__display">
-                        {listMessageInChat?.slice().reverse().map((message) => (
-                            <div className={message?.sender?._id === userCurrent?._id ? 'chat-message user-chat' : 'chat-message'} key={message._id}>
-                                <p>{message?.content}</p>
-                                <span>
-                                    <FontAwesomeIcon icon={faClock} />
-                                    1 phút trước
-                                </span>
-                            </div>
-                        ))}
+                        {listMessageInChat?.slice().reverse().map((message, index) => {
+                            const isLastMessageFromSender = lastSenderId !== message?.sender?._id;
+                            const shouldDisplayAvatar = isLastMessageFromSender;
+                            lastSenderId = message?.sender?._id;
+
+                            return (
+                                <div className={message?.sender?._id === userCurrent?._id ? 'chat-message user-chat' : 'chat-message'} key={index}>
+                                    {shouldDisplayAvatar && message?.sender?._id !== userCurrent?._id &&
+                                        <img className="message-avatar w-10 h-10 rounded-full" src={avatar} alt="Rounded avatar" />
+                                    }
+                                    <div className="message-content">
+                                        <p>{message?.content}</p>
+                                        <span>
+                                            <FontAwesomeIcon icon={faClock} />
+                                            1 phút trước
+                                        </span>
+                                    </div>
+                                </div>
+                            )
+
+                        })}
                     </div> :
                         <div className="chat__display blank">
                             Bắt đầu với tin nhắn mới
