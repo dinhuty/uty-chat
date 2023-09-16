@@ -54,19 +54,9 @@ const ChatWindow = () => {
     useEffect(() => {
         if (socket === null) return
         socket.on("getMessage", res => {
-            // if (idChatCurrent !== res.chat) {
-            //     return
-            // }
-            // console.log(res)
-            // setListMessageInChat((prev => [...prev, res]))
-            // setSent(!sent)
-            console.log("1@", idChatCurrent)
-            console.log("2@", res.chat)
             if (idChatCurrent === res.chat) {
                 setListMessageInChat((prev => [...prev, res]))
 
-            } else {
-                console.log("Bố mày vẫn phải gọi")
             }
             sentRef.current = !sentRef.current
             setSent(sentRef.current)

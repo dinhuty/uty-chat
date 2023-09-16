@@ -18,11 +18,9 @@ const ChatProvider = ({ children }) => {
 
     useEffect(() => {
         const getData = async () => {
-            console.log("CHatProVider", sentRef.current)
             if (!userCurrent) return
             const data = await getChatForUser(userCurrent?._id)
             setListChatForUser(data?.chats?.sort(compareByLastUpdatedDesc))
-            console.log("BỐ mày đã gọi 2")
         }
         getData()
     }, [sent])
@@ -36,7 +34,6 @@ const ChatProvider = ({ children }) => {
             if (resData?.length > 0) {
                 setIdChatCurrent(resData[0]?._id)
             }
-            console.log("id@", idChatCurrent)
         }
         getData()
     }, [userCurrent])
@@ -54,7 +51,7 @@ const ChatProvider = ({ children }) => {
 
     //initial socket
     useEffect(() => {
-        const newSocket = io("http://localhost:3003")
+        const newSocket = io("http://localhost:3001")
         setSocket(newSocket);
         return () => {
             newSocket.disconnect();
@@ -71,7 +68,6 @@ const ChatProvider = ({ children }) => {
         })
     }, [socket])
 
-    console.log(idChatCurrent)
     return (
         <ChatContext.Provider value={{
             listChatForUser,
