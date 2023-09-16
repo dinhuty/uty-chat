@@ -7,6 +7,7 @@ export const MessageContext = createContext()
 const MessageProvider = ({ children }) => {
     const [listMessageInChat, setListMessageInChat] = useState(null)
     const { idChatCurrent } = useContext(ChatContext)
+    const [newMessage, setNewMessage] = useState('')
 
     useEffect(() => {
         const getData = async () => {
@@ -20,7 +21,9 @@ const MessageProvider = ({ children }) => {
     return (
         <MessageContext.Provider value={{
             listMessageInChat,
-            setListMessageInChat
+            setListMessageInChat,
+            newMessage, 
+            setNewMessage
         }}>
             {children}
         </MessageContext.Provider>

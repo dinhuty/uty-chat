@@ -12,12 +12,19 @@ const ChatWindow = () => {
     const { idChatCurrent,
         setIdChatCurrent,
         infoChatCurrent,
-        socket
+        socket,
+        listChatForUser,
+        setListChatForUser,
+        sent,
+        setSent
     } = useContext(ChatContext)
     const { userCurrent } = useContext(AuthContext)
-    const { listMessageInChat, setListMessageInChat } = useContext(MessageContext)
+    const { listMessageInChat,
+        setListMessageInChat,
+        newMessage,
+        setNewMessage
+    } = useContext(MessageContext)
     const [contentMessage, setContentMessage] = useState('')
-    const [newMessage, setNewMessage] = useState('')
 
     const handleSendMessgae = async (e) => {
         e.preventDefault()
@@ -29,7 +36,7 @@ const ChatWindow = () => {
         setContentMessage('')
         setNewMessage(messageData.message)
         setListMessageInChat((prev => [...prev, messageData.message]))
-
+        setSent(!sent)
     }
 
     console.log(infoChatCurrent)
@@ -43,16 +50,18 @@ const ChatWindow = () => {
     // recipient Message
     useEffect(() => {
         console.log("NHận tin nhắn nè")
-
         if (socket === null) return
         socket.on("getMessage", res => {
-            if (idChatCurrent !== res.chat) return
+            setSent(!sent)
+            if (idChatCurrent !== res.chat) {
+                return
+            }
             setListMessageInChat((prev => [...prev, res]))
         })
         return () => {
             socket.off("getMessage")
         }
-    }, [socket, idChatCurrent])
+    }, [socket])
     return (
         <div className='chat-window'>
             {idChatCurrent ?

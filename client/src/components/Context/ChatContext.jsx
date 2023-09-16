@@ -2,12 +2,14 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import { getChatForUser, getInfoChat } from "../../services/Api/chat";
 import { io } from "socket.io-client"
+import { MessageContext } from "./MessageContext";
 export const ChatContext = createContext();
 
 const ChatProvider = ({ children }) => {
     const [listChatForUser, setListChatForUser] = useState([])
     const [idChatCurrent, setIdChatCurrent] = useState(null)
     const { userCurrent } = useContext(AuthContext)
+    const [sent,setSent] = useState(true)
     const [infoChatCurrent, setInfoChatCurrent] = useState(null)
     const [socket, setSocket] = useState(null)
     const [onlineUsers, setOnlineUsers] = useState(null)
@@ -20,7 +22,7 @@ const ChatProvider = ({ children }) => {
             setListChatForUser(data?.chats)
         }
         getData()
-    }, [userCurrent])
+    }, [userCurrent, sent])
 
     //GetInfo ChatCurrent
     useEffect(() => {
@@ -62,7 +64,9 @@ const ChatProvider = ({ children }) => {
             socket,
             setSocket,
             onlineUsers,
-            setOnlineUsers
+            setOnlineUsers,
+            sent,
+            setSent
         }}>
             {children}
         </ChatContext.Provider>
