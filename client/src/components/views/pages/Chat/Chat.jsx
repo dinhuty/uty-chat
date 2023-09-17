@@ -11,7 +11,6 @@ import { AuthContext } from '../../../Context/AuthContext'
 const Chat = () => {
   const [checked, setChecked] = useState(false)
   const { userCurrent } = useContext(AuthContext);
-
   return (
     <div className='app-chat'>
       <div className={`${!checked ? "chat__header" : "chat__header dark"}`}>
