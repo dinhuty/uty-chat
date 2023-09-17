@@ -15,5 +15,4 @@ const port = process.env.PORT_WEB || 3001
 const server = app.listen(port, () => {
     console.log(`Your running port ${port}`)
 })
-
 socketServer(server)
