@@ -16,7 +16,7 @@ const createMessage = async (req, res) => {
         const message = new messageModel({
             content,
             sender: senderId,
-            chat: chatId,
+            chat: chatId,   
         });
         chat.messages.push(message._id);
         chat.lastUpdated = Date.now();
@@ -59,8 +59,50 @@ const getMessageById = async (req, res) => {
     }
 }
 
+const markMessageAsRead = async (req, res) => {
+    try {
+        const messageId = req.params.messageId; // Lấy ID của tin nhắn từ URL hoặc tham số yêu cầu
+
+        // Tìm và cập nhật tin nhắn
+        const updatedMessage = await messageModel.findByIdAndUpdate(
+            messageId,
+            { isRead: true },
+        );
+
+        if (!updatedMessage) {
+            return res.status(404).json({ error: 'Tin nhắn không tồn tại' });
+        }
+        return res.status(200).json(updatedMessage);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'Lỗi server' });
+    }
+}
+
+const markAllMessagesAsRead = async (req, res) => {
+    try {
+        const chatId = req.params.chatId; 
+
+        const result = await messageModel.updateMany(
+            { chat: chatId },
+            { $set: { isRead: true } }
+        );
+
+        if (result.nModified === 0) {
+            return res.status(404).json({ error: 'Không tìm thấy tin nhắn trong phòng' });
+        }
+
+        return res.status(200).json({ message: 'Cập nhật trạng thái isRead thành công' });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'Lỗi server' });
+    }
+};
+
 module.exports = {
     createMessage,
     getMessagesInChat,
     getMessageById,
+    markMessageAsRead,
+    markAllMessagesAsRead,
 };

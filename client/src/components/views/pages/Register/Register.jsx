@@ -3,11 +3,14 @@ import { useNavigate } from "react-router-dom"
 import Container from '../../../common/Container'
 import Logo from '../../../../assets/login-logo.svg'
 import Av from '../../../../assets/login-bg.svg'
+import { register } from '../../../../services/Api/auth'
+import validate from '../../../../utils/validate'
 import { AuthContext } from '../../../Context/AuthContext'
 
 
 const Register = () => {
   const navigate = useNavigate();
+  const [error, setError] = useState(null)
 
   const [data, setData] = useState({
     firstName: "",
@@ -19,7 +22,20 @@ const Register = () => {
   const handleChange = (event) => {
     setData({ ...data, [event.target.name]: event.target.value });
   };
-
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    if (!/\S+@\S+\.\S+/.test(data.email.trim()) || data.password.length < 8 || !data.firstName || !data.lastName || !data.address) {
+      setError('Kiểm tra lại thông tin')
+      return;
+    }
+    const registerUser = await register(data);
+    console.log(registerUser)
+    if(registerUser.status === 200){
+      setError('User Already Exist')
+      return
+    }
+    navigate('/login')
+  }
   return (
     <div className='app-register'>
       <div className="register__left">
@@ -31,9 +47,14 @@ const Register = () => {
           <div className="subtitle">
             Register an account
           </div>
+          {
+            error && <div className="register-error">
+              {error}
+            </div>
+          }
         </div>
         <div className="register__form">
-          <form action="">
+          <form action="" onSubmit={handleRegister}>
             <div className="form__input">
               <input
                 type="text"

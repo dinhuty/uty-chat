@@ -115,7 +115,7 @@ const getChatsForUser = async (req, res) => {
 
             const messages = await MessageModel.find({ chat: chat._id }).lean().populate({
                 path: 'sender',
-                select: 'firstName lastName',
+                select: 'firstName lastName isRead',
             });;
             populatedChat.messages = messages;
             return populatedChat;

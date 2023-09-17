@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import { getChatForUser, getInfoChat } from "../../services/Api/chat";
+import { maskAllMessageRead } from "../../services/Api/message";
 import { io } from "socket.io-client"
 import { MessageContext } from "./MessageContext";
 import { compareByLastUpdatedDesc } from '../../utils/compare'
@@ -14,7 +15,7 @@ const ChatProvider = ({ children }) => {
     const [infoChatCurrent, setInfoChatCurrent] = useState(null)
     const [socket, setSocket] = useState(null)
     const [onlineUsers, setOnlineUsers] = useState(null)
-    const [sent,setSent] = useState(true)
+    const [sent, setSent] = useState(true)
 
     useEffect(() => {
         const getData = async () => {
@@ -23,7 +24,7 @@ const ChatProvider = ({ children }) => {
             setListChatForUser(data?.chats?.sort(compareByLastUpdatedDesc))
         }
         getData()
-    }, [sent])
+    }, [sent, idChatCurrent])
 
     useEffect(() => {
         const getData = async () => {
@@ -40,12 +41,18 @@ const ChatProvider = ({ children }) => {
 
     //GetInfo ChatCurrent
     useEffect(() => {
+        if (!userCurrent) return
         const getData = async () => {
             if (!idChatCurrent) return
             const data = await getInfoChat(idChatCurrent, userCurrent?._id)
             setInfoChatCurrent(data?.chatInfo)
         }
         getData()
+        const updateMessage = async (idChat) => {
+            const result = await maskAllMessageRead(idChat)
+        }
+        updateMessage(idChatCurrent)
+
     }, [idChatCurrent])
 
 

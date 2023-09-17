@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { ChatContext } from '../../../../Context/ChatContext'
 import { AuthContext } from '../../../../Context/AuthContext'
+import { formatTime } from '../../../../../utils/formatTime'
 
 const ChatSide = () => {
     const sliderRef = useRef(null);
@@ -74,7 +75,7 @@ const ChatSide = () => {
         }
         setKeyword('')
     }
-
+    console.log(listChatForUser)
     return (
         <div className='chat-side'>
             <div className="chat-side__top">
@@ -141,7 +142,7 @@ const ChatSide = () => {
             </div>
 
             <div className="chat-side__list">
-                {listChatForUser ? listChatForUser.sort(compareByLastUpdatedDesc).map((item, index) => {
+                {listChatForUser.length > 0 ? listChatForUser.sort(compareByLastUpdatedDesc).map((item, index) => {
                     return (
                         <div className={item._id === idChatCurrent ? "chat-list__item active" : "chat-list__item"}
                             key={item._id}
@@ -167,14 +168,18 @@ const ChatSide = () => {
                                             <span>{item.participants[0].lastName}</span>
                                         </div>
                                     }
-
-                                    <div className="desc-message--recent">
+                                    <div className={item.messages.length > 0 && item.messages[item.messages.length - 1].isRead === true ? "desc-message--recent" : "desc-message--recent unread"}>
                                         {item.messages.length > 0 && <span>{item?.messages[item.messages.length - 1].sender.firstName}:</span>}<span>{item?.messages[item.messages.length - 1]?.content}</span>
                                     </div>
                                 </div>
                             </div>
                             <div className="item__right">
-                                10:15 AM
+                                <div>
+                                    {item.messages.length > 0 && <>{formatTime(item?.messages[item.messages.length - 1].createdAt)}</>}
+                                </div>
+                                <div className={item.messages.length > 0 && item?.messages[item.messages.length - 1].isRead ? 'item__right-icon' : 'item__right-icon active'}>
+
+                                </div>
                             </div>
                         </div>
                     )

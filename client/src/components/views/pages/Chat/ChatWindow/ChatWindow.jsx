@@ -6,7 +6,8 @@ import avatar from '../../../../../assets/avatar-boy.svg'
 import { ChatContext } from '../../../../Context/ChatContext'
 import { AuthContext } from '../../../../Context/AuthContext'
 import { MessageContext } from '../../../../Context/MessageContext'
-import { sendMessage } from '../../../../../services/Api/message'
+import { formatTime } from '../../../../../utils/formatTime'
+import { sendMessage, maskAllMessageRead } from '../../../../../services/Api/message'
 
 const ChatWindow = () => {
     const { idChatCurrent,
@@ -56,18 +57,18 @@ const ChatWindow = () => {
         socket.on("getMessage", res => {
             if (idChatCurrent === res.chat) {
                 setListMessageInChat((prev => [...prev, res]))
-
+                const updateMessRead = async (idChat) => {
+                    const result = await maskAllMessageRead(idChat)
+                }
+                updateMessRead(res.chat)
             }
             sentRef.current = !sentRef.current
             setSent(sentRef.current)
-            console.log("windowSend", sent)
-            console.log("windowRef", sentRef.current)
         })
         return () => {
             socket.off("getMessage")
         }
     }, [socket, idChatCurrent])
-
     return (
         <div className='chat-window'>
             {idChatCurrent ?
@@ -112,7 +113,7 @@ const ChatWindow = () => {
                                         <p>{message?.content}</p>
                                         <span>
                                             <FontAwesomeIcon icon={faClock} />
-                                            1 phút trước
+                                            {formatTime(message.createdAt)}&nbsp;
                                         </span>
                                     </div>
                                 </div>

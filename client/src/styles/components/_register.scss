@@ -8,7 +8,7 @@
     .register__left {
         width: 100%;
         height: 100vh;
-        padding-bottom: 40px;
+        padding-bottom: 20px;
         overflow-y: auto;
         background: #FFF;
         box-shadow: 24.23343px 0px 50.48632px 0px rgba(0, 0, 0, 0.05);
@@ -51,6 +51,11 @@
 
             .subtitle {
                 font-weight: 600;
+            }
+            .register-error{
+                font-weight: 400;
+                font-size: 10px;
+                color: red;
             }
 
         }

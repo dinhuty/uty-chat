@@ -11,12 +11,12 @@ const signup = async (req, res, next) => {
         //Check oldUser
         const oldUser = await User.findOne({ email })
         if (oldUser) {
-            return res.status(400).send({ error: "User Already Exist" })
+            return res.status(200).json({ error: "User Already Exist" })
         }
         const user = new User(req.body)
         const saveUser = await user.save()
 
-        res.status(200).json(saveUser)
+        res.status(201).json(saveUser)
     } catch (error) {
         console.log(error)
         res.status(500).json({ status: "account password is incorrect" })

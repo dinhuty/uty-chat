@@ -8,3 +8,12 @@ export const login = async (data) => {
         console.log(error)
     }
 }
+
+export const register = async (data) => {
+    try {
+        const res = await axios.post("user/signup", data)
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}

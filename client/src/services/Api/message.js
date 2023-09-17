@@ -16,3 +16,12 @@ export const sendMessage = async (data) => {
         console.log(error)
     }
 }
+
+export const maskAllMessageRead = async (idChat) => {
+    try {
+        const updateRead = await axios.put(`message/update-read/${idChat}`)
+        return updateRead.data
+    } catch (error) {
+        console.log(error)
+    }
+}
