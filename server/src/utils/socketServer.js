@@ -1,6 +1,6 @@
 const { Server } = require("socket.io");
 const socketServer = (server) => {
-    const io = new Server(server,{ cors: "http://localhost:5173" });
+    const io = new Server(server,{ cors: "https://uty-chat.vercel.app" });
     let onlineUsers = []
     io.on("connection", (socket) => {
         console.log("new connection", socket.id)
