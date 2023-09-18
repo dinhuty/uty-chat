@@ -1,10 +1,10 @@
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "./AuthContext";
-import { getChatForUser, getInfoChat } from "../../services/Api/chat";
-import { maskAllMessageRead } from "../../services/Api/message";
+import { getChatForUser, getInfoChat } from "../services/Api/chat";
+import { maskAllMessageRead } from "../services/Api/message";
 import { io } from "socket.io-client"
 import { MessageContext } from "./MessageContext";
-import { compareByLastUpdatedDesc } from '../../utils/compare'
+import { compareByLastUpdatedDesc } from '../utils/compare'
 export const ChatContext = createContext();
 
 const ChatProvider = ({ children }) => {
@@ -58,6 +58,7 @@ const ChatProvider = ({ children }) => {
 
     //initial socket
     useEffect(() => {
+        // const newSocket = io("http://localhost:3001/")
         const newSocket = io("https://socket-server-production-f499.up.railway.app/")
         setSocket(newSocket);
         return () => {

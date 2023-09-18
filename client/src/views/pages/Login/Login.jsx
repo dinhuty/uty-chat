@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom"
-import Logo from '../../../../assets/login-logo.svg'
-import Av from '../../../../assets/login-bg.svg'
-import { login } from '../../../../services/Api/auth'
-import { AuthContext } from '../../../Context/AuthContext'
+import Logo from '../../../assets/svg/login-logo.svg'
+import Av from '../../../assets/svg/login-bg.svg'
+import { login } from '../../../services/Api/auth'
+import { AuthContext } from '../../../context/AuthContext'
 
 const Login = () => {
   const { setUserCurrent } = useContext(AuthContext)

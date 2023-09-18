@@ -1,13 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { searchUser } from '../../../../../services/Api/search'
-import { createChat } from '../../../../../services/Api/chat'
-import avatar from "../../../../../assets/avatar-boy.svg"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { compareByLastUpdatedDesc } from '../../../../../utils/compare'
-import { ChatContext } from '../../../../Context/ChatContext'
-import { AuthContext } from '../../../../Context/AuthContext'
-import { formatTime } from '../../../../../utils/formatTime'
+import { searchUser } from '../../../../services/Api/search'
+import { createChat } from '../../../../services/Api/chat'
+import avatar from "../../../../assets/svg/avatar-boy.svg"
+import { compareByLastUpdatedDesc } from '../../../../utils/compare'
+import { ChatContext } from '../../../../context/ChatContext'
+import { AuthContext } from '../../../../context/AuthContext'
+import { formatTime } from '../../../../utils/formatTime'
 
 const ChatSide = () => {
     const sliderRef = useRef(null);

@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { ChatContext } from "./ChatContext";
-import { getListMessageInChat } from "../../services/Api/message";
+import { getListMessageInChat } from "../services/Api/message";
 
 export const MessageContext = createContext()
 

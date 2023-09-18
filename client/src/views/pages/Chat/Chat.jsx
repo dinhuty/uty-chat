@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react'
-import Logo from "../../../../assets/login-logo.svg"
+import Logo from "../../../assets/svg/login-logo.svg"
 import { faBell } from "@fortawesome/free-regular-svg-icons"
 import SideMenu from './SideMenu/SideMenu'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ChatSide from './ChatSide/ChatSide'
 import ChatWindow from './ChatWindow/ChatWindow'
-import avatar from "../../../../assets/avatar-boy.svg"
-import { AuthContext } from '../../../Context/AuthContext'
+import avatar from "../../../assets/svg/avatar-boy.svg"
+import { AuthContext } from '../../../context/AuthContext'
 
 const Chat = () => {
   const [checked, setChecked] = useState(false)

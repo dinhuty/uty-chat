@@ -2,10 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
-import AuthProvider from './components/Context/AuthContext.jsx'
+import AuthProvider from './context/AuthContext.jsx'
 import './index.scss'
-import ChatProvider from './components/Context/ChatContext.jsx'
-import MessageProvider from './components/Context/MessageContext.jsx'
+import ChatProvider from './context/ChatContext.jsx'
+import MessageProvider from './context/MessageContext.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

@@ -1,13 +1,14 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { faList, faPaperPlane, faPhone } from '@fortawesome/free-solid-svg-icons'
+import { faList, faPhone } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClock } from '@fortawesome/free-regular-svg-icons'
-import avatar from '../../../../../assets/avatar-boy.svg'
-import { ChatContext } from '../../../../Context/ChatContext'
-import { AuthContext } from '../../../../Context/AuthContext'
-import { MessageContext } from '../../../../Context/MessageContext'
-import { formatTime } from '../../../../../utils/formatTime'
-import { sendMessage, maskAllMessageRead } from '../../../../../services/Api/message'
+import avatar from '../../../../assets/svg/avatar-boy.svg'
+import { ChatContext } from '../../../../context/ChatContext'
+import { AuthContext } from '../../../../context/AuthContext'
+import { MessageContext } from '../../../../context/MessageContext'
+import { formatTime } from '../../../../utils/formatTime'
+import { moveElementToTop } from '../../../../utils/moveElementToTop'
+import { sendMessage, maskAllMessageRead } from '../../../../services/Api/message'
 
 const ChatWindow = () => {
     const { idChatCurrent,
@@ -62,6 +63,7 @@ const ChatWindow = () => {
             },
             createdAt: formattedDate
         }]);
+        setListChatForUser(moveElementToTop(listChatForUser, idChatCurrent))
         setContentMessage('');
         const messageData = await sendMessage(data);
         setNewMessage(messageData.message);
@@ -69,7 +71,6 @@ const ChatWindow = () => {
         setSent(sentRef.current);
     }
 
-    console.log(listMessageInChat)
     useEffect(() => {
         if (socket === null) return
         const recipientIds = infoChatCurrent?.participants

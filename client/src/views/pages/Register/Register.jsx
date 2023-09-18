@@ -1,11 +1,8 @@
 import React, { useState, useContext } from 'react'
 import { useNavigate } from "react-router-dom"
-import Container from '../../../common/Container'
-import Logo from '../../../../assets/login-logo.svg'
-import Av from '../../../../assets/login-bg.svg'
-import { register } from '../../../../services/Api/auth'
-import validate from '../../../../utils/validate'
-import { AuthContext } from '../../../Context/AuthContext'
+import Logo from '../../../assets/svg/login-logo.svg'
+import Av from '../../../assets/svg/login-bg.svg'
+import { register } from '../../../services/Api/auth'
 
 
 const Register = () => {
