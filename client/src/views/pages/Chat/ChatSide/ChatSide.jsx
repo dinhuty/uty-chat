@@ -6,12 +6,10 @@ import { compareByLastUpdatedDesc } from '../../../../utils/compare'
 import { ChatContext } from '../../../../context/ChatContext'
 import { AuthContext } from '../../../../context/AuthContext'
 import { formatTime } from '../../../../utils/formatTime'
+import HorizontalSlider from '../../../components/HorizontalSlider'
 
 const ChatSide = () => {
     const sliderRef = useRef(null);
-    const [mouseDown, setMouseDown] = useState(false);
-    const [startX, setStartX] = useState(0);
-    const [scrollLeft, setScrollLeft] = useState(0);
     const [keyword, setKeyword] = useState('')
     const [listNewUser, setListNewUser] = useState(null)
     const { listChatForUser, setIdChatCurrent, onlineUsers, setListChatForUser } = useContext(ChatContext);
@@ -30,23 +28,6 @@ const ChatSide = () => {
         return () => clearTimeout(getData)
     }, [keyword])
 
-    const startDragging = (e) => {
-        setMouseDown(true);
-        setStartX(e.pageX - sliderRef.current.offsetLeft);
-        setScrollLeft(sliderRef.current.scrollLeft);
-    };
-
-    const stopDragging = () => {
-        setMouseDown(false);
-    };
-
-    const handleMouseMove = (e) => {
-        e.preventDefault();
-        if (!mouseDown) return;
-        const x = e.pageX - sliderRef.current.offsetLeft;
-        const scroll = x - startX;
-        sliderRef.current.scrollLeft = scrollLeft - scroll;
-    };
     const checkOnlineStatus = (id) => {
         if (onlineUsers?.length <= 0 || onlineUsers === null) return false
         if (onlineUsers.some(user => user.userId === id))
@@ -106,28 +87,7 @@ const ChatSide = () => {
                     )}
 
                 </div>
-                <div
-                    className="chat-side__user-potantial"
-                    ref={sliderRef}
-                    onMouseDown={startDragging}
-                    onMouseUp={stopDragging}
-                    onMouseLeave={stopDragging}
-                    onMouseMove={handleMouseMove}
-                >
-                    {Array.from({ length: 12 }).map((_, index) => (
-                        <div key={index} className='user-potantial__item'>
-                            <div className='user__avatar'>
-                                <img className="w-10 h-10 rounded-full" src={avatar} alt="Rounded avatar" />
-                                <div className="user__avatar-status">
-
-                                </div>
-                            </div>
-                            <div className='user__name'>
-                                Dinh Tran
-                            </div>
-                        </div>
-                    ))}
-                </div>
+                <HorizontalSlider />
                 <div className="chat-side__title">
                     Gần đây
                 </div>
