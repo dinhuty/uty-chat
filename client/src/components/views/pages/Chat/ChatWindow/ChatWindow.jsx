@@ -31,20 +31,45 @@ const ChatWindow = () => {
 
 
     const handleSendMessgae = async (e) => {
+        // e.preventDefault()
+        //     chatId: idChatCurrent
+        // const messageData = await sendMessage({
+        //     content: contentMessage,
+        //     senderId: userCurrent._id,
+        // })
+        // setContentMessage('')
+        // setNewMessage(messageData.message)
+        // setListMessageInChat((prev => [...prev, messageData.message]))
+        // sentRef.current = !sentRef.current
+        // setSent(sentRef.current)
+
         e.preventDefault()
-        const messageData = await sendMessage({
+        const data = {
             content: contentMessage,
             senderId: userCurrent._id,
-            chatId: idChatCurrent
-        })
-        setContentMessage('')
-        setNewMessage(messageData.message)
-        setListMessageInChat((prev => [...prev, messageData.message]))
-        sentRef.current = !sentRef.current
-        setSent(sentRef.current)
+            chatId: idChatCurrent,
+        };
+        const now = new Date();
+        const formattedDate = now.toISOString();
+        setListMessageInChat((prev) => [...prev, {
+            chat: idChatCurrent,
+            content: contentMessage,
+            isRead: true,
+            sender: {
+                firstName: userCurrent.firstName,
+                lastName: userCurrent.lastName,
+                _id: userCurrent._id,
+            },
+            createdAt: formattedDate
+        }]);
+        setContentMessage('');
+        const messageData = await sendMessage(data);
+        setNewMessage(messageData.message);
+        sentRef.current = !sentRef.current;
+        setSent(sentRef.current);
     }
 
-    console.log(infoChatCurrent)
+    console.log(listMessageInChat)
     useEffect(() => {
         if (socket === null) return
         const recipientIds = infoChatCurrent?.participants
