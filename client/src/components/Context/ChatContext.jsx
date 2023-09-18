@@ -58,7 +58,7 @@ const ChatProvider = ({ children }) => {
 
     //initial socket
     useEffect(() => {
-        const newSocket = io("http://localhost:3001")
+        const newSocket = io("https://socket-server-production-f499.up.railway.app/")
         setSocket(newSocket);
         return () => {
             newSocket.disconnect();
