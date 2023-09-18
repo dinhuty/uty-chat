@@ -4,6 +4,7 @@ import { createChat } from '../../../../../services/Api/chat'
 import avatar from "../../../../../assets/avatar-boy.svg"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { compareByLastUpdatedDesc } from '../../../../../utils/compare'
 import { ChatContext } from '../../../../Context/ChatContext'
 import { AuthContext } from '../../../../Context/AuthContext'
 import { formatTime } from '../../../../../utils/formatTime'
@@ -19,7 +20,6 @@ const ChatSide = () => {
     const { userCurrent } = useContext(AuthContext)
     const { idChatCurrent } = useContext(ChatContext)
 
-    console.log("id@ChatSide", idChatCurrent)
     useEffect(() => {
         if (!keyword.trim()) {
             setListNewUser([])
@@ -49,12 +49,6 @@ const ChatSide = () => {
         const scroll = x - startX;
         sliderRef.current.scrollLeft = scrollLeft - scroll;
     };
-
-    const compareByLastUpdatedDesc = (a, b) => {
-        const dateA = new Date(a.lastUpdated);
-        const dateB = new Date(b.lastUpdated);
-        return dateB - dateA;
-    }
     const checkOnlineStatus = (id) => {
         if (onlineUsers?.length <= 0 || onlineUsers === null) return false
         if (onlineUsers.some(user => user.userId === id))
