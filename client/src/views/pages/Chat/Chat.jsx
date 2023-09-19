@@ -7,10 +7,14 @@ import ChatSide from './ChatSide/ChatSide'
 import ChatWindow from './ChatWindow/ChatWindow'
 import avatar from "../../../assets/svg/avatar-boy.svg"
 import { AuthContext } from '../../../context/AuthContext'
+import { ChatContext } from '../../../context/ChatContext'
+import Loading from '../Loading/Loading'
 
 const Chat = () => {
   const [checked, setChecked] = useState(false)
   const { userCurrent } = useContext(AuthContext);
+  const { loading } = useContext(ChatContext)
+  console.log(loading)
   return (
     <div className='app-chat'>
       {/* <div className={`${!checked ? "chat__header" : "chat__header dark"}`}>
@@ -42,11 +46,14 @@ const Chat = () => {
           </div>
         </div>
       </div> */}
-      <div className="chat__main">
-        <SideMenu />
-        <ChatSide />
-        <ChatWindow />
-      </div>
+      {loading ? <Loading /> :
+        <div className="chat__main">
+          <SideMenu />
+          <ChatSide />
+          <ChatWindow />
+        </div>
+      }
+
     </div>
   )
 }

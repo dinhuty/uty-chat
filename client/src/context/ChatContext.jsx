@@ -16,6 +16,7 @@ const ChatProvider = ({ children }) => {
     const [socket, setSocket] = useState(null)
     const [onlineUsers, setOnlineUsers] = useState(null)
     const [sent, setSent] = useState(true)
+    const [loading,setLoading] = useState(false)
 
     useEffect(() => {
         const getData = async () => {
@@ -28,6 +29,7 @@ const ChatProvider = ({ children }) => {
 
     useEffect(() => {
         const getData = async () => {
+            setLoading(true)
             if (!userCurrent) return
             const data = await getChatForUser(userCurrent?._id)
             setListChatForUser(data?.chats)
@@ -35,6 +37,7 @@ const ChatProvider = ({ children }) => {
             if (resData?.length > 0) {
                 setIdChatCurrent(resData[0]?._id)
             }
+            setLoading(false)
         }
         getData()
     }, [userCurrent])
@@ -91,7 +94,8 @@ const ChatProvider = ({ children }) => {
             setOnlineUsers,
             sentRef,
             sent,
-            setSent
+            setSent,
+            loading,
         }}>
             {children}
         </ChatContext.Provider>

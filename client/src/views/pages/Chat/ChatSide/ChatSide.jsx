@@ -22,6 +22,8 @@ const ChatSide = () => {
          sentRef,
          sent,
          setSent,
+         loading,
+         setLoading
          } = useContext(ChatContext);
     const { userCurrent } = useContext(AuthContext)
     const { idChatCurrent } = useContext(ChatContext)
@@ -109,7 +111,7 @@ const ChatSide = () => {
             </div>
 
             <div className="chat-side__list">
-                {listChatForUser.length > 0 ? listChatForUser.sort(compareByLastUpdatedDesc).map((item, index) => {
+                {listChatForUser?.length > 0 ? listChatForUser.sort(compareByLastUpdatedDesc).map((item, index) => {
                     return (
                         <div className={item._id === idChatCurrent ? "chat-list__item active" : "chat-list__item"}
                             key={item._id}
