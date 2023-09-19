@@ -7,6 +7,7 @@ import { ChatContext } from '../../../../context/ChatContext'
 import { AuthContext } from '../../../../context/AuthContext'
 import { formatTime } from '../../../../utils/formatTime'
 import HorizontalSlider from '../../../components/HorizontalSlider'
+import { checkOnlineStatus } from '../../../../utils/checkOnlineStatus'
 
 const ChatSide = () => {
     const sliderRef = useRef(null);
@@ -28,12 +29,6 @@ const ChatSide = () => {
         return () => clearTimeout(getData)
     }, [keyword])
 
-    const checkOnlineStatus = (id) => {
-        if (onlineUsers?.length <= 0 || onlineUsers === null) return false
-        if (onlineUsers.some(user => user.userId === id))
-            return true
-        return false
-    }
     const hanldeCreateChat = async (id) => {
         const data = {
             user1Id: userCurrent._id,
@@ -88,9 +83,6 @@ const ChatSide = () => {
 
                 </div>
                 <HorizontalSlider />
-                <div className="chat-side__title">
-                    Gần đây
-                </div>
             </div>
 
             <div className="chat-side__list">
@@ -104,7 +96,7 @@ const ChatSide = () => {
                                 <div className="avatar">
                                     <img className="w-10 h-10 rounded-full" src={avatar} alt="Rounded avatar" />
 
-                                    {checkOnlineStatus(item.participants[0]._id) && <div className="avatar-status">
+                                    {checkOnlineStatus(onlineUsers,item.participants[0]._id) && <div className="avatar-status">
 
                                     </div>}
                                 </div>
@@ -121,7 +113,7 @@ const ChatSide = () => {
                                         </div>
                                     }
                                     <div className={item.messages.length > 0 && item.messages[item.messages.length - 1].isRead === true ? "desc-message--recent" : "desc-message--recent unread"}>
-                                        {item.messages.length > 0 && <span>{item?.messages[item.messages.length - 1].sender.firstName}:</span>}<span>{item?.messages[item.messages.length - 1]?.content}</span>
+                                        {item.messages.length > 0 && item?.messages[item.messages.length - 1].sender._id === userCurrent._id ? <span>Bạn:</span> : <span>{item?.messages[item.messages.length - 1].sender.lastName}:</span>}<span>{item?.messages[item.messages.length - 1]?.content}</span>
                                     </div>
                                 </div>
                             </div>

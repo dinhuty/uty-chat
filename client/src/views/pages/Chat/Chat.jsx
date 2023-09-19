@@ -13,7 +13,7 @@ const Chat = () => {
   const { userCurrent } = useContext(AuthContext);
   return (
     <div className='app-chat'>
-      <div className={`${!checked ? "chat__header" : "chat__header dark"}`}>
+      {/* <div className={`${!checked ? "chat__header" : "chat__header dark"}`}>
         <div className="header__logo">
           <img src={Logo} alt="" />
           <span>UTY Messenger</span>
@@ -41,7 +41,7 @@ const Chat = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="chat__main">
         <SideMenu />
         <ChatSide />

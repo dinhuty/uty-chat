@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react'
 import avatar from '../../assets/svg/avatar-boy.svg'
+import Avatar from './Avatar';
 
 const HorizontalSlider = () => {
     const sliderRef = useRef(null);
@@ -36,7 +37,7 @@ const HorizontalSlider = () => {
             {Array.from({ length: 12 }).map((_, index) => (
                 <div key={index} className='user-potantial__item'>
                     <div className='user__avatar'>
-                        <img className="w-10 h-10 rounded-full" src={avatar} alt="Rounded avatar" />
+                        <Avatar avatar={avatar}/>
                         <div className="user__avatar-status">
 
                         </div>

@@ -1,7 +1,4 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { faList, faPhone } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faClock } from '@fortawesome/free-regular-svg-icons'
 import avatar from '../../../../assets/svg/avatar-boy.svg'
 import { ChatContext } from '../../../../context/ChatContext'
 import { AuthContext } from '../../../../context/AuthContext'
@@ -9,9 +6,15 @@ import { MessageContext } from '../../../../context/MessageContext'
 import { formatTime } from '../../../../utils/formatTime'
 import { moveElementToTop } from '../../../../utils/moveElementToTop'
 import { sendMessage, maskAllMessageRead } from '../../../../services/Api/message'
+import Message from '../../../components/Message'
+import { checkOnlineStatus } from '../../../../utils/checkOnlineStatus'
+import { IoCallOutline, IoVideocamOutline, IoEllipsisVerticalOutline } from "react-icons/io5";
+import Avatar from '../../../components/Avatar'
+import { LuSendHorizonal } from "react-icons/lu";
 
 const ChatWindow = () => {
-    const { idChatCurrent,
+    const {
+        idChatCurrent,
         setIdChatCurrent,
         infoChatCurrent,
         socket,
@@ -19,31 +22,21 @@ const ChatWindow = () => {
         setListChatForUser,
         sentRef,
         sent,
-        setSent
+        setSent,
+        onlineUsers
     } = useContext(ChatContext)
     const { userCurrent } = useContext(AuthContext)
-    const { listMessageInChat,
+    const {
+        listMessageInChat,
         setListMessageInChat,
         newMessage,
         setNewMessage
     } = useContext(MessageContext)
     const [contentMessage, setContentMessage] = useState('')
-    let lastSenderId = null;
+    let lastSenderId = null
 
 
     const handleSendMessgae = async (e) => {
-        // e.preventDefault()
-        //     chatId: idChatCurrent
-        // const messageData = await sendMessage({
-        //     content: contentMessage,
-        //     senderId: userCurrent._id,
-        // })
-        // setContentMessage('')
-        // setNewMessage(messageData.message)
-        // setListMessageInChat((prev => [...prev, messageData.message]))
-        // sentRef.current = !sentRef.current
-        // setSent(sentRef.current)
-
         e.preventDefault()
         const data = {
             content: contentMessage,
@@ -63,7 +56,9 @@ const ChatWindow = () => {
             },
             createdAt: formattedDate
         }]);
-        setListChatForUser(moveElementToTop(listChatForUser, idChatCurrent))
+
+        const lx = moveElementToTop(listChatForUser, idChatCurrent)
+        setListChatForUser(lx)
         setContentMessage('');
         const messageData = await sendMessage(data);
         setNewMessage(messageData.message);
@@ -101,26 +96,37 @@ const ChatWindow = () => {
                 <>
                     <div className="header" >
                         <div className="header__left">
-                            <img src={avatar} alt="Avatar" />
+                            <div className="user-avatar">
+                                <Avatar avatar={avatar} />
+                                {checkOnlineStatus(onlineUsers, infoChatCurrent?.participants[0]._id) && <div className='user-avatar__status'></div>}
+                            </div>
                             {infoChatCurrent && infoChatCurrent?.isGroup ?
-                                <div className='user-name'>
+                                <div className='user-desc'>
                                     {infoChatCurrent?.participants?.slice(0, 2).map((user) => (
                                         <span key={user._id}>{user.lastName},</span>
                                     ))}
                                     <span>{userCurrent?.lastName}...</span>
                                 </div>
                                 :
-                                <div className='user-name'>
-                                    <span>{infoChatCurrent?.participants[0].firstName}</span>
-                                    <span>{infoChatCurrent?.participants[0].lastName}</span>
+                                <div className='user-desc'>
+                                    <div className="user-desc__name">
+                                        <span>{infoChatCurrent?.participants[0].firstName}</span>
+                                        <span>{infoChatCurrent?.participants[0].lastName}</span>
+                                    </div>
+
+                                    {checkOnlineStatus(onlineUsers, infoChatCurrent?.participants[0]._id) && <div className='user-desc__status'>Active</div>}
                                 </div>}
                         </div>
                         <div className="header__right">
-                            <div className="icon__call">
-                                <FontAwesomeIcon icon={faPhone} />
+                            <div className={checkOnlineStatus(onlineUsers, infoChatCurrent?.participants[0]._id) ? "icon__call active" : "icon__call"}>
+                                <IoCallOutline />
+                                <div className="ripple"></div>
+                            </div>
+                            <div className="icon__video">
+                                <IoVideocamOutline />
                             </div>
                             <div className="icon__list">
-                                <FontAwesomeIcon icon={faList} />
+                                <IoEllipsisVerticalOutline />
                             </div>
                         </div>
                     </div>
@@ -131,28 +137,21 @@ const ChatWindow = () => {
                             lastSenderId = message?.sender?._id;
 
                             return (
-                                <div className={message?.sender?._id === userCurrent?._id ? 'chat-message user-chat' : 'chat-message'} key={index}>
-                                    {shouldDisplayAvatar && message?.sender?._id !== userCurrent?._id &&
-                                        <img className="message-avatar w-10 h-10 rounded-full" src={avatar} alt="Rounded avatar" />
-                                    }
-                                    <div className="message-content">
-                                        <p>{message?.content}</p>
-                                        <span>
-                                            <FontAwesomeIcon icon={faClock} />
-                                            {formatTime(message.createdAt)}&nbsp;
-                                        </span>
-                                    </div>
-                                </div>
+                                <Message
+                                    key={index}
+                                    message={message}
+                                    shouldDisplayAvatar={shouldDisplayAvatar}
+                                    userCurrent={userCurrent}
+                                />
                             )
-
-                        })}
+                        }
+                        )}
                     </div> :
                         <div className="chat__display blank">
                             Bắt đầu với tin nhắn mới
                         </div>
 
                     }
-
                     <div className="chat__bottom">
                         <form className="bottom-box" onSubmit={handleSendMessgae}>
                             <input
@@ -162,7 +161,9 @@ const ChatWindow = () => {
                                 onChange={(e) => setContentMessage(e.target.value)}
                             />
                             <button type="submit" >
-                                Gửi
+                                <div className="btn-icon-send">
+                                    <LuSendHorizonal />
+                                </div>
                             </button>
                         </form>
                     </div>

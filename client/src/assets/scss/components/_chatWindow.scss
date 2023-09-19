@@ -1,9 +1,9 @@
 .chat-window {
-    background-color: #e2e8f0;
+    background-color: $secondary-color;
     width: calc(100% - 425px);
     padding: 15px 12px;
     display: none;
-    border-left: 1px solid #ddd;
+
 
     @include min-sm {
         display: block;
@@ -14,44 +14,140 @@
         height: 100%;
         font-size: 34px;
         font-weight: 500;
-        color: #b1afaf;
     }
 
     .header {
         @include flex-between;
         height: 60px;
         border-radius: 5px;
-        background-color: $secondary-color;
         padding: 0 1rem;
+        border-bottom: 1px solid #e6e6e6;
+
+
 
         &__left {
             @include flex-start;
+            gap: 10px;
 
-            img {
+            .user-avatar {
                 height: 40px;
                 width: 40px;
                 border-radius: 50%;
+                position: relative;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+
+                &__status {
+                    position: absolute;
+                    height: 12px;
+                    width: 12px;
+                    bottom: 1px;
+                    border-radius: 50%;
+                    border: 2px solid $secondary-color;
+                    right: 1px;
+                    background-color: $four-color;
+                    animation: pulse 1s infinite;
+                }
+
+                @keyframes pulse {
+                    0% {
+                        transform: scale(1);
+                        opacity: 1;
+                    }
+
+                    50% {
+                        transform: scale(1.2);
+                        opacity: 0.7;
+                    }
+
+                    100% {
+                        transform: scale(1);
+                        opacity: 1;
+                    }
+                }
             }
 
-            .user-name {
-                padding-left: 1rem;
-                font-weight: 600;
+            .user-desc {
                 display: flex;
-                gap: 5px
+                flex-direction: column;
+                gap: 5px;
+
+                &__name {
+                    font-size: 14px;
+                    font-weight: 600;
+                    display: flex;
+                    gap: 5px
+                }
+
+                &__status {
+                    font-size: 13px;
+                    font-weight: 500;
+                    color: $text-secondary-color;
+                }
             }
         }
 
         &__right {
             @include flex-start;
+            gap: 5px;
 
             div {
                 cursor: pointer;
-                padding-right: 2rem;
                 font-size: 1.5rem;
+                padding: 10px 15px;
+                border-radius: 5px;
+                cursor: pointer;
                 color: $primary-color;
 
+                &.icon__call {
+                    position: relative;
+
+                    .ripple {
+                        position: absolute;
+                        width: 25px;
+                        height: 25px;
+                        left: 50%;
+                        top: 50%;
+                        transform: translate(-50%, -50%) scale(1);
+                        border-radius: 50%;
+                        background: $primary-color;
+                        animation: ripple-animation 1s linear infinite;
+                    }
+
+                    @keyframes ripple-animation {
+                        0% {
+                            transform: translate(-50%, -50%) scale(0);
+                            opacity: 0;
+                        }
+
+                        50% {
+                            transform: translate(-50%, -50%) scale(0);
+                            opacity: 0;
+                        }
+
+                        75% {
+                            transform: translate(-50%, -50%) scale(1);
+                            opacity: 0.5;
+                        }
+
+                        100% {
+                            transform: translate(-50%, -50%) scale(1.2);
+                            opacity: 0;
+                        }
+                    }
+
+                    &.active {
+                        animation: pulse 1s infinite;
+                    }
+                }
+
+
                 &:hover {
-                    opacity: .8;
+                    color: rgb(0, 60, 255);
+                    background-color: $primary-bg-color;
                 }
             }
         }
@@ -59,12 +155,13 @@
     }
 
     .chat__display {
+        width: 100%;
         height: calc(100% - 120px);
         max-height: 100%;
         overflow-y: auto;
         display: flex;
         flex-direction: column-reverse;
-        gap: 12px;
+        gap: 5px;
         padding: 0px 12px 0px 12px;
         padding-bottom: 10px;
 
@@ -76,66 +173,14 @@
 
         }
 
-        .chat-message {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            position: relative;
-            padding-left: 45px;
 
-            .message-avatar {
-                position: absolute;
-                height: 40px;
-                width: 40px;
-                bottom: 5px;
-                left: 0;
-            
-            }
-
-            .message-content {
-                width: fit-content;
-                padding: 12px;
-                line-height: 18px;
-                font-size: 13px;
-                max-width: 400px;
-                height: fit-content;
-                background-color: $secondary-color;
-                border-radius: 5px;
-                display: flex;
-                flex-direction: column;
-
-                span {
-                    color: rgba(113, 128, 150);
-                    align-self: end;
-                    font-size: 11px;
-                    padding-top: 12px;
-
-                    &>* {
-                        padding-right: 5px;
-                    }
-                }
-
-
-            }
-
-            &.user-chat .message-content{
-                align-self: end;
-                color: $secondary-color;
-                background-color: $primary-color;
-                margin-left: 0;
-                span {
-                    color: $secondary-color;
-
-                }
-            }
-        }
     }
 
     .chat__bottom {
         height: 60px;
         @include flex-between;
         padding: 10px 25px 0px 15px;
-        border-radius: 5px;
+        border-top: 1px solid #e6e6e6;
 
         .bottom-box {
             width: 100%;
@@ -150,16 +195,19 @@
             width: 100%;
             border-radius: 20px;
             padding: 12px 24px;
-            background-color: $secondary-color;
+            background-color: $secondary-bg-color;
+            border: 1px solid $secondary-bg-color;
 
         }
 
         button {
-            background-color: $primary-color;
-            color: white;
-            padding: 10px 12px;
-            border-radius: 25px;
-            transition: all .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            padding: 0 12px;
+            .btn-icon-send {
+                color: $primary-color;
+                font-size: 25px;
+                border-radius: 25px;
+                transition: all .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            }
 
             &:hover {
                 transform: scale(1.05);
@@ -167,56 +215,4 @@
         }
     }
 
-    // .chat-header {
-    //     width: 100%;
-    //     background-color: $secondary-color;
-    //     @include flex-between;
-    //     padding: 10px 15px;
-    //     border-radius: 5px; 
-
-    //     .item__left {
-    //         gap: 10px;
-    //         @include flex-start;
-    //         .avatar {
-    //             @include flex-center;
-    //             width: 45px;
-    //             height: 45px;
-
-    //             img {
-    //                 width: 100%;
-    //                 height: 100%;
-    //             }
-    //         }
-
-    //         .desc {
-    //             display: flex;
-    //             flex-direction: column;
-    //             gap: 8px;
-    //             padding-right: 10px;
-    //             white-space: nowrap;
-    //             overflow: hidden;
-    //             text-overflow: ellipsis;
-
-    //             &__name {
-    //                 font-weight: 600;
-    //                 font-size: 14px;
-    //             }
-
-    //             &-message--recent {
-    //                 font-size: 12px;
-    //                 white-space: nowrap;
-    //                 overflow: hidden;
-    //                 text-overflow: ellipsis;
-
-    //             }
-    //         }
-    //     }
-    // }
-    // .chat-content{
-    //     background: $primary-color;
-    //     height: 100%;
-    // }
-    // .chat-bottom{
-    //     background-color: $four-color;
-    // }
 }

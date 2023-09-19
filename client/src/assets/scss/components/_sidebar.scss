@@ -7,30 +7,67 @@
     flex-direction: column;
     color: $third-color;
     gap: 12px;
-    padding-top: 100px;
+    justify-content: space-between;
+    border-right: 1px solid #e6e6e6;
+    padding: 40px 0px;
+    align-items: center;
 
-    &__item {
+    .side-menu__top {
+        cursor: pointer;
+    }
+
+    .side-menu__item {
+        cursor: pointer;
+    }
+
+    .side-menu__main {
+        display: flex;
+        gap: 12px;
+        flex-direction: column;
+        width: 100%;
+        padding: 0 5px;
+
+        .side-menu__item {
+            @include flex-center;
+            padding: 15px 0;
+            font-size: 16px;
+            width: 100%;
+            border-radius: 10px;
+            transition: all .4s ease-in cubic-bezier(0.075, 0.82, 0.165, 1);
+
+            &.active {
+                color: $primary-color;
+                text-shadow: 2px 2px 2px rgba(230, 83, 64, 0.3),
+                    0px -2px 2px rgba(158, 47, 3, 0.3);
+                background-color: $secondary-bg-color;
+            }
+
+            &:hover {
+                color: $primary-color;
+                text-shadow: 2px 2px 2px rgba(230, 83, 64, 0.3),
+                    0px -2px 2px rgba(158, 47, 3, 0.3);
+                background-color: $secondary-bg-color;
+
+            }
+
+        }
+
+    }
+
+    .side-menu__bottom {
+        width: 100%;
         @include flex-center;
-        padding: 10px 0;
-        font-size: 16px;
-        transition: all .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        &.active {
-            color: $primary-color;
-            text-shadow: 2px 2px 2px rgba(230, 83, 64, 0.3),
-                0px -2px 2px rgba(158, 47, 3, 0.3);
-            transform: scale(1.2);
+
+        .side-menu__item {
+            color: red;
+            transition: transform .4 cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+            &:hover {
+                transform: scale(1.2);
+
+            }
         }
 
-        &:hover {
-            color: $primary-color;
-            text-shadow: 2px 2px 2px rgba(230, 83, 64, 0.3),
-                0px -2px 2px rgba(158, 47, 3, 0.3);
-            transform: scale(1.2);
-        }
-        &:nth-last-child(1){
-            color: red;
-            padding-top: 100px;
-        }
 
     }
 }
