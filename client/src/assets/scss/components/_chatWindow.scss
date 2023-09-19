@@ -106,6 +106,7 @@
                     position: relative;
 
                     .ripple {
+                        display: none;
                         position: absolute;
                         width: 25px;
                         height: 25px;
@@ -138,9 +139,13 @@
                             opacity: 0;
                         }
                     }
+                }
 
-                    &.active {
-                        animation: pulse 1s infinite;
+                &.active {
+                    animation: pulse 1s infinite;
+
+                    .ripple{
+                        display: block;
                     }
                 }
 
@@ -202,6 +207,7 @@
 
         button {
             padding: 0 12px;
+
             .btn-icon-send {
                 color: $primary-color;
                 font-size: 25px;
