@@ -3,7 +3,7 @@
     height: 100%;
     box-shadow: 0 3px 20px rgba(0, 0, 0, .043137254901960784);
     background-color: $secondary-color;
-    display: flex;
+    display: none;
     flex-direction: column;
     color: $third-color;
     gap: 12px;
@@ -11,6 +11,9 @@
     border-right: 1px solid #e6e6e6;
     padding: 40px 0px;
     align-items: center;
+    @include min-sm{
+        display: flex;
+    }
 
     .side-menu__top {
         cursor: pointer;

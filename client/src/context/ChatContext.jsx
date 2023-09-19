@@ -48,10 +48,11 @@ const ChatProvider = ({ children }) => {
             setInfoChatCurrent(data?.chatInfo)
         }
         getData()
-        const updateMessage = async (idChat) => {
-            const result = await maskAllMessageRead(idChat)
-        }
-        updateMessage(idChatCurrent)
+        // const updateMessage = async (idChat) => {
+        //     const result = await maskAllMessageRead(idChat)
+        // }
+        
+        // updateMessage(idChatCurrent)
 
     }, [idChatCurrent])
 

@@ -8,14 +8,24 @@ import { AuthContext } from '../../../../context/AuthContext'
 import { formatTime } from '../../../../utils/formatTime'
 import HorizontalSlider from '../../../components/HorizontalSlider'
 import { checkOnlineStatus } from '../../../../utils/checkOnlineStatus'
+import { MessageContext } from '../../../../context/MessageContext'
+import { maskAllMessageRead } from '../../../../services/Api/message'
 
 const ChatSide = () => {
     const sliderRef = useRef(null);
     const [keyword, setKeyword] = useState('')
     const [listNewUser, setListNewUser] = useState(null)
-    const { listChatForUser, setIdChatCurrent, onlineUsers, setListChatForUser } = useContext(ChatContext);
+    const { listChatForUser,
+         setIdChatCurrent, 
+         onlineUsers, 
+         setListChatForUser,
+         sentRef,
+         sent,
+         setSent,
+         } = useContext(ChatContext);
     const { userCurrent } = useContext(AuthContext)
     const { idChatCurrent } = useContext(ChatContext)
+    const { listMessageInChat } = useContext(MessageContext)
 
     useEffect(() => {
         if (!keyword.trim()) {
@@ -43,7 +53,20 @@ const ChatSide = () => {
         }
         setKeyword('')
     }
-    console.log(listChatForUser)
+    useEffect(() => {
+        if (listMessageInChat?.length > 0) {
+            if (listMessageInChat[listMessageInChat?.length - 1].sender._id !== userCurrent._id) {
+                const updateMessage = async (idChat) => {
+                    const result = await maskAllMessageRead(idChat)
+                }
+                console.log("mask Chat ", listMessageInChat[listMessageInChat?.length - 1].sender._id === userCurrent._id)
+                console.log("sender", listMessageInChat[listMessageInChat?.length - 1])
+                console.log("idUser", userCurrent._id)
+                updateMessage(idChatCurrent)
+            }
+        }
+    }, [listMessageInChat])
+    console.log(listMessageInChat?.length > 0 && listMessageInChat[listMessageInChat?.length - 1])
     return (
         <div className='chat-side'>
             <div className="chat-side__top">
@@ -96,7 +119,7 @@ const ChatSide = () => {
                                 <div className="avatar">
                                     <img className="w-10 h-10 rounded-full" src={avatar} alt="Rounded avatar" />
 
-                                    {checkOnlineStatus(onlineUsers,item.participants[0]._id) && <div className="avatar-status">
+                                    {checkOnlineStatus(onlineUsers, item.participants[0]._id) && <div className="avatar-status">
 
                                     </div>}
                                 </div>
@@ -113,7 +136,12 @@ const ChatSide = () => {
                                         </div>
                                     }
                                     <div className={item.messages.length > 0 && item.messages[item.messages.length - 1].isRead === true ? "desc-message--recent" : "desc-message--recent unread"}>
-                                        {item.messages.length > 0 && item?.messages[item.messages.length - 1].sender._id === userCurrent._id ? <span>Bạn:</span> : <span>{item?.messages[item.messages.length - 1].sender.lastName}:</span>}<span>{item?.messages[item.messages.length - 1]?.content}</span>
+                                        {item.messages.length > 0
+                                            && (item?.messages[item.messages.length - 1].sender?._id === userCurrent._id ? <span>Bạn:</span>
+                                                :
+                                                <span>{item?.messages[item.messages.length - 1].sender?.lastName}:</span>)
+                                        }
+                                        <span>{item?.messages[item.messages.length - 1]?.content}</span>
                                     </div>
                                 </div>
                             </div>

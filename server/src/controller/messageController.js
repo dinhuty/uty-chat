@@ -82,7 +82,6 @@ const markMessageAsRead = async (req, res) => {
 const markAllMessagesAsRead = async (req, res) => {
     try {
         const chatId = req.params.chatId; 
-
         const result = await messageModel.updateMany(
             { chat: chatId },
             { $set: { isRead: true } }

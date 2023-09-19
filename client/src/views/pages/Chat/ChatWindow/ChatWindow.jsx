@@ -82,6 +82,7 @@ const ChatWindow = () => {
                     const result = await maskAllMessageRead(idChat)
                 }
                 updateMessRead(res.chat)
+
             }
             sentRef.current = !sentRef.current
             setSent(sentRef.current)
@@ -90,6 +91,7 @@ const ChatWindow = () => {
             socket.off("getMessage")
         }
     }, [socket, idChatCurrent])
+    // console.log(listMessageInChat)
     return (
         <div className='chat-window'>
             {idChatCurrent ?
