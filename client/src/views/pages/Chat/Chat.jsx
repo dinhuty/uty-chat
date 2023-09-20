@@ -9,11 +9,14 @@ import avatar from "../../../assets/svg/avatar-boy.svg"
 import { AuthContext } from '../../../context/AuthContext'
 import { ChatContext } from '../../../context/ChatContext'
 import Loading from '../Loading/Loading'
+import Profile from '../../components/Profile'
+import { ProfileContext } from '../../../context/ProfileContext'
 
 const Chat = () => {
   const [checked, setChecked] = useState(false)
   const { userCurrent } = useContext(AuthContext);
   const { loading } = useContext(ChatContext)
+  const { isProfileOpen, setIsProfileOpen } = useContext(ProfileContext)
   console.log(loading)
   return (
     <div className='app-chat'>
@@ -47,7 +50,10 @@ const Chat = () => {
         </div>
       </div> */}
       {loading ? <Loading /> :
-        <div className="chat__main">
+        <div className="chat-main">
+          <div className={isProfileOpen ? "chat-main__profile active" : "chat-main__profile"}>
+            <Profile />
+          </div>
           <SideMenu />
           <ChatSide />
           <ChatWindow />

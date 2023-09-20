@@ -6,10 +6,12 @@ import { AuthContext } from '../../../../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import Avatar from '../../../components/Avatar'
 import avatar from '../../../../assets/svg/avatar-boy.svg'
+import { ProfileContext } from '../../../../context/ProfileContext'
 
 
 const SideMenu = () => {
     const { setUserCurrent } = useContext(AuthContext);
+    const { isProfileOpen, setIsProfileOpen } = useContext(ProfileContext)
     const navigate = useNavigate()
     const hanldeLogout = () => {
         localStorage.removeItem('user');
@@ -17,9 +19,10 @@ const SideMenu = () => {
         setUserCurrent(null)
         navigate('/login')
     }
+
     return (
         <div className='side-menu'>
-            <div className="side-menu__top">
+            <div className="side-menu__top" onClick={() => setIsProfileOpen(true)}>
                 <Avatar avatar={avatar} />
             </div>
             <div className="side-menu__main">
@@ -27,28 +30,28 @@ const SideMenu = () => {
                     <FontAwesomeIcon icon={faEnvelope} />
 
                 </div>
-                <div className="side-menu__item">
+                <div className="side-menu__item" onClick={() => setIsProfileOpen(true)}>
                     <FontAwesomeIcon icon={faUser} />
 
                 </div>
-                <div className="side-menu__item">
+                <div className="side-menu__item" onClick={() => setIsProfileOpen(true)}>
                     <FontAwesomeIcon icon={faUsers} />
 
                 </div>
-                <div className="side-menu__item">
+                <div className="side-menu__item" onClick={() => setIsProfileOpen(true)}>
                     <FontAwesomeIcon icon={faUserPlus} />
 
                 </div>
-                <div className="side-menu__item">
+                <div className="side-menu__item" onClick={() => setIsProfileOpen(true)}>
                     <FontAwesomeIcon icon={faGear} />
 
                 </div>
             </div>
             <div className="side-menu__bottom">
-                <div className="side-menu__item" onClick={hanldeLogout}>
+                {/* <div className="side-menu__item" onClick={hanldeLogout}>
                     <FontAwesomeIcon icon={faArrowRightFromBracket} />
 
-                </div>
+                </div> */}
             </div>
         </div>
     )

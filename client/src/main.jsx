@@ -6,6 +6,7 @@ import AuthProvider from './context/AuthContext.jsx'
 import './index.scss'
 import ChatProvider from './context/ChatContext.jsx'
 import MessageProvider from './context/MessageContext.jsx'
+import ProfileProvider from './context/ProfileContext.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -13,7 +14,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <AuthProvider>
         <ChatProvider>
           <MessageProvider>
-            <App />
+            <ProfileProvider>
+              <App />
+            </ProfileProvider>
           </MessageProvider>
         </ChatProvider>
       </AuthProvider>
