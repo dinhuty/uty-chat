@@ -5,14 +5,16 @@
 @import "./variables";
 @import "./reset";
 
-@import "./components/login";
-@import "./components/register";
-@import "./components/chat";
-@import "./components/chatSide";
-@import "./components/chatWindow";
-@import "./components/sidebar";
-@import "./components/common/container";
-@import "./components/horizontalSlider";
-@import "./components/message";
-@import "./components/chatLoading";
-@import "./components/profile"
+@import "./views/common/container";
+@import "./views/components/horizontalSlider";
+@import "./views/components/message";
+@import "./views/components/profile";
+@import "./views/pages/chat/chat";
+@import "./views/pages/chat/chatMenu";
+@import "./views/pages/chat/chatSide";
+@import "./views/pages/chat/chatWindow";
+@import "./views/pages/chat/sideMenu";
+@import "./views/pages/loading/chatLoading";
+@import "./views/pages/login/login";
+@import "./views/pages/register/register";
+

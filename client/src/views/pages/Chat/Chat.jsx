@@ -11,13 +11,17 @@ import { ChatContext } from '../../../context/ChatContext'
 import Loading from '../Loading/Loading'
 import Profile from '../../components/Profile'
 import { ProfileContext } from '../../../context/ProfileContext'
+import ChatMenu from './ChatWindow/ChatMenu/ChatMenu'
 
 const Chat = () => {
   const [checked, setChecked] = useState(false)
   const { userCurrent } = useContext(AuthContext);
   const { loading } = useContext(ChatContext)
-  const { isProfileOpen, setIsProfileOpen } = useContext(ProfileContext)
-  console.log(loading)
+  const { isProfileOpen,
+    setIsProfileOpen,
+    isOpenMenu,
+    setIsOpenMenu } = useContext(ProfileContext)
+
   return (
     <div className='app-chat'>
       {/* <div className={`${!checked ? "chat__header" : "chat__header dark"}`}>
@@ -53,6 +57,9 @@ const Chat = () => {
         <div className="chat-main">
           <div className={isProfileOpen ? "chat-main__profile active" : "chat-main__profile"}>
             <Profile />
+          </div>
+          <div className={isOpenMenu ? "chat-main__options active" : "chat-main__options"}>
+            <ChatMenu />
           </div>
           <SideMenu />
           <ChatSide />

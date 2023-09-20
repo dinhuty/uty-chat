@@ -5,6 +5,7 @@
     justify-content: center;
     align-items: center;
     position: relative;
+    overflow: auto;
 
     @include min-sm {
         padding: 60px 0;
@@ -16,7 +17,6 @@
         width: 100%;
         position: absolute;
         background-color: rgba(0, 0, 0, 0.5);
-        overflow: hidden;
     }
 
     .profile-main {

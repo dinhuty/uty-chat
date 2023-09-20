@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState, memo } from 'react'
 import { searchUser } from '../../../../services/Api/search'
 import { createChat } from '../../../../services/Api/chat'
 import avatar from "../../../../assets/svg/avatar-boy.svg"
@@ -61,14 +61,11 @@ const ChatSide = () => {
                 const updateMessage = async (idChat) => {
                     const result = await maskAllMessageRead(idChat)
                 }
-                console.log("mask Chat ", listMessageInChat[listMessageInChat?.length - 1].sender._id === userCurrent._id)
-                console.log("sender", listMessageInChat[listMessageInChat?.length - 1])
-                console.log("idUser", userCurrent._id)
                 updateMessage(idChatCurrent)
             }
         }
     }, [listMessageInChat])
-    console.log(listMessageInChat?.length > 0 && listMessageInChat[listMessageInChat?.length - 1])
+    console.log("chat side rerender")
     return (
         <div className='chat-side'>
             <div className="chat-side__top">

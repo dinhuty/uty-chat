@@ -11,6 +11,8 @@ import { checkOnlineStatus } from '../../../../utils/checkOnlineStatus'
 import { IoCallOutline, IoVideocamOutline, IoEllipsisVerticalOutline } from "react-icons/io5";
 import Avatar from '../../../components/Avatar'
 import { LuSendHorizonal } from "react-icons/lu";
+import ChatMenu from './ChatMenu/ChatMenu'
+import { ProfileContext } from '../../../../context/ProfileContext'
 
 const ChatWindow = () => {
     const {
@@ -32,9 +34,9 @@ const ChatWindow = () => {
         newMessage,
         setNewMessage
     } = useContext(MessageContext)
+    const {isOpenMenu, setIsOpenMenu}  = useContext(ProfileContext)
     const [contentMessage, setContentMessage] = useState('')
     let lastSenderId = null
-
 
     const handleSendMessgae = async (e) => {
         e.preventDefault()
@@ -95,7 +97,7 @@ const ChatWindow = () => {
     return (
         <div className='chat-window'>
             {idChatCurrent ?
-                <>
+                <div className='chat-window__main'>
                     <div className="header" >
                         <div className="header__left">
                             <div className="user-avatar">
@@ -127,7 +129,7 @@ const ChatWindow = () => {
                             <div className="icon__video">
                                 <IoVideocamOutline />
                             </div>
-                            <div className="icon__list">
+                            <div className="icon__list" onClick={() => setIsOpenMenu(true)}>
                                 <IoEllipsisVerticalOutline />
                             </div>
                         </div>
@@ -169,7 +171,7 @@ const ChatWindow = () => {
                             </button>
                         </form>
                     </div>
-                </>
+                </div>
                 :
                 <div className='chat-window__blank'>
                     Chọn 1 cuộc trò chuyện
