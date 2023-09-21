@@ -66,8 +66,12 @@ const findUserByEmail = async (req, res, next) => {
 };
 const findUsersByEmailKeyword = async (req, res, next) => {
     try {
-        const keyword = req.query.keyword; 
-        const users = await User.find({ email: { $regex: keyword, $options: 'i' } }); 
+        const keyword = req.query.keyword;
+        const excludedUserIds = req.query.excludedIds || [];
+        const users = await User.find({
+            email: { $regex: keyword, $options: 'i' },
+            _id: { $nin: excludedUserIds }
+        });
 
         res.status(200).json(users);
     } catch (error) {

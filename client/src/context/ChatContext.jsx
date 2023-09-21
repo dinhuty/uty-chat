@@ -5,6 +5,7 @@ import { maskAllMessageRead } from "../services/Api/message";
 import { io } from "socket.io-client"
 import { MessageContext } from "./MessageContext";
 import { compareByLastUpdatedDesc } from '../utils/compare'
+import { CommonContext } from "./CommonContext";
 export const ChatContext = createContext();
 
 const ChatProvider = ({ children }) => {
@@ -16,7 +17,8 @@ const ChatProvider = ({ children }) => {
     const [socket, setSocket] = useState(null)
     const [onlineUsers, setOnlineUsers] = useState(null)
     const [sent, setSent] = useState(true)
-    const [loading,setLoading] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const { addHandle, setAddHandle } = useContext(CommonContext)
 
     useEffect(() => {
         const getData = async () => {
@@ -51,13 +53,8 @@ const ChatProvider = ({ children }) => {
             setInfoChatCurrent(data?.chatInfo)
         }
         getData()
-        // const updateMessage = async (idChat) => {
-        //     const result = await maskAllMessageRead(idChat)
-        // }
-        
-        // updateMessage(idChatCurrent)
-
-    }, [idChatCurrent])
+        console.log("CALL LAI INFO CHAT")
+    }, [idChatCurrent, addHandle])
 
 
     //initial socket

@@ -5,6 +5,19 @@
     overflow-y: auto;
     overflow-x: hidden;
 
+    &__popup {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        z-index: 26;
+        display: none;
+        overflow-y: auto;
+
+        &.active{
+            display: block;
+        }
+    }
+
     &__blur {
         position: absolute;
         height: 100%;
@@ -123,6 +136,10 @@
                         height: 15px;
                         width: 15px;
                     }
+                }
+
+                &:nth-last-child(1) {
+                    color: red;
                 }
             }
         }

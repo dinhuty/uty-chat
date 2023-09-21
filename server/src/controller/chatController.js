@@ -83,7 +83,7 @@ const getChatById = async (req, res) => {
 // Thêm thành viên vào cuộc trò chuyện (nhóm chat)
 const addParticipantToChat = async (req, res) => {
     try {
-        const { chatId, userId } = req.body;
+        const { chatId, userIds } = req.body;
         const chat = await ChatModel.findById(chatId);
         if (!chat) {
             return res.status(404).json({ status: 'Chat not found' });
@@ -91,13 +91,14 @@ const addParticipantToChat = async (req, res) => {
         if (!chat.isGroup) {
             return res.status(500).json({ status: "Not is Group chat" })
         }
-        if (!chat.participants.includes(userId)) {
-            chat.participants.push(userId);
-            const updatedChat = await chat.save();
-            res.status(200).json({ status: 'Success', chat: updatedChat });
-        } else {
-            res.status(400).json({ status: 'User is already a participant' });
+        for (const userId of userIds) {
+            if (!chat.participants.includes(userId)) {
+                chat.participants.push(userId);
+            }
         }
+        const updatedChat = await chat.save();
+        res.status(200).json({ status: 'Success', chat: updatedChat });
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ status: 'Error' });

@@ -6,19 +6,19 @@ import AuthProvider from './context/AuthContext.jsx'
 import './index.scss'
 import ChatProvider from './context/ChatContext.jsx'
 import MessageProvider from './context/MessageContext.jsx'
-import ProfileProvider from './context/ProfileContext.jsx'
+import CommonProvider from './context/CommonContext.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <ChatProvider>
-          <MessageProvider>
-            <ProfileProvider>
+        <CommonProvider>
+          <ChatProvider>
+            <MessageProvider>
               <App />
-            </ProfileProvider>
-          </MessageProvider>
-        </ChatProvider>
+            </MessageProvider>
+          </ChatProvider>
+        </CommonProvider>
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>

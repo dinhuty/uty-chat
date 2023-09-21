@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-import { ProfileContext } from '../../context/ProfileContext'
 import { IoEllipsisVerticalOutline } from 'react-icons/io5'
 import Avatar from './Avatar'
 import avatar from '../../assets/svg/avatar-boy.svg'
@@ -11,14 +10,14 @@ import rightArrowIcon from '../../assets/svg/right-arrow-backup-2-svgrepo-com.sv
 import languageIcon from '../../assets/svg/language-svgrepo-com.svg'
 import passwordIcon from '../../assets/svg/password-svgrepo-com.svg'
 import homeIcon from '../../assets/svg/home-page-svgrepo-com.svg'
-
 import { AuthContext } from '../../context/AuthContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
+import { CommonContext } from '../../context/CommonContext'
 
 const Profile = () => {
-    const { isProfileOpen, setIsProfileOpen } = useContext(ProfileContext)
+    const { isProfileOpen, setIsProfileOpen, darkMode, setDarkMode } = useContext(CommonContext)
     const { userCurrent, setUserCurrent } = useContext(AuthContext)
     const navigate = useNavigate()
 
@@ -51,7 +50,7 @@ const Profile = () => {
         {
             icon: nightIcon,
             name: "Giao diện tối",
-            action: ""
+            action: "darkmode"
         },
         {
             icon: passwordIcon,
@@ -64,7 +63,7 @@ const Profile = () => {
             action: ""
         }
     ]
-    console.log("isProfileOpen",isProfileOpen)
+    console.log("isProfileOpen", isProfileOpen)
     return (
         <div className='app-profile'>
             <div className="profile-blur" onClick={() => setIsProfileOpen(false)}>
@@ -98,7 +97,7 @@ const Profile = () => {
                     </div>
                 </div>
                 <div className="profile-preferences">
-                    <div className="title">
+                    <div className="title" >
                         Preferences
                     </div>
                     <div className="preferences">
@@ -113,9 +112,19 @@ const Profile = () => {
                                             {item.name}
                                         </div>
                                     </div>
-                                    <div className="action">
-                                        <img src={rightArrowIcon} alt="" />
-                                    </div>
+                                    {item.action === 'darkmode' ?
+                                        <div className="action" >
+                                            <label className="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" value="" className="sr-only peer" checked={darkMode} onChange={() => setDarkMode(!darkMode)} />
+                                                <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                                            </label>
+                                        </div>
+                                        :
+                                        <div className="action">
+                                            <img src={rightArrowIcon} alt="" />
+                                        </div>
+                                    }
+
                                 </div>
                             ))
                         }

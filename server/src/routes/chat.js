@@ -12,9 +12,9 @@ const router = express.Router()
 router.post('/create', createChatBetweenTwoUsers)
 router.post('/create/group', createGroupChat)
 router.post('/add/group', addParticipantToChat)
-router.post('/leave/group', leaveGroupChat)
+router.put('/leave/group', leaveGroupChat)
+router.delete('/delete/:chatId', deleteChat)
 router.get('/list/:userId', getChatsForUser)
 router.get('/info/:chatId/:userId', getChatById)
-
 
 module.exports = router

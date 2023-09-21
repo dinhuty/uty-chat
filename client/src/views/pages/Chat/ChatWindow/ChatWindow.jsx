@@ -12,7 +12,7 @@ import { IoCallOutline, IoVideocamOutline, IoEllipsisVerticalOutline } from "rea
 import Avatar from '../../../components/Avatar'
 import { LuSendHorizonal } from "react-icons/lu";
 import ChatMenu from './ChatMenu/ChatMenu'
-import { ProfileContext } from '../../../../context/ProfileContext'
+import { CommonContext } from '../../../../context/CommonContext'
 
 const ChatWindow = () => {
     const {
@@ -34,7 +34,7 @@ const ChatWindow = () => {
         newMessage,
         setNewMessage
     } = useContext(MessageContext)
-    const {isOpenMenu, setIsOpenMenu}  = useContext(ProfileContext)
+    const { isOpenMenu, setIsOpenMenu } = useContext(CommonContext)
     const [contentMessage, setContentMessage] = useState('')
     let lastSenderId = null
 
@@ -105,10 +105,15 @@ const ChatWindow = () => {
                                 {checkOnlineStatus(onlineUsers, infoChatCurrent?.participants[0]._id) && <div className='user-avatar__status'></div>}
                             </div>
                             {infoChatCurrent && infoChatCurrent?.isGroup ?
-                                <div className='user-desc'>
-                                    {infoChatCurrent?.participants?.slice(0, 2).map((user) => (
+                                <div className='user-desc group'>
+                                    {infoChatCurrent?.participants?.length > 1 ? infoChatCurrent?.participants?.slice(0, 2).map((user) => (
                                         <span key={user._id}>{user.lastName},</span>
-                                    ))}
+                                    ))
+                                        :
+                                        infoChatCurrent?.participants?.slice(0, 1).map((user) => (
+                                            <span key={user._id}>{user.lastName},</span>
+                                        ))
+                                    }
                                     <span>{userCurrent?.lastName}...</span>
                                 </div>
                                 :

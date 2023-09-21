@@ -10,21 +10,18 @@ import HorizontalSlider from '../../../components/HorizontalSlider'
 import { checkOnlineStatus } from '../../../../utils/checkOnlineStatus'
 import { MessageContext } from '../../../../context/MessageContext'
 import { maskAllMessageRead } from '../../../../services/Api/message'
+import NameChat from '../../../common/NameChat'
+import { getListIdCurrent } from '../../../../utils/getListIdCurrent'
 
 const ChatSide = () => {
     const sliderRef = useRef(null);
     const [keyword, setKeyword] = useState('')
     const [listNewUser, setListNewUser] = useState(null)
     const { listChatForUser,
-         setIdChatCurrent, 
-         onlineUsers, 
-         setListChatForUser,
-         sentRef,
-         sent,
-         setSent,
-         loading,
-         setLoading
-         } = useContext(ChatContext);
+        setIdChatCurrent,
+        onlineUsers,
+        setListChatForUser,
+    } = useContext(ChatContext);
     const { userCurrent } = useContext(AuthContext)
     const { idChatCurrent } = useContext(ChatContext)
     const { listMessageInChat } = useContext(MessageContext)
@@ -35,7 +32,7 @@ const ChatSide = () => {
             return
         }
         const getData = setTimeout(async () => {
-            const list = await searchUser(keyword);
+            const list = await searchUser(keyword,[userCurrent._id, ...getListIdCurrent(listChatForUser)]);
             setListNewUser(list)
         }, 500)
         return () => clearTimeout(getData)
@@ -118,22 +115,12 @@ const ChatSide = () => {
                                 <div className="avatar">
                                     <img className="w-10 h-10 rounded-full" src={avatar} alt="Rounded avatar" />
 
-                                    {checkOnlineStatus(onlineUsers, item.participants[0]._id) && <div className="avatar-status">
+                                    {checkOnlineStatus(onlineUsers, item?.participants[0]?._id) && <div className="avatar-status">
 
                                     </div>}
                                 </div>
                                 <div className="desc">
-                                    {item.isGroup ? <div className="desc__name">
-                                        {item.participants.slice(0, 2).map((user) => (
-                                            <span key={user._id}>{user.lastName},</span>
-                                        ))}
-                                        <span>{userCurrent.lastName}...</span>
-                                    </div> :
-                                        <div className="desc__name">
-                                            <span>{item.participants[0].firstName}</span>
-                                            <span>{item.participants[0].lastName}</span>
-                                        </div>
-                                    }
+                                    <NameChat chat={item} userCurrent={userCurrent} />
                                     <div className={item.messages.length > 0 && item.messages[item.messages.length - 1].isRead === true ? "desc-message--recent" : "desc-message--recent unread"}>
                                         {item.messages.length > 0
                                             && (item?.messages[item.messages.length - 1].sender?._id === userCurrent._id ? <span>Bạn:</span>

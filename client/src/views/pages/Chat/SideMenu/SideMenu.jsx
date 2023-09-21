@@ -6,12 +6,12 @@ import { AuthContext } from '../../../../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import Avatar from '../../../components/Avatar'
 import avatar from '../../../../assets/svg/avatar-boy.svg'
-import { ProfileContext } from '../../../../context/ProfileContext'
+import { CommonContext } from '../../../../context/CommonContext'
 
 
 const SideMenu = () => {
     const { setUserCurrent } = useContext(AuthContext);
-    const { isProfileOpen, setIsProfileOpen } = useContext(ProfileContext)
+    const { isProfileOpen, setIsProfileOpen } = useContext(CommonContext)
     const navigate = useNavigate()
     const hanldeLogout = () => {
         localStorage.removeItem('user');

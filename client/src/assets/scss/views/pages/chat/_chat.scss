@@ -86,7 +86,7 @@
         height: calc(100%);
         display: flex;
         position: relative;
-        overflow-x: hidden;
+        overflow: hidden;
 
         &__profile {
             position: absolute;
@@ -96,6 +96,7 @@
             top: 0;
             left: 0;
             display: none;
+            overflow: auto;
 
             &.active {
                 display: block;
@@ -111,19 +112,10 @@
             right: 0;
             z-index: 99;
             transform: translateX(100%);
-            // transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+
             &.active {
-                // width: 100%;
                 transform: translateX(0%);
             }
-            // .options-blur{
-            //     top: 0;
-            //     left: 0;
-            //     position: absolute;
-            //     height: 100%;
-            //     width: 100%;
-            //     background-color: red
-            // }
         }
     }
 

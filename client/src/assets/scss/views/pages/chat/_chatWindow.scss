@@ -82,6 +82,12 @@
                     flex-direction: column;
                     gap: 5px;
 
+                    &.group {
+                        flex-direction: row;
+                        font-weight: 600;
+
+                    }
+
                     &__name {
                         font-size: 14px;
                         font-weight: 600;
