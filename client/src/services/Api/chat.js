@@ -42,7 +42,7 @@ export const deleteChat = async (idChat) => {
 }
 export const leaveChat = async (data) => {
     try {
-        const leave = await axios.post("/leave/group", data)
+        const leave = await axios.put("chat/leave/group", data)
         return leave.data
     } catch (error) {
         console.log(error)

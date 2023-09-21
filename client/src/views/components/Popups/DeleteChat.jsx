@@ -1,16 +1,22 @@
 import React, { useContext } from 'react'
 import { MdOutlineDeleteForever } from "react-icons/md";
 import { CommonContext } from '../../../context/CommonContext';
+import { ChatContext } from '../../../context/ChatContext';
+import { deleteChat } from '../../../services/Api/chat';
 export const DeleteChat = () => {
-    const { isPopup,
-        setIsPopup,
+    const { setIsPopup,
         setIsOpenMenu,
-        addHandle,
-        setAddHandle,
+        deleteHandle,
+        setDeleteHandle
     } = useContext(CommonContext)
+    const { idChatCurrent } = useContext(ChatContext)
 
-    const handleDeleteChat = async() => {
- 
+    const handleDeleteChat = async () => {
+        const deleteAChat = await deleteChat(idChatCurrent)
+        setIsPopup(false)
+        setIsOpenMenu(false)
+        setDeleteHandle(!deleteHandle)
+        
     }
     return (
         <div className='wrapper-delete__popup'>

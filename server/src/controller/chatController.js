@@ -65,20 +65,6 @@ const getChatById = async (req, res) => {
         console.error(error);
         res.status(500).json({ status: 'Error' });
     }
-    // try {
-    //     const chatId = req.params.chatId;
-
-    //     const chat = await ChatModel.findById(chatId).populate('participants', 'firstName lastName email');
-
-    //     if (!chat) {
-    //         return res.status(404).json({ status: 'Chat not found' });
-    //     }
-
-    //     res.status(200).json({ status: 'Success', chat });
-    // } catch (error) {
-    //     console.error(error);
-    //     res.status(500).json({ status: 'Error' });
-    // }
 };
 // Thêm thành viên vào cuộc trò chuyện (nhóm chat)
 const addParticipantToChat = async (req, res) => {
@@ -108,8 +94,11 @@ const addParticipantToChat = async (req, res) => {
 // Lấy danh sách cuộc trò chuyện của người dùng
 const getChatsForUser = async (req, res) => {
     try {
-        const userId = req.params.userId; // Hoặc lấy thông tin người dùng từ JWT token
-        const chats = await ChatModel.find({ participants: userId }).lean(); // Sử dụng .lean() để chuyển kết quả thành một đối tượng JavaScript thay vì Mongoose Document
+        const userId = req.params.userId;
+        const chats = await ChatModel
+            .find({ participants: userId })
+            .sort({ updatedAt: -1 })
+            .lean(); 
         const populatedChats = await Promise.all(chats.map(async (chat) => {
             const participantsWithoutSelf = chat.participants.filter(participant => participant.toString() !== userId);
             const populatedChat = await ChatModel.populate(chat, { path: 'participants', select: 'firstName lastName email', match: { _id: { $in: participantsWithoutSelf } } });

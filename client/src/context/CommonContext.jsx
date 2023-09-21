@@ -8,7 +8,8 @@ const CommonProvider = ({ children }) => {
     const [darkMode, setDarkMode] = useState(false)
     const [isPopup, setIsPopup] = useState(false)
     const [addHandle, setAddHandle] = useState(false)
-
+    const [deleteHandle, setDeleteHandle] = useState(false)
+    const [leaveGroupHandle,setLeaveGroupHandle] = useState(false)
     return (
         <CommonContext.Provider value={{
             isProfileOpen,
@@ -20,7 +21,11 @@ const CommonProvider = ({ children }) => {
             isPopup,
             setIsPopup,
             addHandle,
-            setAddHandle
+            setAddHandle,
+            deleteHandle, 
+            setDeleteHandle,
+            leaveGroupHandle,
+            setLeaveGroupHandle
         }}>
             {children}
         </CommonContext.Provider>

@@ -14,7 +14,6 @@ const MessageProvider = ({ children }) => {
             if (!idChatCurrent) return;
             const data = await getListMessageInChat(idChatCurrent)
             setListMessageInChat(data.messages)
-            console.log(data.messages)
         }
         getData()
     }, [idChatCurrent])

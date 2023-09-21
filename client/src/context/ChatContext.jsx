@@ -18,13 +18,13 @@ const ChatProvider = ({ children }) => {
     const [onlineUsers, setOnlineUsers] = useState(null)
     const [sent, setSent] = useState(true)
     const [loading, setLoading] = useState(false)
-    const { addHandle, setAddHandle } = useContext(CommonContext)
+    const { addHandle, deleteHandle, leaveGroupHandle, } = useContext(CommonContext)
 
     useEffect(() => {
         const getData = async () => {
             if (!userCurrent) return
             const data = await getChatForUser(userCurrent?._id)
-            setListChatForUser(data?.chats?.sort(compareByLastUpdatedDesc))
+            setListChatForUser(data?.chats)
         }
         getData()
     }, [sent, idChatCurrent])
@@ -35,14 +35,13 @@ const ChatProvider = ({ children }) => {
             if (!userCurrent) return
             const data = await getChatForUser(userCurrent?._id)
             setListChatForUser(data?.chats)
-            const resData = data?.chats?.sort(compareByLastUpdatedDesc)
-            if (resData?.length > 0) {
-                setIdChatCurrent(resData[0]?._id)
+            if (data?.chats.length > 0) {
+                setIdChatCurrent(data?.chats[0]?._id)
             }
             setLoading(false)
         }
         getData()
-    }, [userCurrent])
+    }, [userCurrent, deleteHandle, leaveGroupHandle])
 
     //GetInfo ChatCurrent
     useEffect(() => {
@@ -53,8 +52,7 @@ const ChatProvider = ({ children }) => {
             setInfoChatCurrent(data?.chatInfo)
         }
         getData()
-        console.log("CALL LAI INFO CHAT")
-    }, [idChatCurrent, addHandle])
+    }, [idChatCurrent, addHandle, leaveGroupHandle])
 
 
     //initial socket

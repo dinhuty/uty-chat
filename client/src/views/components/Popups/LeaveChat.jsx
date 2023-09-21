@@ -1,16 +1,27 @@
 import React, { useContext } from 'react'
 import { CommonContext } from '../../../context/CommonContext'
 import { MdOutlineDeleteForever } from 'react-icons/md'
+import { leaveChat } from '../../../services/Api/chat'
+import { ChatContext } from '../../../context/ChatContext'
+import { AuthContext } from '../../../context/AuthContext'
 
 export const LeaveChat = () => {
     const { isPopup,
         setIsPopup,
         setIsOpenMenu,
-        addHandle,
-        setAddHandle,
+        leaveGroupHandle,
+        setLeaveGroupHandle
     } = useContext(CommonContext)
+    const { idChatCurrent } = useContext(ChatContext)
+    const { userCurrent } = useContext(AuthContext)
     const handleLeaveGroupChat = async () => {
-
+        const leaveAction = await leaveChat({
+            chatId: idChatCurrent,
+            userId: userCurrent._id
+        })
+        setIsPopup(false)
+        setIsOpenMenu(false)
+        setLeaveGroupHandle(!leaveGroupHandle)
     }
     return (
         <div className='wrapper-leave__popup'>

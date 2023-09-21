@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useRef, useState, memo } from 'react'
 import { searchUser } from '../../../../services/Api/search'
 import { createChat } from '../../../../services/Api/chat'
 import avatar from "../../../../assets/svg/avatar-boy.svg"
-import { compareByLastUpdatedDesc } from '../../../../utils/compare'
 import { ChatContext } from '../../../../context/ChatContext'
 import { AuthContext } from '../../../../context/AuthContext'
 import { formatTime } from '../../../../utils/formatTime'
@@ -105,7 +104,7 @@ const ChatSide = () => {
             </div>
 
             <div className="chat-side__list">
-                {listChatForUser?.length > 0 ? listChatForUser.sort(compareByLastUpdatedDesc).map((item, index) => {
+                {listChatForUser?.length > 0 ? listChatForUser.map((item, index) => {
                     return (
                         <div className={item._id === idChatCurrent ? "chat-list__item active" : "chat-list__item"}
                             key={item._id}
@@ -152,4 +151,4 @@ const ChatSide = () => {
     )
 }
 
-export default ChatSide
+export default memo(ChatSide)
