@@ -1,8 +1,28 @@
 .name-chat {
     width: 100%;
 
-    .desc__name {
+    .user-desc {
         display: flex;
+        flex-direction: column;
         gap: 5px;
+
+        &.group {
+            flex-direction: row;
+            font-weight: 600;
+
+        }
+
+        &__name {
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            gap: 5px
+        }
+
+        &__status {
+            font-size: 13px;
+            font-weight: 500;
+            color: $text-secondary-color;
+        }
     }
 }

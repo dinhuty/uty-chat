@@ -8,10 +8,10 @@ import ChatWindow from './ChatWindow/ChatWindow'
 import avatar from "../../../assets/svg/avatar-boy.svg"
 import { AuthContext } from '../../../context/AuthContext'
 import { ChatContext } from '../../../context/ChatContext'
-import Loading from '../Loading/Loading'
 import Profile from '../../components/Profile'
-import ChatMenu from './ChatWindow/ChatMenu/ChatMenu'
 import { CommonContext } from '../../../context/CommonContext'
+import ChatMenu from './ChatMenu/ChatMenu'
+import ChatLoading from '../Loading/ChatLoading'
 
 const Chat = () => {
   const [checked, setChecked] = useState(false)
@@ -24,7 +24,7 @@ const Chat = () => {
 
   return (
     <div className='app-chat'>
-      {loading ? <Loading /> :
+      {loading ? <ChatLoading /> :
         <div className="chat-main">
           <div className={isProfileOpen ? "chat-main__profile active" : "chat-main__profile"}>
             <Profile />

@@ -38,14 +38,14 @@ const CreateGroup = () => {
             return
         }
         const getData = setTimeout(async () => {
-            const list = await searchUser(searchText, [userCurrent._id, infoChatCurrent.participants[0]._id]);
+            const list = await searchUser(searchText, infoChatCurrent.participants.map(user => user._id));
             setListSearch(list)
         }, 500)
         return () => clearTimeout(getData)
     }, [searchText])
     useEffect(() => {
-        if (infoChatCurrent) {
-            setListCheck([userCurrent._id, infoChatCurrent.participants[0]._id])
+        if (infoChatCurrent && isPopup) {
+            setListCheck(infoChatCurrent.participants.map(user => user._id))
         }
     }, [isPopup])
     const toggleCheck = (userId) => {

@@ -31,7 +31,7 @@ const ChatSide = () => {
             return
         }
         const getData = setTimeout(async () => {
-            const list = await searchUser(keyword,[userCurrent._id, ...getListIdCurrent(listChatForUser)]);
+            const list = await searchUser(keyword, [userCurrent._id, ...getListIdCurrent(listChatForUser)]);
             setListNewUser(list)
         }, 500)
         return () => clearTimeout(getData)
@@ -61,7 +61,6 @@ const ChatSide = () => {
             }
         }
     }, [listMessageInChat])
-    console.log("chat side rerender")
     return (
         <div className='chat-side'>
             <div className="chat-side__top">
@@ -113,13 +112,15 @@ const ChatSide = () => {
                             <div className="item__left">
                                 <div className="avatar">
                                     <img className="w-10 h-10 rounded-full" src={avatar} alt="Rounded avatar" />
-
-                                    {checkOnlineStatus(onlineUsers, item?.participants[0]?._id) && <div className="avatar-status">
-
+                                    {checkOnlineStatus(onlineUsers, item, userCurrent) && <div className="avatar-status">
                                     </div>}
                                 </div>
                                 <div className="desc">
-                                    <NameChat chat={item} userCurrent={userCurrent} />
+                                    <NameChat
+                                        chat={item}
+                                        userCurrent={userCurrent}
+                                        onlineUsers={onlineUsers}
+                                    />
                                     <div className={item.messages.length > 0 && item.messages[item.messages.length - 1].isRead === true ? "desc-message--recent" : "desc-message--recent unread"}>
                                         {item.messages.length > 0
                                             && (item?.messages[item.messages.length - 1].sender?._id === userCurrent._id ? <span>Bạn:</span>

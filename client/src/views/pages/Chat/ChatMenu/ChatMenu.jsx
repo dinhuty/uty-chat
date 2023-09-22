@@ -1,21 +1,21 @@
 import React, { useContext, useState } from 'react'
-import reportIcon from '../../../../../assets/svg/report-svgrepo-com.svg'
-import themeIcon from '../../../../../assets/svg/theme-store-svgrepo-com.svg'
-import editIcon from '../../../../../assets/svg/edit-svgrepo-com.svg'
-import deleteIcon from '../../../../../assets/svg/delete-stop-svgrepo-com.svg'
-import userAddIcon from '../../../../../assets/svg/user-add-svgrepo-com.svg'
-import leftArrowIcon from '../../../../../assets/svg/left-arrow-backup-2-svgrepo-com.svg'
-import bandIcon from '../../../../../assets/svg/gui-ban-svgrepo-com.svg'
-import avatar from '../../../../../assets/svg/avatar-boy.svg'
-import rightArrowIcon from '../../../../../assets/svg/right-arrow-backup-2-svgrepo-com.svg'
-import groupIcon from '../../../../../assets/svg/group-add-svgrepo-com.svg'
-import outIcon from '../../../../../assets/svg/sign-out-left-4-svgrepo-com.svg'
-import Avatar from '../../../../components/Avatar'
-import { CommonContext } from '../../../../../context/CommonContext'
-import { ChatContext } from '../../../../../context/ChatContext'
-import NameChat from '../../../../common/NameChat'
-import { AuthContext } from '../../../../../context/AuthContext'
-import ActionPopup from '../../../../components/ActionPopup'
+import reportIcon from '../../../../assets/svg/report-svgrepo-com.svg'
+import themeIcon from '../../../../assets/svg/theme-store-svgrepo-com.svg'
+import editIcon from '../../../../assets/svg/edit-svgrepo-com.svg'
+import deleteIcon from '../../../../assets/svg/delete-stop-svgrepo-com.svg'
+import userAddIcon from '../../../../assets/svg/user-add-svgrepo-com.svg'
+import leftArrowIcon from '../../../../assets/svg/left-arrow-backup-2-svgrepo-com.svg'
+import bandIcon from '../../../../assets/svg/gui-ban-svgrepo-com.svg'
+import avatar from '../../../../assets/svg/avatar-boy.svg'
+import rightArrowIcon from '../../../../assets/svg/right-arrow-backup-2-svgrepo-com.svg'
+import groupIcon from '../../../../assets/svg/group-add-svgrepo-com.svg'
+import outIcon from '../../../../assets/svg/sign-out-left-4-svgrepo-com.svg'
+import { CommonContext } from '../../../../context/CommonContext'
+import { ChatContext } from '../../../../context/ChatContext'
+import NameChat from '../../../common/NameChat'
+import { AuthContext } from '../../../../context/AuthContext'
+import ActionPopup from '../../../components/ActionPopup'
+import Avatar from '../../../components/Avatar'
 
 
 const ChatMenu = () => {
@@ -27,7 +27,6 @@ const ChatMenu = () => {
     const { userCurrent } = useContext(AuthContext)
     const [actionOption, setActionOption] = useState(null)
 
-    console.log("xx", infoChatCurrent)
     const options = [
         {
             type: 1,

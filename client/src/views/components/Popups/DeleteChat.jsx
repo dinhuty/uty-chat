@@ -16,7 +16,7 @@ export const DeleteChat = () => {
         setIsPopup(false)
         setIsOpenMenu(false)
         setDeleteHandle(!deleteHandle)
-        
+
     }
     return (
         <div className='wrapper-delete__popup'>
@@ -29,7 +29,11 @@ export const DeleteChat = () => {
                 <MdOutlineDeleteForever />
             </div>
             <div className="bottom">
-                <button className="btn-cancel" onClick={() => setIsOpenMenu(false)}>
+                <button className="btn-cancel" onClick={() => {
+                    setIsPopup(false)
+                    setIsOpenMenu(false)
+                }}
+                >
                     Hủy bỏ
                 </button>
                 <button className="btn-delete" onClick={handleDeleteChat}>

@@ -11,8 +11,8 @@ import { checkOnlineStatus } from '../../../../utils/checkOnlineStatus'
 import { IoCallOutline, IoVideocamOutline, IoEllipsisVerticalOutline } from "react-icons/io5";
 import Avatar from '../../../components/Avatar'
 import { LuSendHorizonal } from "react-icons/lu";
-import ChatMenu from './ChatMenu/ChatMenu'
 import { CommonContext } from '../../../../context/CommonContext'
+import NameChat from '../../../common/NameChat'
 
 const ChatWindow = () => {
     const {
@@ -59,8 +59,6 @@ const ChatWindow = () => {
             createdAt: formattedDate
         }]);
 
-        const lx = moveElementToTop(listChatForUser, idChatCurrent)
-        setListChatForUser(lx)
         setContentMessage('');
         const messageData = await sendMessage(data);
         setNewMessage(messageData.message);
@@ -70,7 +68,7 @@ const ChatWindow = () => {
 
     useEffect(() => {
         if (socket === null) return
-        const recipientIds = infoChatCurrent?.participants
+        const recipientIds = infoChatCurrent?.participants.filter((user) => user._id !== userCurrent._id)
         socket.emit("sendMessage", { newMessage, recipientIds })
     }, [newMessage])
 
@@ -102,32 +100,18 @@ const ChatWindow = () => {
                         <div className="header__left">
                             <div className="user-avatar">
                                 <Avatar avatar={avatar} />
-                                {checkOnlineStatus(onlineUsers, infoChatCurrent?.participants[0]._id) && <div className='user-avatar__status'></div>}
+                                {checkOnlineStatus(onlineUsers, infoChatCurrent, userCurrent) && <div className='user-avatar__status'></div>}
                             </div>
-                            {infoChatCurrent && infoChatCurrent?.isGroup ?
-                                <div className='user-desc group'>
-                                    {infoChatCurrent?.participants?.length > 1 ? infoChatCurrent?.participants?.slice(0, 2).map((user) => (
-                                        <span key={user._id}>{user.lastName},</span>
-                                    ))
-                                        :
-                                        infoChatCurrent?.participants?.slice(0, 1).map((user) => (
-                                            <span key={user._id}>{user.lastName},</span>
-                                        ))
-                                    }
-                                    <span>{userCurrent?.lastName}...</span>
-                                </div>
-                                :
-                                <div className='user-desc'>
-                                    <div className="user-desc__name">
-                                        <span>{infoChatCurrent?.participants[0].firstName}</span>
-                                        <span>{infoChatCurrent?.participants[0].lastName}</span>
-                                    </div>
-
-                                    {checkOnlineStatus(onlineUsers, infoChatCurrent?.participants[0]._id) && <div className='user-desc__status'>Active</div>}
-                                </div>}
+                            {infoChatCurrent &&
+                                <NameChat chat={infoChatCurrent}
+                                    userCurrent={userCurrent}
+                                    viewStatus={true}
+                                    onlineUsers={onlineUsers}
+                                />
+                            }
                         </div>
                         <div className="header__right">
-                            <div className={checkOnlineStatus(onlineUsers, infoChatCurrent?.participants[0]._id) ? "icon__call active" : "icon__call"}>
+                            <div className={checkOnlineStatus(onlineUsers, infoChatCurrent, userCurrent) ? "icon__call active" : "icon__call"}>
                                 <IoCallOutline />
                                 <div className="ripple"></div>
                             </div>

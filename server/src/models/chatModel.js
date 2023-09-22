@@ -12,6 +12,14 @@ const chatSchema = mongoose.Schema({
     participants: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
+        // user: {
+        //     type: mongoose.Schema.Types.ObjectId,
+        //     ref: 'User',
+        // },
+        // left: {
+        //     type: Boolean,
+        //     default: false, // Mặc định là false (chưa rời)
+        // },
     }],
     messages: [{
         type: mongoose.Schema.Types.ObjectId,

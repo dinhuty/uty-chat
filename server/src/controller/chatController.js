@@ -10,9 +10,10 @@ const createChatBetweenTwoUsers = async (req, res) => {
         const existingChat = await ChatModel.findOne({
             participants: { $all: [user1Id, user2Id] },
         });
-        if (existingChat) {
-            const participantsWithoutSelf = existingChat.participants.filter(participant => participant.toString() !== user1Id);
-            const chatInfo = await ChatModel.populate(existingChat, { path: 'participants', select: 'firstName lastName email', match: { _id: { $in: participantsWithoutSelf } } });
+        if (existingChat && existingChat.isGroup == false) {
+
+            const chatInfo = await ChatModel.populate(chat, { path: 'participants', select: 'firstName lastName email' });
+
             return res.status(200).json({ status: 'Chat exists', chat: chatInfo });
         }
         const chat = new ChatModel({
@@ -20,8 +21,8 @@ const createChatBetweenTwoUsers = async (req, res) => {
             lastUpdated: Date.now()
         });
         const savedChat = await chat.save();
-        const participantsWithoutSelf = savedChat.participants.filter(participant => participant.toString() !== user1Id);
-        const chatInfo = await ChatModel.populate(savedChat, { path: 'participants', select: 'firstName lastName email', match: { _id: { $in: participantsWithoutSelf } } });
+
+        const chatInfo = await ChatModel.populate(chat, { path: 'participants', select: 'firstName lastName email' });
         res.status(201).json({ status: 'Success', chat: chatInfo });
     } catch (error) {
         console.error(error);
@@ -57,8 +58,8 @@ const getChatById = async (req, res) => {
         if (!chat) {
             return res.status(404).json({ status: 'Chat not found' });
         }
-        const participantsWithoutSelf = chat.participants.filter(participant => participant.toString() !== userId);
-        const chatInfo = await ChatModel.populate(chat, { path: 'participants', select: 'firstName lastName email', match: { _id: { $in: participantsWithoutSelf } } });
+
+        const chatInfo = await ChatModel.populate(chat, { path: 'participants', select: 'firstName lastName email' });
 
         res.status(200).json({ chatInfo });
     } catch (error) {
@@ -98,11 +99,9 @@ const getChatsForUser = async (req, res) => {
         const chats = await ChatModel
             .find({ participants: userId })
             .sort({ updatedAt: -1 })
-            .lean(); 
+            .lean();
         const populatedChats = await Promise.all(chats.map(async (chat) => {
-            const participantsWithoutSelf = chat.participants.filter(participant => participant.toString() !== userId);
-            const populatedChat = await ChatModel.populate(chat, { path: 'participants', select: 'firstName lastName email', match: { _id: { $in: participantsWithoutSelf } } });
-
+            const populatedChat = await ChatModel.populate(chat, { path: 'participants', select: 'firstName lastName email' });
             const messages = await MessageModel.find({ chat: chat._id }).lean().populate({
                 path: 'sender',
                 select: 'firstName lastName isRead',

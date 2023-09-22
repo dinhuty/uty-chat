@@ -34,7 +34,10 @@ export const LeaveChat = () => {
                 <MdOutlineDeleteForever />
             </div>
             <div className="bottom">
-                <button className="btn-cancel" onClick={() => setIsOpenMenu(false)}>
+                <button className="btn-cancel" onClick={() => {
+                    setIsOpenMenu(false)
+                    setIsPopup(false)
+                }}>
                     Hủy bỏ
                 </button>
                 <button className="btn-delete" onClick={handleLeaveGroupChat}>

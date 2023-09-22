@@ -79,6 +79,26 @@ const findUsersByEmailKeyword = async (req, res, next) => {
         res.status(500).json({ error: "Lỗi không xác định" });
     }
 };
+// PUT /user/updatepassword
+const updatePassword = async (req, res, next) => {
+    try {
+        const { oldPassword, newPassword, confirmPassword } = req.body
+        const user = req.user
+
+        const passwordMatch = await bcrypt.compare(oldPassword, user.password)
+        if (!passwordMatch) {
+            return res.status(400).json({ error: "Mat khau khong chính xác" })
+        }
+        if (newPassword !== confirmPassword) throw new Error("Mat khau khong khop")
+
+        user.password = newPassword
+        const saveNewPassword = await user.save()
+        res.status(200).json({ success: "Doi mk thanh cong" })
+
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+}
 
 
 module.exports = {
@@ -86,5 +106,6 @@ module.exports = {
     signup,
     userProfile,
     findUserByEmail,
-    findUsersByEmailKeyword
+    findUsersByEmailKeyword,
+    updatePassword
 }

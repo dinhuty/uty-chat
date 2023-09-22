@@ -7,6 +7,8 @@
 
 @import "./views/common/container";
 @import "./views/common/nameChat";
+@import "./views/common/input";
+
 @import "./views/components/horizontalSlider";
 @import "./views/components/message";
 @import "./views/components/profile";
@@ -15,6 +17,9 @@
 @import "./views/components/Popups/addUserToGroup.scss";
 @import "./views/components/Popups/deleteChat.scss";
 @import "./views/components/Popups/leaveGroupChat.scss";
+@import "./views/components/ProfileAction/changePassword";
+@import "./views/components/ProfileAction/generalSetting";
+@import "./views/components/ProfileAction/languageSetting";
 
 @import "./views/pages/chat/chat";
 @import "./views/pages/chat/chatMenu";
@@ -22,6 +27,7 @@
 @import "./views/pages/chat/chatWindow";
 @import "./views/pages/chat/sideMenu";
 @import "./views/pages/loading/chatLoading";
+@import "./views/pages/loading/loading";
 @import "./views/pages/login/login";
 @import "./views/pages/register/register";
 
