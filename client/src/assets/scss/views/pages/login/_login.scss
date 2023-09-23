@@ -2,14 +2,31 @@
     height: 100vh;
     width: 100%;
     font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.688);
+    overflow: auto;
+    position: relative;
 
     .login-main {
-        height: 100%;
         width: 100%;
-        background-color: $primary-bg-color;
+        height: 100%;
+        background-color: #fff;
         display: flex;
         position: relative;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        flex-direction: column;
+        gap: 32px;
+        overflow-y: auto;
+        padding: 50px 30px;
 
+        @include min-sm {
+            width: 550px;
+            height: auto;
+            border-radius: 10px;
+            padding: 40px 30px;
+        }
     }
 
     .login-loading {
@@ -18,197 +35,131 @@
         position: absolute;
         top: 0;
         left: 0;
-
+        z-index: 99;
     }
 
-    .login__left {
+
+    .login-title {
+        font-size: 20px;
+        font-weight: 700;
+        padding-bottom: 20px;
+    }
+
+
+    .error-login {
+        text-align: center;
         width: 100%;
-        background: #FFF;
-        box-shadow: 24.23343px 0px 50.48632px 0px rgba(0, 0, 0, 0.05);
-        display: flex;
-        flex-direction: column;
-        gap: 32px;
-        padding: 0 20px;
-        padding-bottom: 40px;
-        overflow-y: auto;
+        padding: 15px 10px;
+        border: 1px solid red;
+        background-color: rgba(255, 0, 0, 0.1);
+        color: red;
+        font-weight: 500;
+        border-radius: 5px;
+    }
 
-        @include min-sm {
-            width: 400px;
-        }
-
-
-        .logo__container {
-            padding-top: 100px;
+    .login__form {
+        form {
             display: flex;
-            justify-content: center;
-            align-items: center;
             flex-direction: column;
             gap: 24px;
-            font-size: 12px;
 
-            .logo__img {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                gap: 16px;
-
-                img {
-                    height: 60px;
-                    width: auto;
-                }
-
-                span {
-                    font-size: 32px;
-                    font-weight: 700;
-                    color: $primary-color;
-                    text-shadow: 2px 7px 5px rgba(230, 83, 64, 0.3),
-                        0px -4px 10px rgba(158, 47, 3, 0.3);
-                }
-            }
-
-            .subtitle {
-                font-weight: 600;
-            }
-
-        }
-
-        .error-login {
-            text-align: center;
-            width: 100%;
-            padding: 15px 10px;
-            border: 1px solid red;
-            background-color: rgba(255, 0, 0, 0.177);
-            color: red;
-            font-weight: 500;
-            border-radius: 5px;
-        }
-
-        .login__form {
-            form {
+            .form__input {
                 display: flex;
                 flex-direction: column;
-                gap: 24px;
+                gap: 12px;
 
-                .form__input {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 12px;
-
-                    label {
-                        font-size: 16px;
-                        font-weight: 600;
-                    }
-
-                    input {
-                        font-size: 14px;
-                        padding: 10px 12px;
-                        background-color: #F1F3F6;
-                        border-radius: 5px;
-
-                        &::placeholder {
-                            font-size: 12px;
-                        }
-                    }
+                label {
+                    font-size: 14px;
+                    font-weight: 500;
                 }
 
-                .form__submit {
-                    width: 100%;
-                    height: 45px;
-                    background-color: $primary-color;
-                    color: #fff;
-                    font-weight: 600;
-                    margin-top: 12px;
+                input {
+                    font-size: 13px;
+                    padding: 12px 12px;
                     border-radius: 5px;
-                    box-shadow: 0px 12.11672px 24.23343px 0px rgba(253, 116, 1, 0.30);
+                    border: 1px solid $primary-color;
 
-                    &:hover {
-                        opacity: .8;
+                    &::placeholder {
+                        font-size: 12px;
                     }
                 }
-
             }
-        }
 
-        .login__sub {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            width: 100%;
-            padding: 0 20px;
-
-            .login__password-fg {
-                cursor: pointer;
-                width: auto;
-                color: rgb(0, 85, 255);
-                text-decoration: underline;
-                font-size: 12px;
-                padding: 5px 0;
+            .form__submit {
+                width: 100%;
+                height: 45px;
+                background-color: $primary-color;
+                color: #fff;
+                font-weight: 500;
+                margin-top: 12px;
+                border-radius: 5px;
 
                 &:hover {
                     opacity: .8;
                 }
             }
 
-            .login__register-btn {
-                @include flex-center;
-                width: 100%;
-                height: 45px;
-                background-color: #fff;
-                color: $primary-color;
-                border: 2px solid $primary-color;
-                font-weight: 600;
-                border-radius: 5px;
-                transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
-
-                &:hover {
-                    background-color: $primary-color;
-                    color: #fff;
-                }
-            }
-
-            .login__line {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-
-                span {
-                    &:nth-child(2) {
-                        width: 40px;
-                        color: #C2C2C2;
-                        text-align: center;
-                    }
-
-                    &:nth-child(1),
-                    &:nth-child(3) {
-                        width: calc(50% - 20px);
-                        height: 1px;
-                        background-color: #C2C2C2;
-                    }
-                }
-            }
         }
     }
 
-    .login__right {
-        width: calc(100% - 400px);
-        background-color: #F1F3F6;
-        display: none;
+    .login__sub {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        width: 100%;
+        padding: 0 20px;
 
-        @include min-sm {
-            display: block;
+        .login__password-fg {
+            cursor: pointer;
+            width: auto;
+            color: rgb(0, 85, 255);
+            font-weight: 500;
+            font-size: 13px;
+            padding: 5px 0;
+
+            &:hover {
+                opacity: .8;
+            }
         }
 
-        &__img {
-            width: 100%;
-            height: 100%;
+        .login__register-btn {
             @include flex-center;
+            width: 100%;
+            height: 45px;
+            background-color: #fff;
+            color: $primary-color;
+            border: 2px solid $primary-color;
+            font-weight: 500;
+            border-radius: 5px;
+            transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+            &:hover {
+                background-color: $primary-color;
+                color: #fff;
+            }
         }
 
-        img {
-            height: 400px;
-            width: 400px;
-            margin: auto;
+        .login__line {
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
+            span {
+                &:nth-child(2) {
+                    width: 40px;
+                    color: #C2C2C2;
+                    text-align: center;
+                }
+
+                &:nth-child(1),
+                &:nth-child(3) {
+                    width: calc(50% - 20px);
+                    height: 1px;
+                    background-color: #C2C2C2;
+                }
+            }
         }
     }
+
+
 }

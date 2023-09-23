@@ -1,14 +1,15 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { useNavigate } from "react-router-dom"
-import Logo from '../../../assets/svg/login-logo.svg'
-import Av from '../../../assets/svg/login-bg.svg'
 import { register } from '../../../services/Api/auth'
+import { AppLoading } from '../Loading/AppLoading'
+import validate from '../../../utils/validate'
+import { getValueFirstItem } from '../../../utils/getValueFirstItem'
 
 
 const Register = () => {
   const navigate = useNavigate();
-  const [error, setError] = useState(null)
-
+  const [error, setError] = useState('')
+  const [errors, setErrors] = useState({})
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
@@ -16,70 +17,61 @@ const Register = () => {
     password: "",
     address: ""
   });
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    setErrors(validate(data));
+  }, [data]);
+
   const handleChange = (event) => {
     setData({ ...data, [event.target.name]: event.target.value });
   };
+
   const handleRegister = async (e) => {
     e.preventDefault();
-    if (!/\S+@\S+\.\S+/.test(data.email.trim()) || data.password.length < 8 || !data.firstName || !data.lastName || !data.address) {
-      setError('Kiểm tra lại thông tin')
+    if (Object.keys(errors).length) {
+      setError(getValueFirstItem(errors))
       return;
     }
+    setLoading(true)
     const registerUser = await register(data);
     console.log(registerUser)
-    if(registerUser.status === 200){
-      setError('User Already Exist')
+    if (registerUser.status === 200) {
+      setError('Tài khoản đã tồn tại')
+      setLoading(false)
       return
     }
+    setLoading(false)
     navigate('/login')
   }
   return (
     <div className='app-register'>
-      <div className="register__left">
-        <div className="logo__container">
-          <div className="logo__img">
-            <img src={Logo} alt="" />
-            <span>UTY</span>
-          </div>
-          <div className="subtitle">
-            Register an account
-          </div>
-          {
-            error && <div className="register-error">
-              {error}
-            </div>
-          }
+      {
+        loading &&
+        <div className="register-loading">
+          <AppLoading />
         </div>
+      }
+      <div className="register-main">
+        <header className="register-title">
+          Đăng ký
+        </header>
+        {error && <div className='error-register'>
+          {error}
+        </div>}
         <div className="register__form">
           <form action="" onSubmit={handleRegister}>
+
             <div className="form__input">
+              <label htmlFor="email">Tài khoản</label>
               <input
-                type="text"
-                placeholder='Firt Name'
-                value={data.firstName}
-                onChange={handleChange}
-                name='firstName'
-              />
-              <input
-                type="text"
-                placeholder='Last Name'
-                value={data.lastName}
-                onChange={handleChange}
-                name='lastName'
-              />
-            </div>
-            <div className="form__input">
-              <label htmlFor="email">Email</label>
-              <input
-                type="text"
-                placeholder='Enter your email'
+                type="email"
+                placeholder='example@gmail.com'
                 value={data.email}
                 onChange={handleChange}
                 name='email'
+                autocomplete="off"
               />
-            </div>
-            <div className="form__input">
-              <label htmlFor="password">Password</label>
               <input
                 type="password"
                 placeholder='Enter your password'
@@ -90,10 +82,28 @@ const Register = () => {
             </div>
 
             <div className="form__input">
-              <label htmlFor="address">Address</label>
+              <label htmlFor="address">Thông tin cá nhân</label>
+              <div>
+                <input
+                  type="text"
+                  placeholder='Firt Name'
+                  value={data.firstName}
+                  onChange={handleChange}
+                  name='firstName'
+                  autocomplete="off"
+                />
+                <input
+                  type="text"
+                  placeholder='Last Name'
+                  value={data.lastName}
+                  onChange={handleChange}
+                  name='lastName'
+                  autocomplete="off"
+                />
+              </div>
               <input
                 type="address"
-                placeholder='Enter your password'
+                placeholder='Address'
                 value={data.address}
                 onChange={handleChange}
                 name='address'
@@ -105,20 +115,16 @@ const Register = () => {
         <div className="register__sub">
           <div className="register__line">
             <span></span>
-            <span>OR</span>
+            <span>or</span>
             <span></span>
           </div>
           <div className="register__login-btn" onClick={() => navigate('/login')}>
             Đăng nhập ngay
           </div>
+        </div>
+      </div>
 
-        </div>
-      </div>
-      <div className="register__right">
-        <div className="register__right__img">
-          <img src={Av} alt="" />
-        </div>
-      </div>
+
     </div>
   )
 }
