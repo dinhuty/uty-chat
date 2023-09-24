@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { login } from '../../../services/Api/auth'
 import { AuthContext } from '../../../context/AuthContext'
 import { AppLoading } from '../Loading/AppLoading'
@@ -80,9 +80,9 @@ const Login = () => {
           </form>
         </div>
         <div className="login__sub">
-          <div className="login__password-fg">
+          <Link className="login__password-fg" to={"/forgot-password"}>
             Quên mật khẩu
-          </div>
+          </Link>
           <div className="login__line">
             <span></span>
             <span>or</span>

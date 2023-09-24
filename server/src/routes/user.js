@@ -5,7 +5,10 @@ const {
     userProfile,
     findUserByEmail,
     findUsersByEmailKeyword,
-    updatePassword
+    updatePassword,
+    forgotPassword,
+    resetPasswordForm,
+    resetPassword
 } = require('../controller/userController')
 const auth = require('../middleware/auth')
 
@@ -15,7 +18,10 @@ router.post('/signup', signup)
 router.post('/signin', signin)
 router.get('/findbyemail/:email', findUserByEmail)
 router.get('/findbykeyword', findUsersByEmailKeyword)
-router.put('/updatePassword',auth, updatePassword)
+router.put('/updatePassword', auth, updatePassword)
+router.post('/forgotPassword', forgotPassword)
+router.get('/resetpassword/:id/:token', resetPasswordForm)
+router.post('/resetpassword/:id/:token', resetPassword)
 router.get('/me', userProfile)
 
 

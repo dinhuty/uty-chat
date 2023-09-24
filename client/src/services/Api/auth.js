@@ -30,3 +30,13 @@ export const changePassword = async (data, token) => {
         return error.response
     }
 }
+
+
+export const forgotPassword = async (email) => {
+    try {
+        const res = await axios.post("user/forgotPassword", { email })
+        return res
+    } catch (error) {
+        return error.response
+    }
+}

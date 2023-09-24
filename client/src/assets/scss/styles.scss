@@ -21,6 +21,7 @@
 @import "./views/components/ProfileAction/generalSetting";
 @import "./views/components/ProfileAction/languageSetting";
 @import "./views/components/Message/endMessage.scss";
+
 @import "./views/pages/chat/chat";
 @import "./views/pages/chat/chatMenu";
 @import "./views/pages/chat/chatSide";
@@ -31,3 +32,4 @@
 @import "./views/pages/loading/loadingMessage";
 @import "./views/pages/login/login";
 @import "./views/pages/register/register";
+@import "./views/pages/auth/forgotPassword.scss";

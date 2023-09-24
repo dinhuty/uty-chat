@@ -32,13 +32,14 @@ module.exports = async (email, data, type) => {
         const mailOptions = {
             from: process.env.ADMIN_EMAIL_ADDRESS,
             to: email,
-            subject: `[DINHPRO] COMPANY`,
+            subject: `[DinhUTY] COMPANY`,
             html: `${data}`
         }
         await transport.sendMail(mailOptions)
 
         console.log({ success: "Send SUCCESS" })
     } catch (error) {
+        console.log("Lỗi rồi")
         console.log({ error: error })
     }
 }

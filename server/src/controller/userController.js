@@ -2,6 +2,7 @@
 const User = require('../models/userModel')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
+const mailer = require('../service/mailer')
 
 
 // POST /user/signup
@@ -99,13 +100,61 @@ const updatePassword = async (req, res, next) => {
         res.status(500).json({ error: error.message })
     }
 }
+//POST /user/forgotPassword
+const forgotPassword = async (req, res, next) => {
+    try {
 
+        const email = req.body.email
+        console.log(email)
+        const user = await User.findOne({ email })
+        if (!user) {
+            throw new Error("Email chua duoc dang ky")
+        }
+        const token = await user.createPasswordResetToken();
+        const resetURL = `<h1>Ban co 5phut de thay doi mat khau <a href="https://uty-chat-api.vercel.app/api/user/resetpassword/${user._id}/${token}">Tao mat khau moi</a></h1>`
+        mailer(email, resetURL)
+        res.status(200).json({ success: "Kiem tra email" })
 
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+}
+// GET /user/resetpassword/:id/:token
+const resetPasswordForm = async (req, res, next) => {
+    try {
+        const { id, token } = req.params
+        const user = await User.findOne({ _id: id })
+        if (!user) throw new Error("Da xay ra loi")
+        const data = jwt.verify(token, process.env.JWT_KEY)
+        res.render('index', { id, token })
+    } catch (error) {
+        res.render('error')
+    }
+}
+// post /user/resetpassword/:id/:token
+const resetPassword = async (req, res, next) => {
+    try {
+        const { id, token } = req.params
+        const user = await User.findOne({ _id: id })
+        if (!user) throw new Error("Da xay ra loi")
+        const data = jwt.verify(token, process.env.JWT_KEY)
+        const { password } = await req.body
+        console.log(req.body)
+        user.password = password
+        const saveNewPassword = await user.save()
+        res.status(200).json({ success: "đổi mk thành công" })
+    } catch (error) {
+        res.status(500).json({ error: "đổi mk ko thành công" })
+    }
+}
 module.exports = {
     signin,
     signup,
     userProfile,
     findUserByEmail,
     findUsersByEmailKeyword,
-    updatePassword
+    updatePassword,
+    forgotPassword,
+    resetPasswordForm,
+    resetPassword
 }

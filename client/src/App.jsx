@@ -6,6 +6,7 @@ import Register from './views/pages/Register/Register'
 import Chat from './views/pages/Chat/Chat'
 import { AuthContext } from './context/AuthContext'
 import { useContext } from 'react'
+import { ForgotPassword } from './views/pages/Auth/ForgotPassword'
 
 function App() {
   const { userCurrent } = useContext(AuthContext);
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route element={!userCurrent ? <Login /> : <Chat />} path='/login' />
         <Route element={!userCurrent ? <Register /> : <Chat />} path='/register' />
+        <Route element={!userCurrent ? <ForgotPassword /> : <Chat />} path='/forgot-password' />
         <Route element={userCurrent ? <Chat /> : <Login />} path='/' />
         <Route element={userCurrent ? <Chat /> : <Login />} path='/*' />
       </Routes>
