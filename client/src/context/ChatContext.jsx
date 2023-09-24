@@ -1,10 +1,7 @@
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import { getChatForUser, getInfoChat } from "../services/Api/chat";
-import { maskAllMessageRead } from "../services/Api/message";
 import { io } from "socket.io-client"
-import { MessageContext } from "./MessageContext";
-import { compareByLastUpdatedDesc } from '../utils/compare'
 import { CommonContext } from "./CommonContext";
 export const ChatContext = createContext();
 

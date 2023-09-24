@@ -1,8 +1,12 @@
 import axios from '../../utils/services'
 
-export const getListMessageInChat = async (idChat) => {
+export const getListMessageInChat = async (idChat, page) => {
     try {
-        const getList = await axios.get(`message/list/${idChat}`)
+        const getList = await axios.get(`message/list/${idChat}`,{
+            params: {
+                page: page
+            }
+        })
         return getList.data
     } catch (error) {
         console.log(error)

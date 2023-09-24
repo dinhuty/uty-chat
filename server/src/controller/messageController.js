@@ -16,7 +16,7 @@ const createMessage = async (req, res) => {
         const message = new messageModel({
             content,
             sender: senderId,
-            chat: chatId,   
+            chat: chatId,
         });
         chat.messages.push(message._id);
         chat.lastUpdated = Date.now();
@@ -32,11 +32,20 @@ const createMessage = async (req, res) => {
 }
 const getMessagesInChat = async (req, res) => {
     try {
+        const page = parseInt(req.query.page);
+        const limit = parseInt(req.query.limit) || 15;
         const chatId = req.params.chatId;
+        const totalItems = await messageModel.countDocuments({ chat: chatId });
+        const totalPages = Math.ceil(totalItems / limit);
 
-        const messages = await messageModel.find({ chat: chatId }).populate('sender', 'firstName lastName');
+        const messages = await messageModel
+            .find({ chat: chatId })
+            .populate('sender', 'firstName lastName')
+            .sort({ createdAt: -1 })
+            .skip((page - 1) * limit)
+            .limit(limit);
 
-        res.status(200).json({ messages });
+        res.status(200).json({ messages , totalPages });
     } catch (error) {
         console.error(error);
         res.status(500).json({ status: 'Error' });
@@ -81,7 +90,7 @@ const markMessageAsRead = async (req, res) => {
 
 const markAllMessagesAsRead = async (req, res) => {
     try {
-        const chatId = req.params.chatId; 
+        const chatId = req.params.chatId;
         const result = await messageModel.updateMany(
             { chat: chatId },
             { $set: { isRead: true } }

@@ -51,16 +51,17 @@ const ChatSide = () => {
         }
         setKeyword('')
     }
-    useEffect(() => {
-        if (listMessageInChat?.length > 0) {
-            if (listMessageInChat[listMessageInChat?.length - 1].sender._id !== userCurrent._id) {
-                const updateMessage = async (idChat) => {
-                    const result = await maskAllMessageRead(idChat)
-                }
-                updateMessage(idChatCurrent)
-            }
-        }
-    }, [listMessageInChat])
+    console.log("CHATSIDE_RUN")
+    // useEffect(() => {
+    //     if (listMessageInChat?.length > 0) {
+    //         if (listMessageInChat[listMessageInChat?.length - 1].sender._id !== userCurrent._id) {
+    //             const updateMessage = async (idChat) => {
+    //                 const result = await maskAllMessageRead(idChat)
+    //             }
+    //             updateMessage(idChatCurrent)
+    //         }
+    //     }
+    // }, [listMessageInChat])
     return (
         <div className='chat-side'>
             <div className="chat-side__top">

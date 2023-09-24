@@ -172,18 +172,27 @@
 
         }
 
+        #scrollableDiv {
+            height: calc(100% - 130px) !important;
+            display: flex;
+            flex-direction: column-reverse;
+            overflow: auto;
+        }
+
         .chat__display {
-            width: 100%;
-            height: calc(100% - 130px);
-            max-height: 100%;
-            overflow-y: auto;
+            // width: 100%;
+            // height: calc(100% - 130px) !important;
+            // max-height: 100%;
+            // height: 100%;
+            // overflow-y: auto !important;
             display: flex;
             flex-direction: column-reverse;
             gap: 5px;
-            padding: 0px 12px 0px 12px;
+            padding: 50px 12px 0px 12px;
             padding-bottom: 10px;
 
             &.blank {
+                height: calc(100% - 130px) !important;
                 @include flex-center;
                 font-weight: 600;
                 font-size: 20px;
