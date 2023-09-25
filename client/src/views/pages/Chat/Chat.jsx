@@ -12,20 +12,21 @@ import Profile from '../../components/Profile'
 import { CommonContext } from '../../../context/CommonContext'
 import ChatMenu from './ChatMenu/ChatMenu'
 import ChatLoading from '../Loading/ChatLoading'
+import { MessageContext } from '../../../context/MessageContext'
+import { ImageDetail } from '../../components/ImageDetail'
 
 const Chat = () => {
-  const [checked, setChecked] = useState(false)
-  const { userCurrent } = useContext(AuthContext);
   const { loading } = useContext(ChatContext)
-  const { isProfileOpen,
-    setIsProfileOpen,
-    isOpenMenu,
-    setIsOpenMenu } = useContext(CommonContext)
+  const { imageOpen } = useContext(MessageContext)
+  const { isProfileOpen, isOpenMenu } = useContext(CommonContext)
 
   return (
     <div className='app-chat'>
       {loading ? <ChatLoading /> :
         <div className="chat-main">
+          <div className={imageOpen ? "chat-main__img-detail active" : "chat-main__img-detail"}>
+            <ImageDetail />
+          </div>
           <div className={isProfileOpen ? "chat-main__profile active" : "chat-main__profile"}>
             <Profile />
           </div>

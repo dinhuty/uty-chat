@@ -1,11 +1,12 @@
 import { faClock } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { formatTime } from '../../utils/formatTime';
 import avatar from '../../assets/svg/avatar-boy.svg'
+import { MessageContext } from '../../context/MessageContext';
 
 const Message = ({ message, shouldDisplayAvatar, userCurrent }) => {
-    console.log(message)
+    const { setImageOpen } = useContext(MessageContext)
     const conditionAvatar = shouldDisplayAvatar && message?.sender?._id !== userCurrent?._id
     const conditionTimer = shouldDisplayAvatar
     return (
@@ -23,7 +24,7 @@ const Message = ({ message, shouldDisplayAvatar, userCurrent }) => {
                 }
                 {message?.attachments?.length > 0 &&
                     <div className="message-media">
-                        <img src={message.attachments[0].url} alt="Image" />
+                        <img src={message.attachments[0].url} alt="Image" onClick={() => setImageOpen(message.attachments[0].url)} />
                     </div>
 
                 }

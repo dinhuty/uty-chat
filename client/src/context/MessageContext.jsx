@@ -11,6 +11,7 @@ const MessageProvider = ({ children }) => {
     const [totalPages, setTotalPages] = useState(1)
     const page = useRef(1)
     const hasMore = useRef(true)
+    const [imageOpen, setImageOpen] = useState('')
 
     useEffect(() => {
         page.current = 1
@@ -32,7 +33,9 @@ const MessageProvider = ({ children }) => {
             setNewMessage,
             totalPages,
             page,
-            hasMore
+            hasMore,
+            imageOpen, 
+            setImageOpen
         }}>
             {children}
         </MessageContext.Provider>
