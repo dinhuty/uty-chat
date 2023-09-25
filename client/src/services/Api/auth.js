@@ -31,6 +31,19 @@ export const changePassword = async (data, token) => {
     }
 }
 
+export const changeAvatar = async (newAvatar, token) => {
+    try {
+        const res = await axios.post("user/changeAvatar", { newAvatar }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        return res
+    } catch (error) {
+        return error.response
+    }
+}
+
 
 export const forgotPassword = async (email) => {
     try {

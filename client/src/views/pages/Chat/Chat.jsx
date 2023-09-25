@@ -14,16 +14,20 @@ import ChatMenu from './ChatMenu/ChatMenu'
 import ChatLoading from '../Loading/ChatLoading'
 import { MessageContext } from '../../../context/MessageContext'
 import { ImageDetail } from '../../components/ImageDetail'
+import { ImagePreview } from '../../components/Modal/ImagePreview'
 
 const Chat = () => {
   const { loading } = useContext(ChatContext)
   const { imageOpen } = useContext(MessageContext)
-  const { isProfileOpen, isOpenMenu } = useContext(CommonContext)
+  const { isProfileOpen, isOpenMenu, imageChangeAvatar } = useContext(CommonContext)
 
   return (
     <div className='app-chat'>
       {loading ? <ChatLoading /> :
         <div className="chat-main">
+          <div className={imageChangeAvatar ? "chat-main__img-preview active" : "chat-main__img-preview"}>
+            <ImagePreview />
+          </div>
           <div className={imageOpen ? "chat-main__img-detail active" : "chat-main__img-detail"}>
             <ImageDetail />
           </div>

@@ -3,6 +3,7 @@ const User = require('../models/userModel')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const mailer = require('../service/mailer')
+const { cloudinary } = require('../service/cloudinary')
 
 
 // POST /user/signup
@@ -55,6 +56,7 @@ const userProfile = async (req, res, next) => {
     }
     res.status(200).send(req.user)
 }
+
 const findUserByEmail = async (req, res, next) => {
     try {
         const email = req.params.email;
@@ -65,6 +67,7 @@ const findUserByEmail = async (req, res, next) => {
         res.status(500).json({ error: "Lỗi không xác định" });
     }
 };
+
 const findUsersByEmailKeyword = async (req, res, next) => {
     try {
         const keyword = req.query.keyword;
@@ -98,6 +101,29 @@ const updatePassword = async (req, res, next) => {
 
     } catch (error) {
         res.status(500).json({ error: error.message })
+    }
+}
+// Pathc /user/change-avatar
+const changeAvatar = async (req, res, next) => {
+    try {
+        const { newAvatar } = req.body
+        const user = req.user
+        if (newAvatar) {
+            console.log("newAvatar", newAvatar)
+            const responseUpload = await cloudinary.uploader.upload(newAvatar, {
+                upload_preset: 'uty_chat'
+            })
+            console.log(responseUpload)
+            user.avatarURL = responseUpload.secure_url
+
+        } else {
+            throw new Error("Lỗi thay đổi avatar")
+        }
+        const saveAvatar = await user.save()
+        res.status(200).json({ success: "Thay thành công" })
+
+    } catch (error) {
+        res.status(500).json({ error: "Lỗi thay đổi avatar" })
     }
 }
 //POST /user/forgotPassword
@@ -156,5 +182,6 @@ module.exports = {
     updatePassword,
     forgotPassword,
     resetPasswordForm,
-    resetPassword
+    resetPassword,
+    changeAvatar
 }

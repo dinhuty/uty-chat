@@ -122,6 +122,21 @@
             }
 
             .user-avatar {
+                position: relative;
+
+                .icon {
+                    position: absolute;
+                    right: 0px;
+                    bottom: 0px;
+                    color: $primary-color;
+                    font-size: 16px;
+                    padding: 4px;
+                    border-radius: 50%;
+                    cursor: pointer;
+                    transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+                    background-color: rgba(32, 164, 252, 0.177);
+                }
+
                 img {
                     width: 70px;
                     height: 70px;

@@ -29,6 +29,7 @@ const Login = () => {
     if (userLogin.status === 200) {
       localStorage.setItem('user', JSON.stringify(userLogin.data.user));
       localStorage.setItem('token', userLogin.data.token);
+      console.log(userLogin)
       setUserCurrent(userLogin.data.user)
       navigate('/')
       setLoading(false)

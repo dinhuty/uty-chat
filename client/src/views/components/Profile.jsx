@@ -18,6 +18,7 @@ import { CommonContext } from '../../context/CommonContext'
 import { ChangePassword } from './ActionProfile.js/ChangePassword'
 import { GeneralSetting } from './ActionProfile.js/GeneralSetting'
 import { LanguageSetting } from './ActionProfile.js/LanguageSetting'
+import { BsCamera } from "react-icons/bs";
 
 const Profile = () => {
     const {
@@ -27,21 +28,31 @@ const Profile = () => {
         setDarkMode,
         isActionProfile,
         setIsActionProfile,
+        imageChangeAvatar,
+        setImageChangeAvatar
     } = useContext(CommonContext)
     const { userCurrent, setUserCurrent } = useContext(AuthContext)
     const navigate = useNavigate()
     const [action, setAction] = useState(null)
+    const [fileInputAvatar, setFileInputAvatar] = useState('')
+
     let componentToRender = null;
 
-    const hanldeCloseProfilePopup = () => {
-        setIsProfileOpen(false)
-    }
     const hanldeLogout = () => {
         localStorage.removeItem('user');
         localStorage.removeItem('token')
         setUserCurrent(null)
         setIsProfileOpen(false)
         navigate('/login')
+    }
+    const handleFileChange = (e) => {
+        setFileInputAvatar(e.target.value)
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setImageChangeAvatar(reader.result);
+        };
     }
     const preferences = [
         {
@@ -105,9 +116,6 @@ const Profile = () => {
 
             </div>
             <div className="profile-main">
-                {/* {isActionProfile && <div className="profile-action">
-                    {componentToRender}
-                </div>} */}
                 <div className={isActionProfile ? "profile-action active" : "profile-action"}>
                     {componentToRender}
                 </div>
@@ -125,7 +133,20 @@ const Profile = () => {
                 </div>
                 <div className="profile-user">
                     <div className="user-avatar">
-                        <Avatar avatar={avatar} />
+                        <div className="icon" >
+                            <label htmlFor="fileInputAvatar">
+                                <BsCamera />
+                            </label>
+                            <input
+                                id="fileInputAvatar"
+                                type="file"
+                                accept="image/*, video/*"
+                                value={fileInputAvatar}
+                                onChange={handleFileChange}
+                                style={{ display: 'none' }} // Ẩn trường input file
+                            />
+                        </div>
+                        <Avatar avatar={userCurrent?.avatarURL ? userCurrent?.avatarURL : avatar} />
                     </div>
                     <div className="user-name">
                         <span>

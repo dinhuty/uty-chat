@@ -9,6 +9,7 @@ const CommonProvider = ({ children }) => {
     const [darkMode, setDarkMode] = useState(false)
     const [isPopup, setIsPopup] = useState(false)
     const [isActionProfile, setIsActionProfile] = useState(false)
+    const [imageChangeAvatar, setImageChangeAvatar] = useState('')
     //chats
     const [addHandle, setAddHandle] = useState(false)
     const [deleteHandle, setDeleteHandle] = useState(false)
@@ -30,7 +31,9 @@ const CommonProvider = ({ children }) => {
             deleteHandle, 
             setDeleteHandle,
             leaveGroupHandle,
-            setLeaveGroupHandle
+            setLeaveGroupHandle,
+            imageChangeAvatar, 
+            setImageChangeAvatar
         }}>
             {children}
         </CommonContext.Provider>
