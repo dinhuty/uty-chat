@@ -22,6 +22,7 @@ const ChatProvider = ({ children }) => {
             if (!userCurrent) return
             const data = await getChatForUser(userCurrent?._id)
             setListChatForUser(data?.chats)
+            console.log(data?.chats)
         }
         getData()
     }, [sent, idChatCurrent])

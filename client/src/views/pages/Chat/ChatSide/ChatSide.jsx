@@ -51,17 +51,7 @@ const ChatSide = () => {
         }
         setKeyword('')
     }
-    console.log("CHATSIDE_RUN")
-    // useEffect(() => {
-    //     if (listMessageInChat?.length > 0) {
-    //         if (listMessageInChat[listMessageInChat?.length - 1].sender._id !== userCurrent._id) {
-    //             const updateMessage = async (idChat) => {
-    //                 const result = await maskAllMessageRead(idChat)
-    //             }
-    //             updateMessage(idChatCurrent)
-    //         }
-    //     }
-    // }, [listMessageInChat])
+
     return (
         <div className='chat-side'>
             <div className="chat-side__top">
@@ -122,21 +112,21 @@ const ChatSide = () => {
                                         userCurrent={userCurrent}
                                         onlineUsers={onlineUsers}
                                     />
-                                    <div className={item.messages.length > 0 && item.messages[item.messages.length - 1].isRead === true ? "desc-message--recent" : "desc-message--recent unread"}>
+                                    <div className={item.messages.length > 0 && item?.messages[0]?.isRead === true ? "desc-message--recent" : "desc-message--recent unread"}>
                                         {item.messages.length > 0
-                                            && (item?.messages[item.messages.length - 1].sender?._id === userCurrent._id ? <span>Bạn:</span>
+                                            && (item?.messages[0]?.sender?._id === userCurrent._id ? <span>Bạn:</span>
                                                 :
-                                                <span>{item?.messages[item.messages.length - 1].sender?.lastName}:</span>)
+                                                <span>{item?.messages[0]?.sender?.lastName}:</span>)
                                         }
-                                        <span>{item?.messages[item.messages.length - 1]?.content}</span>
+                                        <span>{item?.messages[0]?.content}</span>
                                     </div>
                                 </div>
                             </div>
                             <div className="item__right">
                                 <div>
-                                    {item.messages.length > 0 && <>{formatTime(item?.messages[item.messages.length - 1].createdAt)}</>}
+                                    {item.messages.length > 0 && <>{formatTime(item?.messages[0]?.createdAt)}</>}
                                 </div>
-                                <div className={item.messages.length > 0 && item?.messages[item.messages.length - 1].isRead ? 'item__right-icon' : 'item__right-icon active'}>
+                                <div className={item.messages.length > 0 && item?.messages[0]?.isRead ? 'item__right-icon' : 'item__right-icon active'}>
 
                                 </div>
                             </div>

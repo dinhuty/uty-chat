@@ -77,7 +77,8 @@ userSchema.methods.createPasswordResetToken = async function () {
         { _id: user._id },
         process.env.JWT_KEY,
         {
-            expiresIn: '300s',
+            expiresIn: "3d",
+            // expiresIn: '300s',
         }
     )
     return token

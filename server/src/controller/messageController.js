@@ -1,10 +1,10 @@
 const messageModel = require('../models/messageModel')
 const ChatModel = require('../models/chatModel')
-
+const { cloudinary } = require('../service/cloudinary')
 
 const createMessage = async (req, res) => {
     try {
-        const { content, senderId, chatId } = req.body;
+        const { content, senderId, chatId, attachment } = req.body;
 
         const chat = await ChatModel.findById(chatId);
         const isUserInChat = chat.participants.includes(senderId);
@@ -12,14 +12,25 @@ const createMessage = async (req, res) => {
         if (!isUserInChat) {
             return res.status(404).json({ status: 'User not in GroupChat' });
         }
-
-        const message = new messageModel({
+        const messageData = {
             content,
             sender: senderId,
             chat: chatId,
-        });
+        };
+        if (attachment) {
+            const uploadResponse = await cloudinary.uploader.upload(attachment, {
+                upload_preset: 'uty_chat'
+            })
+            messageData.attachments = [{
+                type: uploadResponse.resource_type,
+                url: uploadResponse.secure_url
+            }]
+        }
+
+        const message = new messageModel(messageData)
         chat.messages.push(message._id);
         chat.lastUpdated = Date.now();
+
         await chat.save();
         const savedMessage = await message.save();
         await savedMessage.populate('sender', 'firstName lastName');
@@ -45,7 +56,7 @@ const getMessagesInChat = async (req, res) => {
             .skip((page - 1) * limit)
             .limit(limit);
 
-        res.status(200).json({ messages , totalPages });
+        res.status(200).json({ messages, totalPages });
     } catch (error) {
         console.error(error);
         res.status(500).json({ status: 'Error' });

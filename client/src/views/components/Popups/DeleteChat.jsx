@@ -1,8 +1,9 @@
 import React, { useContext } from 'react'
-import { MdOutlineDeleteForever } from "react-icons/md";
 import { CommonContext } from '../../../context/CommonContext';
 import { ChatContext } from '../../../context/ChatContext';
 import { deleteChat } from '../../../services/Api/chat';
+import { PiWarning, PiXBold } from "react-icons/pi";
+
 export const DeleteChat = () => {
     const { setIsPopup,
         setIsOpenMenu,
@@ -19,15 +20,32 @@ export const DeleteChat = () => {
 
     }
     return (
-        <div className='wrapper-delete__popup'>
-            <div className="top">
-                <span>
-                    Xóa cuộc trò chuyện
-                </span>
-            </div>
-            <div className="icon">
-                <MdOutlineDeleteForever />
-            </div>
+        <section className='wrapper-delete__popup'>
+            <header>
+                <div className="header-top">
+                    <div className="icon" onClick={() => {
+                        setIsPopup(false)
+                        setIsOpenMenu(false)
+                    }}>
+                        <PiXBold />
+                    </div>
+                </div>
+                <div className="header-bottom">
+                    <div className="icon">
+                        <PiWarning />
+                    </div>
+                    <div className="main">
+                        <div className="title">
+                            Bạn chắc chắn muốn xóa cuộc trò chuyện này
+                        </div>
+                        <div className="sub-title">
+                            Bạn sẽ không thể khôi phục
+                        </div>
+                    </div>
+                </div>
+
+            </header>
+
             <div className="bottom">
                 <button className="btn-cancel" onClick={() => {
                     setIsPopup(false)
@@ -40,6 +58,6 @@ export const DeleteChat = () => {
                     Xóa
                 </button>
             </div>
-        </div>
+        </section>
     )
 }

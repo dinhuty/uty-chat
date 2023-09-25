@@ -18,7 +18,6 @@ const createChatBetweenTwoUsers = async (req, res) => {
         }
         const chat = new ChatModel({
             participants: [user1Id, user2Id],
-            lastUpdated: Date.now()
         });
         const savedChat = await chat.save();
 
@@ -38,7 +37,6 @@ const createGroupChat = async (req, res) => {
             name,
             participants: participantIds,
             isGroup: true,
-            lastUpdated: Date.now()
         });
         console.log(participantIds)
         const savedChat = await chat.save();
@@ -102,11 +100,16 @@ const getChatsForUser = async (req, res) => {
             .lean();
         const populatedChats = await Promise.all(chats.map(async (chat) => {
             const populatedChat = await ChatModel.populate(chat, { path: 'participants', select: 'firstName lastName email' });
-            const messages = await MessageModel.find({ chat: chat._id }).lean().populate({
-                path: 'sender',
-                select: 'firstName lastName isRead',
-            });;
-            populatedChat.messages = messages;
+            const latestMessage = await MessageModel
+                .findOne({ chat: chat._id })
+                .sort({ createdAt: -1 })
+                .lean()
+                .populate({
+                    path: 'sender',
+                    select: 'firstName lastName isRead',
+                });
+
+            populatedChat.messages = [latestMessage];
             return populatedChat;
         }));
         res.status(200).json({ chats: populatedChats });

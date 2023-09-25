@@ -5,8 +5,9 @@ import { formatTime } from '../../utils/formatTime';
 import avatar from '../../assets/svg/avatar-boy.svg'
 
 const Message = ({ message, shouldDisplayAvatar, userCurrent }) => {
+    console.log(message)
     const conditionAvatar = shouldDisplayAvatar && message?.sender?._id !== userCurrent?._id
-    const conditionTimer = shouldDisplayAvatar 
+    const conditionTimer = shouldDisplayAvatar
     return (
         <div className={message?.sender?._id === userCurrent?._id ? 'chat-message user-chat' : 'chat-message'}>
             {conditionAvatar ?
@@ -15,9 +16,17 @@ const Message = ({ message, shouldDisplayAvatar, userCurrent }) => {
                 <div className='message-avatar'></div>
             }
             <div className="message-content">
-                <div className="message-text">
-                    <p>{message?.content}</p>
-                </div>
+                {message?.content?.length > 0 &&
+                    <div className="message-text">
+                        <p>{message?.content}</p>
+                    </div>
+                }
+                {message?.attachments?.length > 0 &&
+                    <div className="message-media">
+                        <img src={message.attachments[0].url} alt="Image" />
+                    </div>
+
+                }
                 {conditionTimer && <div className='message-time'>
                     <div className="message-time-icon">
                         <FontAwesomeIcon icon={faClock} />

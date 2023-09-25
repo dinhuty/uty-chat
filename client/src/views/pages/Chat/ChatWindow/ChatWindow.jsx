@@ -9,11 +9,15 @@ import { checkOnlineStatus } from '../../../../utils/checkOnlineStatus'
 import { IoCallOutline, IoVideocamOutline, IoEllipsisVerticalOutline } from "react-icons/io5";
 import Avatar from '../../../components/Avatar'
 import { LuSendHorizonal } from "react-icons/lu";
+import { ImAttachment } from "react-icons/im";
 import { CommonContext } from '../../../../context/CommonContext'
 import NameChat from '../../../common/NameChat'
 import InfiniteScroll from "react-infinite-scroll-component"
 import { LoadMoreMessages } from '../../Loading/LoadMoreMessages'
 import { EndMessage } from '../../../components/Message/EndMessage'
+import { BiImageAdd } from "react-icons/bi";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { PiXBold } from 'react-icons/pi'
 
 const ChatWindow = () => {
     const {
@@ -32,18 +36,24 @@ const ChatWindow = () => {
         setNewMessage,
         totalPages,
         page,
-        hasMore
     } = useContext(MessageContext)
     const { setIsOpenMenu } = useContext(CommonContext)
     const [contentMessage, setContentMessage] = useState('')
-    const [loading, setLoading] = useState(true)
+    const [fileSlected, setFileSelected] = useState('')
+    const [fileInput, setFileInput] = useState('')
     let lastSenderId = null
+
+
     const handleSendMessgae = async (e) => {
         e.preventDefault()
+        if (!fileSlected && !contentMessage) {
+            return
+        }
         const data = {
             content: contentMessage,
             senderId: userCurrent._id,
             chatId: idChatCurrent,
+            attachment: fileSlected
         };
         const now = new Date();
         const formattedDate = now.toISOString();
@@ -56,10 +66,18 @@ const ChatWindow = () => {
                 lastName: userCurrent.lastName,
                 _id: userCurrent._id,
             },
+            attachments: fileSlected && [
+                {
+                    type: 'image',
+                    url: fileSlected
+                }
+            ],
             createdAt: formattedDate
         }, ...prev]);
 
         setContentMessage('');
+        setFileInput('')
+        setFileSelected('')
         const messageData = await sendMessage(data);
         setNewMessage(messageData.message);
         sentRef.current = !sentRef.current;
@@ -71,7 +89,6 @@ const ChatWindow = () => {
         const recipientIds = infoChatCurrent?.participants.filter((user) => user._id !== userCurrent._id)
         socket.emit("sendMessage", { newMessage, recipientIds })
     }, [newMessage])
-    console.log("PAGE", page)
     useEffect(() => {
         if (socket === null) return
         socket.on("getMessage", res => {
@@ -93,12 +110,26 @@ const ChatWindow = () => {
 
     const fetchData = async () => {
         page.current += 1;
-        setLoading(true)
         const data = await getListMessageInChat(idChatCurrent, page.current)
         setListMessageInChat(prevMessages => [...prevMessages, ...data.messages]);
 
     };
-    console.log(infoChatCurrent)
+
+    const handleFileChange = (e) => {
+        setFileInput(e.target.value)
+        const file = e.target.files[0];
+        if (!file.type.startsWith('image/')) {
+            alert("Chọn hình ảnh")
+            setFileInput('')
+            return
+        }
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setFileSelected(reader.result);
+        };
+    }
+
     return (
         <div className='chat-window'>
             {idChatCurrent ?
@@ -169,11 +200,31 @@ const ChatWindow = () => {
                     <div className="chat__bottom">
                         <form className="bottom-box" onSubmit={handleSendMessgae}>
                             <input
+                                className='ip-text'
                                 type="text"
                                 placeholder='Nhập tin nhắn'
                                 value={contentMessage}
                                 onChange={(e) => setContentMessage(e.target.value)}
                             />
+                            <div className="btn-icon-file">
+                                {fileSlected && <div className="preview">
+                                    <div className="icon" onClick={() => setFileSelected('')}>
+                                        <PiXBold />
+                                    </div>
+                                    <img src={fileSlected} alt="" />
+                                </div>}
+                                <label htmlFor="fileInput" className="file-input-label">
+                                    <BiImageAdd />
+                                </label>
+                                <input
+                                    id="fileInput"
+                                    type="file"
+                                    accept="image/*, video/*"
+                                    value={fileInput}
+                                    onChange={handleFileChange}
+                                    style={{ display: 'none' }} // Ẩn trường input file
+                                />
+                            </div>
                             <button type="submit" >
                                 <div className="btn-icon-send">
                                     <LuSendHorizonal />

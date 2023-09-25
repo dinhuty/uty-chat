@@ -25,10 +25,6 @@ const chatSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Message',
     }],
-    lastUpdated: {
-        type: Date,
-        default: Date.now
-    }
 },
 
     { timestamps: true }

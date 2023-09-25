@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const { cloudinary } = require('./service/cloudinary')
 const bodyParser = require('body-parser');
 const path = require('path')
 const cors = require('cors')
@@ -10,9 +11,9 @@ require('dotenv').config();
 
 connectDB()
 app.use(cors())
-app.use(express.json())
+app.use(express.json({ limit: '50mb' }))
 app.set('view engine', 'pug');
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.set('views', path.join(__dirname, 'views'));
 route(app)
 const port = process.env.PORT_WEB || 3001

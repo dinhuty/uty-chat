@@ -6,11 +6,9 @@ export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
     const [userCurrent, setUserCurrent] = useState(null)
     const [accessToken, setAccessToken] = useState(null)
-    console.log(typeof accessToken)
     useEffect(() => {
         const userCurrent = localStorage.getItem('user')
-        const token  = localStorage.getItem('token')
-        console.log(token)
+        const token = localStorage.getItem('token')
         if (userCurrent) {
             setUserCurrent(JSON.parse(userCurrent))
             setAccessToken(token)
@@ -20,7 +18,7 @@ const AuthProvider = ({ children }) => {
         <AuthContext.Provider value={{
             userCurrent,
             setUserCurrent,
-            accessToken, 
+            accessToken,
             setAccessToken
         }} >
             {children}

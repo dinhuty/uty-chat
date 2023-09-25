@@ -13,6 +13,18 @@ const messageModel = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Chat',
     },
+    attachments: [
+        {
+            type: {
+                type: String,
+                required: true,
+            },
+            url: {
+                type: String,
+                required: true,
+            },
+        },
+    ],
     isRead: {
         type: Boolean,
         default: false,
