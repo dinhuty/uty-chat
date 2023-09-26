@@ -68,7 +68,7 @@ const ChatMenu = () => {
             type: 1,
             icon: bandIcon,
             name: "Chặn",
-            action: "",
+            action: "BLOCK_USER",
         },
         {
             type: 1,

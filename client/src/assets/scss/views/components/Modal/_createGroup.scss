@@ -1,7 +1,8 @@
     .wrapper-create__popup {
         height: 500px;
         width: 500px;
-        background-color: #fff;
+        background-color: getColor(primary);
+        color: getColor(text-primary);
         z-index: 28;
         padding: 10px;
         display: flex;
@@ -9,13 +10,13 @@
         gap: 20px;
         border-radius: 10px;
         overflow: auto;
+        border: 1px solid getColor(secondary);
 
         .popup-header {
             display: flex;
             position: relative;
             justify-content: center;
             padding: 10px 0;
-
             .popup__back {
                 position: absolute;
                 left: 10px;
@@ -23,14 +24,15 @@
                 transform: translate(-50%, -50%);
 
                 img {
-                    height: 25px;
-                    width: 25px;
+                    height: 22px;
+                    width: 22px;
                 }
             }
-            span{
-                font-size: 15px;
+
+            span {
+                font-size: 16px;
                 font-weight: 500;
-                color: $primary-color;
+                color: getColor(blue);
             }
         }
 
@@ -42,12 +44,13 @@
             .popup-search {
                 display: flex;
                 justify-content: space-between;
-                gap: 12px;
+                gap: 20px;
+                padding: 0 10px;
 
                 button {
                     height: 40px;
                     width: 60px;
-                    background-color: $primary-color;
+                    background-color: getColor(blue);
                     color: white;
                     border-radius: 8px;
 
@@ -58,11 +61,13 @@
 
                 input {
                     width: calc(100% - 60px);
-                    border: 1px solid rgb(0, 166, 255);
-                    padding: 5px 10px;
+                    border-bottom: 1px solid rgba(122, 122, 122, 0.399);
+                    padding: 10px 15px;
                     height: 40px;
-                    border-radius: 8px;
 
+                    &::placeholder {
+                        font-size: 13px;
+                    }
                 }
             }
 
@@ -72,21 +77,26 @@
                 gap: 10px;
                 height: 350px;
                 overflow: auto;
-
+                padding: 0 10px;
+                background-color: getColor(secondary);
+                border-radius: 10px;
                 .list__item {
                     cursor: pointer;
                     display: flex;
                     flex-direction: row;
                     justify-content: space-between;
                     align-items: center;
-                    padding: 5px 10px;
+                    padding: 12px 20px;
                     border-radius: 10px;
 
                     &:hover {
-                        color: white;
-                        background-color: rgb(0, 144, 254);
+                        background-color: rgba(181, 181, 181, 0.319);
                     }
 
+                    .avatar{
+                        width: 50px;
+                        height: 50px;
+                    }
                     .item-info {
                         display: flex;
                         justify-content: center;
@@ -102,7 +112,9 @@
                     }
 
                     .item-check {
-                        font-size: 13px;
+                        height: 20px;
+                        width: 20px;
+
                     }
                 }
             }

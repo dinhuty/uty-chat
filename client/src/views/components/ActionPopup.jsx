@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { CommonContext } from '../../context/CommonContext'
-import CreateGroup from './Popups/CreateGroup'
-import { AddUserToGroup } from './Popups/AddUserToGroup'
-import { DeleteChat } from './Popups/DeleteChat'
-import { LeaveChat } from './Popups/LeaveChat'
+import CreateGroup from './Modal/CreateGroup'
+import { AddUserToGroup } from './Modal/AddUserToGroup'
+import { DeleteChat } from './Modal/DeleteChat'
+import { LeaveChat } from './Modal/LeaveChat'
 
 const ActionPopup = ({ action }) => {
     const { setIsPopup } = useContext(CommonContext)
@@ -21,6 +21,9 @@ const ActionPopup = ({ action }) => {
             break;
         case "OUT_GROUP":
             componentToRender = <LeaveChat />;
+            break;
+        case "BLOCK_USER":
+            componentToRender = <DeleteChat />;
             break;
         default:
             componentToRender = <CreateGroup />;

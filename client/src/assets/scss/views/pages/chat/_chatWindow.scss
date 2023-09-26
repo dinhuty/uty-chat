@@ -1,9 +1,11 @@
 .chat-window {
     width: calc(100% - 425px);
-    // padding: 15px 12px;
     height: 100%;
     display: none;
     position: relative;
+    color: getColor(text-primary);
+    background-color: getColor(primary);
+    padding: 0 0 0 10px;
 
     @include min-sm {
         display: block;
@@ -17,7 +19,6 @@
     }
 
     &__main {
-        background-color: $secondary-color;
         height: 100%;
         width: 100%;
 
@@ -26,9 +27,9 @@
         .header {
             @include flex-between;
             height: 60px;
-            border-radius: 5px;
+            // border-radius: 5px;
             padding: 0 1rem;
-            border-bottom: 1px solid #e6e6e6;
+            border-bottom: 1px solid getColor(border-primary);
 
 
 
@@ -37,14 +38,13 @@
                 gap: 10px;
 
                 .user-avatar {
-                    height: 40px;
-                    width: 40px;
-                    border-radius: 50%;
                     position: relative;
+                    height: 40px;
+                    width: 60px;
 
                     img {
-                        width: 100%;
-                        height: 100%;
+                        height: 40px;
+                        width: 40px;
                     }
 
                     &__status {
@@ -53,9 +53,10 @@
                         width: 12px;
                         bottom: 1px;
                         border-radius: 50%;
-                        border: 2px solid $secondary-color;
+                        border: 2px solid getColor(white);
                         right: 1px;
-                        background-color: $four-color;
+                        color: getColor(text-secondary);
+                        background-color: getColor(green);
                         animation: pulse 1s infinite;
                     }
 
@@ -98,7 +99,7 @@
                     &__status {
                         font-size: 13px;
                         font-weight: 500;
-                        color: $text-secondary-color;
+                        color: getColor(text-secondary);
                     }
                 }
             }
@@ -113,7 +114,7 @@
                     padding: 10px 15px;
                     border-radius: 5px;
                     cursor: pointer;
-                    color: $primary-color;
+                    color: getColor(blue);
 
                     &.icon__call {
                         position: relative;
@@ -127,7 +128,7 @@
                             top: 50%;
                             transform: translate(-50%, -50%) scale(1);
                             border-radius: 50%;
-                            background: $primary-color;
+                            background: getColor(blue);
                             animation: ripple-animation 1s linear infinite;
                         }
 
@@ -164,8 +165,8 @@
 
 
                     &:hover {
-                        color: rgb(0, 60, 255);
-                        background-color: $primary-bg-color;
+                        color: getColor(blue);
+                        background-color: getColor(third);
                     }
                 }
             }
@@ -177,14 +178,23 @@
             display: flex;
             flex-direction: column-reverse;
             overflow: auto;
+
+            &::-webkit-scrollbar {
+                width: 8px;
+            
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background-color: getColor(third);
+                border-radius: 6px;
+            }
+
+            &::-webkit-scrollbar-button {
+                display: none;
+            }
         }
 
         .chat__display {
-            // width: 100%;
-            // height: calc(100% - 130px) !important;
-            // max-height: 100%;
-            // height: 100%;
-            // overflow-y: auto !important;
             display: flex;
             flex-direction: column-reverse;
             gap: 5px;
@@ -196,7 +206,7 @@
                 @include flex-center;
                 font-weight: 600;
                 font-size: 20px;
-                color: #b1afaf;
+                color: getColor(text-secondary);
 
             }
 
@@ -207,7 +217,8 @@
             height: 70px;
             @include flex-between;
             padding: 10px 20px;
-            border-top: 1px solid #e6e6e6;
+            border-top: 1px solid getColor(border-primary);
+
 
             .bottom-box {
                 width: 100%;
@@ -222,8 +233,7 @@
                 width: 100%;
                 border-radius: 20px;
                 padding: 10px 24px;
-                background-color: $secondary-bg-color;
-                border: 1px solid $secondary-bg-color;
+                background-color: getColor(third);
 
             }
 
@@ -241,10 +251,12 @@
                     img {
                         max-width: 150px;
                         max-height: 150px;
+                        border-radius: 10px;
+
                     }
 
                     .icon {
-                        background-color: rgba(0, 0, 0, 0.226);
+                        background-color: getColor(third);
                         border-radius: 5px;
                         padding: 3px;
                         position: absolute;
@@ -263,7 +275,7 @@
 
                 label {
                     font-size: 30px;
-                    color: #000;
+                    color: getColor(text-secondary);
                 }
             }
 

@@ -2,21 +2,28 @@
     width: 65px;
     height: 100%;
     box-shadow: 0 3px 20px rgba(0, 0, 0, .043137254901960784);
-    background-color: $secondary-color;
+    background-color: getColor(secondary);
     display: none;
     flex-direction: column;
     color: $third-color;
     gap: 12px;
     justify-content: space-between;
-    border-right: 1px solid #e6e6e6;
+    border-right: 1px solid getColor(border-primary);
     padding: 40px 0px;
     align-items: center;
-    @include min-sm{
+    color: getColor(text-secondary);
+
+    @include min-sm {
         display: flex;
     }
 
     .side-menu__top {
         cursor: pointer;
+
+        img {
+            height: 45px;
+            width: 45px;
+        }
     }
 
     .side-menu__item {
@@ -39,38 +46,21 @@
             transition: all .4s ease-in cubic-bezier(0.075, 0.82, 0.165, 1);
 
             &.active {
-                color: $primary-color;
+                color: getColor(text-third);
                 text-shadow: 2px 2px 2px rgba(230, 83, 64, 0.3),
                     0px -2px 2px rgba(158, 47, 3, 0.3);
-                background-color: $secondary-bg-color;
+                background-color: getColor(third);
             }
 
             &:hover {
-                color: $primary-color;
+                color: getColor(text-third);
                 text-shadow: 2px 2px 2px rgba(230, 83, 64, 0.3),
                     0px -2px 2px rgba(158, 47, 3, 0.3);
-                background-color: $secondary-bg-color;
+                background-color: getColor(third);
 
             }
 
         }
-
-    }
-
-    .side-menu__bottom {
-        width: 100%;
-        @include flex-center;
-
-        .side-menu__item {
-            color: red;
-            transition: transform .4 cubic-bezier(0.175, 0.885, 0.32, 1.275);
-
-            &:hover {
-                transform: scale(1.2);
-
-            }
-        }
-
 
     }
 }

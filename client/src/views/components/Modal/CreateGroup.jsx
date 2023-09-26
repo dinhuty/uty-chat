@@ -7,6 +7,9 @@ import avatar from '../../../assets/svg/avatar-boy.svg'
 import leftArrowIcon from '../../../assets/svg/left-arrow-backup-2-svgrepo-com.svg'
 import Avatar from '../Avatar'
 import { searchUser } from '../../../services/Api/search'
+import radioCheck from '../../../assets/svg/gui-form-radio-svgrepo-com.svg'
+import radioChecked from '../../../assets/svg/gui-form-radio-checked-svgrepo-com.svg'
+import Image from '../../common/Image'
 
 
 const CreateGroup = () => {
@@ -43,11 +46,13 @@ const CreateGroup = () => {
         }, 500)
         return () => clearTimeout(getData)
     }, [searchText])
+
     useEffect(() => {
         if (infoChatCurrent && isPopup) {
             setListCheck(infoChatCurrent.participants.map(user => user._id))
         }
     }, [isPopup])
+
     const toggleCheck = (userId) => {
         if (listCheck.includes(userId)) {
             setListCheck(listCheck.filter((id) => id !== userId));
@@ -72,9 +77,9 @@ const CreateGroup = () => {
                         type="text"
                         value={searchText}
                         onChange={(e) => setSearchText(e.target.value)}
-                        placeholder='nhập tên thành viên'
+                        placeholder='Nhập tên thành viên'
                     />
-                    <button onClick={hanldeCreateGroupChat}>Create</button>
+                    <button onClick={hanldeCreateGroupChat}>Tạo</button>
                 </div>
                 <div className="popup-list">
                     {listSearch?.length > 0 && listSearch.map((user, index) => (
@@ -89,7 +94,10 @@ const CreateGroup = () => {
                                 </div>
                             </div>
                             <div className="item-check" >
-                                {listCheck.includes(user._id) ? "✓" : "◻"}
+                                {listCheck.includes(user._id) ?
+                                    <Image image={radioChecked} className="image" />
+                                    :
+                                    <Image image={radioCheck} className="image" />}
                             </div>
                         </div>
                     ))}

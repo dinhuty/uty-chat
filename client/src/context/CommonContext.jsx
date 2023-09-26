@@ -1,4 +1,5 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
+import useLocalStorage from 'use-local-storage';
 
 export const CommonContext = createContext()
 
@@ -13,7 +14,12 @@ const CommonProvider = ({ children }) => {
     //chats
     const [addHandle, setAddHandle] = useState(false)
     const [deleteHandle, setDeleteHandle] = useState(false)
-    const [leaveGroupHandle,setLeaveGroupHandle] = useState(false)
+    const [leaveGroupHandle, setLeaveGroupHandle] = useState(false)
+
+    //theme
+    const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const [theme, setTheme] = useLocalStorage('theme', defaultDark ? 'dark' : 'light');
+    
     return (
         <CommonContext.Provider value={{
             isProfileOpen,
@@ -24,16 +30,18 @@ const CommonProvider = ({ children }) => {
             setDarkMode,
             isPopup,
             setIsPopup,
-            isActionProfile, 
+            isActionProfile,
             setIsActionProfile,
             addHandle,
             setAddHandle,
-            deleteHandle, 
+            deleteHandle,
             setDeleteHandle,
             leaveGroupHandle,
             setLeaveGroupHandle,
-            imageChangeAvatar, 
-            setImageChangeAvatar
+            imageChangeAvatar,
+            setImageChangeAvatar,
+            theme,
+            setTheme
         }}>
             {children}
         </CommonContext.Provider>

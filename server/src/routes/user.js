@@ -19,11 +19,11 @@ router.post('/signup', signup)
 router.post('/signin', signin)
 router.get('/findbyemail/:email', findUserByEmail)
 router.get('/findbykeyword', findUsersByEmailKeyword)
-router.put('/updatePassword', auth, updatePassword)
+router.patch('/updatePassword', auth, updatePassword)
 router.post('/forgotPassword', forgotPassword)
 router.get('/resetpassword/:id/:token', resetPasswordForm)
 router.post('/resetpassword/:id/:token', resetPassword)
-router.post('/changeAvatar', auth, changeAvatar)
+router.patch('/changeAvatar', auth, changeAvatar)
 router.get('/me', userProfile)
 
 

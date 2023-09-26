@@ -37,7 +37,7 @@ export const ChangePassword = () => {
             setStatus("Mật khẩu mới phải khác mật khẩu cũ")
             return
         }
-        console.log(accessToken)
+        console.log("Action Change Password:", accessToken)
         const updatePassword = async () => {
             const res = await changePassword(
                 { oldPassword, newPassword, confirmPassword }

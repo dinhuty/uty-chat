@@ -8,21 +8,26 @@
 @import "./views/common/container";
 @import "./views/common/nameChat";
 @import "./views/common/input";
+@import "./views/common/avatar";
 
 @import "./views/components/horizontalSlider";
 @import "./views/components/message";
 @import "./views/components/profile";
-@import "./views/components/addUserGroup";
-@import "./views/components/Popups/createGroup.scss";
-@import "./views/components/Popups/addUserToGroup.scss";
-@import "./views/components/Popups/deleteChat.scss";
-@import "./views/components/Popups/leaveGroupChat.scss";
+@import "./views/components/addUserGroup"
+;
+@import "./views/components/Modal/createGroup.scss";
+@import "./views/components/Modal/addUserToGroup.scss";
+@import "./views/components/Modal/deleteChat.scss";
+@import "./views/components/Modal/leaveGroupChat.scss";
+
 @import "./views/components/ProfileAction/changePassword";
 @import "./views/components/ProfileAction/generalSetting";
 @import "./views/components/ProfileAction/languageSetting";
+
 @import "./views/components/Message/endMessage.scss";
 @import "./views/components/imageDetail";
 @import "./views/components/Modal/imagePreview";
+
 @import "./views/pages/chat/chat";
 @import "./views/pages/chat/chatMenu";
 @import "./views/pages/chat/chatSide";

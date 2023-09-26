@@ -7,8 +7,7 @@ import { AuthContext } from '../../../context/AuthContext'
 import { PiWarning, PiXBold } from 'react-icons/pi'
 
 export const LeaveChat = () => {
-    const { isPopup,
-        setIsPopup,
+    const { setIsPopup,
         setIsOpenMenu,
         leaveGroupHandle,
         setLeaveGroupHandle
@@ -25,12 +24,11 @@ export const LeaveChat = () => {
         setLeaveGroupHandle(!leaveGroupHandle)
     }
     return (
-        <section className='wrapper-delete__popup'>
+        <section className='wrapper-leave__popup'>
             <header>
                 <div className="header-top">
                     <div className="icon" onClick={() => {
                         setIsPopup(false)
-                        setIsOpenMenu(false)
                     }}>
                         <PiXBold />
                     </div>
@@ -53,7 +51,6 @@ export const LeaveChat = () => {
 
             <div className="bottom">
                 <button className="btn-cancel" onClick={() => {
-                    setIsOpenMenu(false)
                     setIsPopup(false)
                 }}
                 >
@@ -64,26 +61,5 @@ export const LeaveChat = () => {
                 </button>
             </div>
         </section>
-        // <div className='wrapper-leave__popup'>
-        //     <div className="top">
-        //         <span>
-        //             Rời cuộc trò chuyện
-        //         </span>
-        //     </div>
-        //     <div className="icon">
-        //         <MdOutlineDeleteForever />
-        //     </div>
-        //     <div className="bottom">
-        //         <button className="btn-cancel" onClick={() => {
-        //             setIsOpenMenu(false)
-        //             setIsPopup(false)
-        //         }}>
-        //             Hủy bỏ
-        //         </button>
-        //         <button className="btn-delete" onClick={handleLeaveGroupChat}>
-        //             Rời
-        //         </button>
-        //     </div>
-        // </div>
     )
 }

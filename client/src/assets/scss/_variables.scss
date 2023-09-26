@@ -1,5 +1,59 @@
-$primary-color: rgba(58,141,245);
-$secondary-color: #ffffff;
+$colors:(primary: #fff,
+    secondary: #fff,
+    third: rgba(227, 227, 227, 0.525),
+    four: #525252,
+    green: #00A400,
+    white: #fff,
+    blue: rgba(58, 141, 245),
+    text-primary: #000,
+    text-secondary: #9A99A2,
+    text-third: rgba(58, 141, 245),
+    border-primary: rgba(205, 205, 205, 0.6),
+    border-secondary: #000,
+
+);
+
+$colors-dark:(primary: #1e1e1e,
+    secondary: #232326,
+    third: #363636,
+    four: #525252,
+    green: #00A400,
+    white: #fff,
+    blue: rgba(58, 141, 245),
+    text-primary: #fff,
+    text-secondary: #9A99A2,
+    text-third: rgba(58, 141, 245),
+    border-primary: #262626,
+    border-secondary: #fff,
+);
+
+
+:root {
+
+    @each $name,
+    $color in $colors {
+        --color-#{$name}: #{$color};
+    }
+
+    --theme: 'light';
+}
+
+[data-theme='dark'] {
+
+    @each $name,
+    $color in $colors-dark {
+        --color-#{$name}: #{$color};
+    }
+
+    --theme: 'dark';
+}
+
+@function getColor($color-name) {
+    @return var(--color-#{$color-name})
+}
+
+$primary-color: rgba(58, 141, 245);
+$secondary-color: #fff;
 $third-color: #151618;
 $four-color: #00A400;
 

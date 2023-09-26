@@ -7,7 +7,7 @@ export const ImagePreview = () => {
     const { imageChangeAvatar, setImageChangeAvatar } = useContext(CommonContext)
     const { accessToken } = useContext(AuthContext)
     const handleChangeAvatar = () => {
-        console.log(imageChangeAvatar)
+        console.log("Acction Change: ", accessToken)
         const change = async () => {
             const result = await changeAvatar(imageChangeAvatar, accessToken)
             console.log(result)

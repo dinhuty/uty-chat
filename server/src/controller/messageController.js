@@ -18,7 +18,6 @@ const createMessage = async (req, res) => {
             chat: chatId,
         };
         if (attachment) {
-            console.log("AR",attachment)
             const uploadResponse = await cloudinary.uploader.upload(attachment, {
                 upload_preset: 'uty_chat'
             })

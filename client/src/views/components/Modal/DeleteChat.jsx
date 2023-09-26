@@ -25,7 +25,6 @@ export const DeleteChat = () => {
                 <div className="header-top">
                     <div className="icon" onClick={() => {
                         setIsPopup(false)
-                        setIsOpenMenu(false)
                     }}>
                         <PiXBold />
                     </div>
@@ -49,7 +48,6 @@ export const DeleteChat = () => {
             <div className="bottom">
                 <button className="btn-cancel" onClick={() => {
                     setIsPopup(false)
-                    setIsOpenMenu(false)
                 }}
                 >
                     Hủy bỏ

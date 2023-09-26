@@ -20,7 +20,7 @@ export const register = async (data) => {
 
 export const changePassword = async (data, token) => {
     try {
-        const res = await axios.put("user/updatePassword", data, {
+        const res = await axios.patch("user/updatePassword", data, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -33,7 +33,7 @@ export const changePassword = async (data, token) => {
 
 export const changeAvatar = async (newAvatar, token) => {
     try {
-        const res = await axios.post("user/changeAvatar", { newAvatar }, {
+        const res = await axios.patch("user/changeAvatar", { newAvatar }, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }

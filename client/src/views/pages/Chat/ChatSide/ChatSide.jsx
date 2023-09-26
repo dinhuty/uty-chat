@@ -90,7 +90,7 @@ const ChatSide = () => {
                     )}
 
                 </div>
-                <HorizontalSlider />
+                {/* <HorizontalSlider /> */}
             </div>
 
             <div className="chat-side__list">

@@ -5,10 +5,11 @@ import { AuthContext } from '../../../context/AuthContext'
 import { AppLoading } from '../Loading/AppLoading'
 
 const Login = () => {
-  const { setUserCurrent } = useContext(AuthContext)
+
+  const navigate = useNavigate();
+  const { setUserCurrent, setAccessToken } = useContext(AuthContext)
   const [errorLogin, setErrorLogin] = useState('')
   const [loading, setLoading] = useState(false)
-  const navigate = useNavigate();
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -17,11 +18,12 @@ const Login = () => {
   const handleChange = (event) => {
     setData({ ...data, [event.target.name]: event.target.value });
   };
-  // Login Page
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
     if (!data.email || !data.password) {
+      setErrorLogin("Nhập thông tin cá nhân")
       return;
     }
     setLoading(true)
@@ -29,8 +31,8 @@ const Login = () => {
     if (userLogin.status === 200) {
       localStorage.setItem('user', JSON.stringify(userLogin.data.user));
       localStorage.setItem('token', userLogin.data.token);
-      console.log(userLogin)
       setUserCurrent(userLogin.data.user)
+      setAccessToken(userLogin.data.token)
       navigate('/')
       setLoading(false)
     } else {
@@ -89,9 +91,9 @@ const Login = () => {
             <span>or</span>
             <span></span>
           </div>
-          <div className="login__register-btn" onClick={() => navigate('/register')}>
+          <Link className="login__register-btn" to={"/register"}>
             Đăng ký ngay
-          </div>
+          </Link>
 
         </div>
       </div>

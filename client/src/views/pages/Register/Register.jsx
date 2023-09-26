@@ -70,7 +70,7 @@ const Register = () => {
                 value={data.email}
                 onChange={handleChange}
                 name='email'
-                autocomplete="off"
+                autoComplete="off"
               />
               <input
                 type="password"
@@ -90,7 +90,7 @@ const Register = () => {
                   value={data.firstName}
                   onChange={handleChange}
                   name='firstName'
-                  autocomplete="off"
+                  autoComplete="off"
                 />
                 <input
                   type="text"
@@ -98,7 +98,7 @@ const Register = () => {
                   value={data.lastName}
                   onChange={handleChange}
                   name='lastName'
-                  autocomplete="off"
+                  autoComplete="off"
                 />
               </div>
               <input

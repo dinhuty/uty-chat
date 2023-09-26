@@ -50,8 +50,8 @@
                 border-radius: 15px;
                 border-end-start-radius: 4px;
                 width: fit-content;
-                color: $third-color;
-                background-color: #cccccc94;
+                color: getColor(text-primary);
+                background-color: getColor(third);
             }
 
             img {
@@ -60,7 +60,8 @@
         }
 
         .message-time {
-            color: #828282;
+            color: getColor(text-secondary);
+            font-weight: 600;
             font-size: 10px;
             bottom: 0;
             display: flex;
@@ -95,11 +96,10 @@
                 p {
                     border: unset;
                     width: fit-content;
-                    color: $secondary-color;
+                    color: getColor(white);
                     border-end-start-radius: 15px;
                     border-end-end-radius: 4px;
-
-                    background-color: $primary-color;
+                    background-color: getColor(blue);
                 }
             }
 
@@ -109,7 +109,8 @@
 
             .message-time {
                 align-self: end;
-                color: rgba(113, 128, 150);
+                color: getColor(text-secondary);
+                font-weight: 600;
             }
         }
     }

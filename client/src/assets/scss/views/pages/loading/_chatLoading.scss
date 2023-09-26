@@ -1,5 +1,5 @@
 .chat-loading {
-    background-color: $secondary-color;
+    background-color: getColor(secondary);
     height: 100%;
     position: relative;
     overflow: hidden;

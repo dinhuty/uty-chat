@@ -208,7 +208,10 @@ const ChatWindow = () => {
                             />
                             <div className="btn-icon-file">
                                 {fileSlected && <div className="preview">
-                                    <div className="icon" onClick={() => setFileSelected('')}>
+                                    <div className="icon" onClick={() => {
+                                        setFileSelected('')
+                                        setFileInput('')
+                                    }}>
                                         <PiXBold />
                                     </div>
                                     <img src={fileSlected} alt="" />

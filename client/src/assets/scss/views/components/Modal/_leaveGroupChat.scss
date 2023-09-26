@@ -1,5 +1,5 @@
-.wrapper-delete__popup {
-    background-color: white;
+.wrapper-leave__popup {
+    background-color: getColor(primary);
     z-index: 28;
     padding: 20px;
     border-radius: 10px;
@@ -7,12 +7,12 @@
     flex-direction: column;
     gap: 40px;
     max-width: 90%;
-
+    border: 1px solid getColor(third);
     header {
         display: flex;
         flex-direction: column;
         gap: 20px;
-
+        color: getColor(text-primary);
         .header-top {
             align-self: flex-end;
             cursor: pointer;
@@ -46,11 +46,13 @@
                 .title {
                     font-size: 16px;
                     font-weight: 600;
+                    color: getColor(text-primary);
                 }
 
                 .sub-title {
                     font-family: 15px;
-                    color: #818181;
+                    color: getColor(text-secondary);
+
                 }
             }
 
@@ -72,17 +74,18 @@
         }
 
         .btn-cancel {
-            border: 2px solid #c4c4c4;
-
+            border: 2px solid gtColor(third);
+            background-color: getColor(third);
+            color: getColor(text-primary);
             &:hover {
                 background-color: #c4c4c4;
                 opacity: .8;
-                color: $secondary-color;
+                color: getColor(text-primary);
             }
         }
 
         .btn-delete {
-            color: $secondary-color;
+            color: getColor(white);
             background-color: rgba(255, 33, 33, 0.81);
 
             &:hover {
