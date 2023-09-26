@@ -8,19 +8,19 @@ export const ChatContext = createContext();
 const ChatProvider = ({ children }) => {
     const [listChatForUser, setListChatForUser] = useState([])
     const [idChatCurrent, setIdChatCurrent] = useState(null)
-    const { userCurrent } = useContext(AuthContext)
+    const { userCurrent, accessToken } = useContext(AuthContext)
     const sentRef = useRef(true)
     const [infoChatCurrent, setInfoChatCurrent] = useState(null)
     const [socket, setSocket] = useState(null)
     const [onlineUsers, setOnlineUsers] = useState(null)
     const [sent, setSent] = useState(true)
     const [loading, setLoading] = useState(false)
-    const { addHandle, deleteHandle, leaveGroupHandle, } = useContext(CommonContext)
+    const { addHandle, deleteHandle, leaveGroupHandle, blockHandle } = useContext(CommonContext)
 
     useEffect(() => {
         const getData = async () => {
             if (!userCurrent) return
-            const data = await getChatForUser(userCurrent?._id)
+            const data = await getChatForUser(userCurrent?._id, accessToken)
             setListChatForUser(data?.chats)
             console.log(data?.chats)
         }
@@ -31,7 +31,7 @@ const ChatProvider = ({ children }) => {
         const getData = async () => {
             setLoading(true)
             if (!userCurrent) return
-            const data = await getChatForUser(userCurrent?._id)
+            const data = await getChatForUser(userCurrent?._id, accessToken)
             setListChatForUser(data?.chats)
             if (data?.chats.length > 0) {
                 setIdChatCurrent(data?.chats[0]?._id)
@@ -39,18 +39,23 @@ const ChatProvider = ({ children }) => {
             setLoading(false)
         }
         getData()
-    }, [userCurrent, deleteHandle, leaveGroupHandle])
+    }, [userCurrent,
+        deleteHandle,
+        leaveGroupHandle])
 
     //GetInfo ChatCurrent
     useEffect(() => {
         if (!userCurrent) return
         const getData = async () => {
             if (!idChatCurrent) return
-            const data = await getInfoChat(idChatCurrent, userCurrent?._id)
+            const data = await getInfoChat(idChatCurrent, userCurrent?._id, accessToken)
             setInfoChatCurrent(data?.chatInfo)
         }
         getData()
-    }, [idChatCurrent, addHandle, leaveGroupHandle])
+    }, [idChatCurrent,
+        addHandle,
+        leaveGroupHandle,
+        blockHandle])
 
 
     //initial socket

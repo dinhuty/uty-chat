@@ -24,7 +24,7 @@ export const AddUserToGroup = () => {
         sent,
         setSent,
     } = useContext(ChatContext)
-    const { userCurrent } = useContext(AuthContext)
+    const { userCurrent, accessToken } = useContext(AuthContext)
     const [listCheck, setListCheck] = useState([])
     const [listBoxCurrent, setListBoxCurrent] = useState()
 
@@ -33,7 +33,7 @@ export const AddUserToGroup = () => {
             chatId: idChatCurrent,
             userIds: listCheck
         }
-        const res = await addUserToGroupChat(data)
+        const res = await addUserToGroupChat(data, accessToken)
         console.log("hanldeAddUserToGroupChat", res)
         setSearchText('')
         setIsPopup(false)

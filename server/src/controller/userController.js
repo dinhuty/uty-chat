@@ -120,7 +120,7 @@ const changeAvatar = async (req, res, next) => {
             throw new Error("Lỗi thay đổi avatar")
         }
         const saveAvatar = await user.save()
-        res.status(200).json({ success: "Thay thành công" })
+        res.status(200).json({ user })
 
     } catch (error) {
         res.status(500).json({ error: "Lỗi thay đổi avatar" })
@@ -173,6 +173,18 @@ const resetPassword = async (req, res, next) => {
         res.status(500).json({ error: "đổi mk ko thành công" })
     }
 }
+
+const blockUser = async (req, res, next) => {
+    try {
+        const { idUserBlock } = req.body
+        const user = req.user
+        user.blockedUsers.push(idUserBlock)
+        const save = await user.save()
+        res.status(200).json({ succes: "Blocked" })
+    } catch (error) {
+        res.status(500).json({ error: "Lỗi server" })
+    }
+}
 module.exports = {
     signin,
     signup,
@@ -183,5 +195,6 @@ module.exports = {
     forgotPassword,
     resetPasswordForm,
     resetPassword,
-    changeAvatar
+    changeAvatar,
+    blockUser
 }

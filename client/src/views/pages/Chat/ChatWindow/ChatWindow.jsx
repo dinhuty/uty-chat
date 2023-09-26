@@ -17,7 +17,9 @@ import { LoadMoreMessages } from '../../Loading/LoadMoreMessages'
 import { EndMessage } from '../../../components/Message/EndMessage'
 import { BiImageAdd } from "react-icons/bi";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { PiXBold } from 'react-icons/pi'
+import { PiWarning, PiXBold } from 'react-icons/pi'
+import { checkAvaiableChat } from '../../../../utils/checkAvaiableChat'
+import { getUserWithoutUserCr } from '../../../../utils/getIdWithoutUser'
 
 const ChatWindow = () => {
     const {
@@ -28,7 +30,7 @@ const ChatWindow = () => {
         setSent,
         onlineUsers
     } = useContext(ChatContext)
-    const { userCurrent } = useContext(AuthContext)
+    const { userCurrent, accessToken } = useContext(AuthContext)
     const {
         listMessageInChat,
         setListMessageInChat,
@@ -78,7 +80,7 @@ const ChatWindow = () => {
         setContentMessage('');
         setFileInput('')
         setFileSelected('')
-        const messageData = await sendMessage(data);
+        const messageData = await sendMessage(data, accessToken);
         setNewMessage(messageData.message);
         sentRef.current = !sentRef.current;
         setSent(sentRef.current);
@@ -95,7 +97,7 @@ const ChatWindow = () => {
             if (idChatCurrent === res.chat) {
                 setListMessageInChat((prev => [res, ...prev]))
                 const updateMessRead = async (idChat) => {
-                    const result = await maskAllMessageRead(idChat)
+                    const result = await maskAllMessageRead(idChat, accessToken)
                 }
                 updateMessRead(res.chat)
 
@@ -110,7 +112,7 @@ const ChatWindow = () => {
 
     const fetchData = async () => {
         page.current += 1;
-        const data = await getListMessageInChat(idChatCurrent, page.current)
+        const data = await getListMessageInChat(idChatCurrent, page.current, accessToken)
         setListMessageInChat(prevMessages => [...prevMessages, ...data.messages]);
 
     };
@@ -137,7 +139,9 @@ const ChatWindow = () => {
                     <div className="header" >
                         <div className="header__left">
                             <div className="user-avatar">
-                                <Avatar avatar={avatar} />
+                                {infoChatCurrent &&
+                                    <Avatar avatar={getUserWithoutUserCr(infoChatCurrent, userCurrent)?.avatarURL ? getUserWithoutUserCr(infoChatCurrent, userCurrent)?.avatarURL : avatar} />
+                                }
                                 {checkOnlineStatus(onlineUsers, infoChatCurrent, userCurrent) && <div className='user-avatar__status'></div>}
                             </div>
                             {infoChatCurrent &&
@@ -178,6 +182,7 @@ const ChatWindow = () => {
                                         const isLastMessageFromSender = lastSenderId !== message?.sender?._id;
                                         const shouldDisplayAvatar = isLastMessageFromSender;
                                         lastSenderId = message?.sender?._id;
+                                        console.log(message)
                                         return (
                                             <Message
                                                 key={index}
@@ -198,42 +203,52 @@ const ChatWindow = () => {
 
                     }
                     <div className="chat__bottom">
-                        <form className="bottom-box" onSubmit={handleSendMessgae}>
-                            <input
-                                className='ip-text'
-                                type="text"
-                                placeholder='Nhập tin nhắn'
-                                value={contentMessage}
-                                onChange={(e) => setContentMessage(e.target.value)}
-                            />
-                            <div className="btn-icon-file">
-                                {fileSlected && <div className="preview">
-                                    <div className="icon" onClick={() => {
-                                        setFileSelected('')
-                                        setFileInput('')
-                                    }}>
-                                        <PiXBold />
+                        {
+                            infoChatCurrent?.avaiable ?
+                                <form className="bottom-box" onSubmit={handleSendMessgae}>
+                                    <input
+                                        className='ip-text'
+                                        type="text"
+                                        placeholder='Nhập tin nhắn'
+                                        value={contentMessage}
+                                        onChange={(e) => setContentMessage(e.target.value)}
+                                    />{console.log(checkAvaiableChat(infoChatCurrent, userCurrent))}
+                                    <div className="btn-icon-file">
+                                        {fileSlected && <div className="preview">
+                                            <div className="icon" onClick={() => {
+                                                setFileSelected('')
+                                                setFileInput('')
+                                            }}>
+                                                <PiXBold />
+                                            </div>
+                                            <img src={fileSlected} alt="" />
+                                        </div>}
+                                        <label htmlFor="fileInput" className="file-input-label">
+                                            <BiImageAdd />
+                                        </label>
+                                        <input
+                                            id="fileInput"
+                                            type="file"
+                                            accept="image/*, video/*"
+                                            value={fileInput}
+                                            onChange={handleFileChange}
+                                            style={{ display: 'none' }} // Ẩn trường input file
+                                        />
                                     </div>
-                                    <img src={fileSlected} alt="" />
-                                </div>}
-                                <label htmlFor="fileInput" className="file-input-label">
-                                    <BiImageAdd />
-                                </label>
-                                <input
-                                    id="fileInput"
-                                    type="file"
-                                    accept="image/*, video/*"
-                                    value={fileInput}
-                                    onChange={handleFileChange}
-                                    style={{ display: 'none' }} // Ẩn trường input file
-                                />
-                            </div>
-                            <button type="submit" >
-                                <div className="btn-icon-send">
-                                    <LuSendHorizonal />
+                                    <button type="submit" >
+                                        <div className="btn-icon-send">
+                                            <LuSendHorizonal />
+                                        </div>
+                                    </button>
+                                </form>
+                                :
+                                <div className="form-noti">
+                                    <h1>Bạn không thể nhắn tin với người này!</h1>
+                                    <div className="icon">
+                                        <PiWarning />
+                                    </div>
                                 </div>
-                            </button>
-                        </form>
+                        }
                     </div>
                 </div>
                 :

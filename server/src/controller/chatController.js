@@ -57,7 +57,7 @@ const getChatById = async (req, res) => {
             return res.status(404).json({ status: 'Chat not found' });
         }
 
-        const chatInfo = await ChatModel.populate(chat, { path: 'participants', select: 'firstName lastName email' });
+        const chatInfo = await ChatModel.populate(chat, { path: 'participants', select: 'firstName lastName email avatarURL' });
 
         res.status(200).json({ chatInfo });
     } catch (error) {
@@ -99,7 +99,7 @@ const getChatsForUser = async (req, res) => {
             .sort({ updatedAt: -1 })
             .lean();
         const populatedChats = await Promise.all(chats.map(async (chat) => {
-            const populatedChat = await ChatModel.populate(chat, { path: 'participants', select: 'firstName lastName email' });
+            const populatedChat = await ChatModel.populate(chat, { path: 'participants', select: 'firstName lastName email avatarURL' });
             const latestMessage = await MessageModel
                 .findOne({ chat: chat._id })
                 .sort({ createdAt: -1 })
@@ -154,6 +154,32 @@ const deleteChat = async (req, res) => {
     }
 };
 
+const blockChat = async (req, res) => {
+    try {
+        const chatId = req.body.chatId;
+        const user = req.user
+        const chat = await ChatModel.findById(chatId);
+        if (!chat) {
+            return res.status(404).json({ status: 'Chat not found' });
+        }
+        const isUserInChat = chat.participants.includes(user._id);
+        if (!isUserInChat) {
+            return res.status(403).json({ status: 'Access denied' });
+        }
+        const updatedChat = await ChatModel.findByIdAndUpdate(
+            chatId,
+            { avaiable: false },
+            { new: true }
+        );
+        if (!updatedChat) {
+            return res.status(404).json({ status: 'Chat not found' });
+        }
+        res.status(200).json({ status: 'Success', message: 'Blocked' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ status: 'Error' });
+    }
+};
 
 
 
@@ -164,5 +190,7 @@ module.exports = {
     addParticipantToChat,
     deleteChat,
     leaveGroupChat,
-    getChatById
+    getChatById,
+    blockChat,
+    
 };

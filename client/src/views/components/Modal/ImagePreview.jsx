@@ -1,25 +1,32 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { CommonContext } from '../../../context/CommonContext'
 import { changeAvatar } from '../../../services/Api/auth'
 import { AuthContext } from '../../../context/AuthContext'
+import { AppLoading } from '../../pages/Loading/AppLoading'
 
 export const ImagePreview = () => {
     const { imageChangeAvatar, setImageChangeAvatar } = useContext(CommonContext)
-    const { accessToken } = useContext(AuthContext)
-    const handleChangeAvatar = () => {
+    const { accessToken, setUserCurrent } = useContext(AuthContext)
+    const [loading, setLoading] = useState(false)
+    const handleChangeAvatar = async () => {
         console.log("Acction Change: ", accessToken)
-        const change = async () => {
-            const result = await changeAvatar(imageChangeAvatar, accessToken)
-            console.log(result)
-        }
-        change()
+        setLoading(true)
+        const result = await changeAvatar(imageChangeAvatar, accessToken)
+        setUserCurrent(result.data.user)
+        localStorage.setItem('user', JSON.stringify(result.data.user));
+        setImageChangeAvatar('')
+        setLoading(false)
     }
     return (
         <div className='app-image-preview'>
             <div className="image-blur" onClick={() => {
                 setImageChangeAvatar("")
             }}>
-
+                {
+                    loading && <div className="loading">
+                        <AppLoading />
+                    </div>
+                }
             </div>
             <main>
                 <div className="avatar">

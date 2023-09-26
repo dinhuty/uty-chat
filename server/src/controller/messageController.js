@@ -51,7 +51,7 @@ const getMessagesInChat = async (req, res) => {
 
         const messages = await messageModel
             .find({ chat: chatId })
-            .populate('sender', 'firstName lastName')
+            .populate('sender', 'firstName lastName avatarURL')
             .sort({ createdAt: -1 })
             .skip((page - 1) * limit)
             .limit(limit);

@@ -4,6 +4,7 @@ import CreateGroup from './Modal/CreateGroup'
 import { AddUserToGroup } from './Modal/AddUserToGroup'
 import { DeleteChat } from './Modal/DeleteChat'
 import { LeaveChat } from './Modal/LeaveChat'
+import { BlockUser } from './Modal/BlockUser'
 
 const ActionPopup = ({ action }) => {
     const { setIsPopup } = useContext(CommonContext)
@@ -23,7 +24,7 @@ const ActionPopup = ({ action }) => {
             componentToRender = <LeaveChat />;
             break;
         case "BLOCK_USER":
-            componentToRender = <DeleteChat />;
+            componentToRender = <BlockUser />;
             break;
         default:
             componentToRender = <CreateGroup />;

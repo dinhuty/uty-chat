@@ -13,12 +13,14 @@ export const LeaveChat = () => {
         setLeaveGroupHandle
     } = useContext(CommonContext)
     const { idChatCurrent } = useContext(ChatContext)
-    const { userCurrent } = useContext(AuthContext)
+    const { userCurrent, accessToken } = useContext(AuthContext)
     const handleLeaveGroupChat = async () => {
         const leaveAction = await leaveChat({
             chatId: idChatCurrent,
             userId: userCurrent._id
-        })
+        },
+            accessToken
+        )
         setIsPopup(false)
         setIsOpenMenu(false)
         setLeaveGroupHandle(!leaveGroupHandle)

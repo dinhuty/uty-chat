@@ -15,7 +15,7 @@ const CommonProvider = ({ children }) => {
     const [addHandle, setAddHandle] = useState(false)
     const [deleteHandle, setDeleteHandle] = useState(false)
     const [leaveGroupHandle, setLeaveGroupHandle] = useState(false)
-
+    const [blockHandle,setBlockHandle] = useState(false)
     //theme
     const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const [theme, setTheme] = useLocalStorage('theme', defaultDark ? 'dark' : 'light');
@@ -41,7 +41,9 @@ const CommonProvider = ({ children }) => {
             imageChangeAvatar,
             setImageChangeAvatar,
             theme,
-            setTheme
+            setTheme,
+            blockHandle,
+            setBlockHandle
         }}>
             {children}
         </CommonContext.Provider>

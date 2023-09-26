@@ -9,7 +9,8 @@ const {
     forgotPassword,
     resetPasswordForm,
     resetPassword,
-    changeAvatar
+    changeAvatar,
+    blockUser
 } = require('../controller/userController')
 const auth = require('../middleware/auth')
 
@@ -24,6 +25,7 @@ router.post('/forgotPassword', forgotPassword)
 router.get('/resetpassword/:id/:token', resetPasswordForm)
 router.post('/resetpassword/:id/:token', resetPassword)
 router.patch('/changeAvatar', auth, changeAvatar)
+router.patch('/block', auth, blockUser)
 router.get('/me', userProfile)
 
 

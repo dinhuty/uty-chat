@@ -14,7 +14,7 @@ const AuthProvider = ({ children }) => {
             setAccessToken(token)
         }
     }, [])
-    console.log("Auth token", accessToken)
+    console.log("User", userCurrent)
     return (
         <AuthContext.Provider value={{
             userCurrent,

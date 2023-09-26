@@ -1,24 +1,26 @@
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { ChatContext } from "./ChatContext";
 import { getListMessageInChat } from "../services/Api/message";
+import { CommonContext } from "./CommonContext";
+import { AuthContext } from "./AuthContext";
 
 export const MessageContext = createContext()
 
 const MessageProvider = ({ children }) => {
     const [listMessageInChat, setListMessageInChat] = useState(null)
     const { idChatCurrent } = useContext(ChatContext)
+    const { accessToken } = useContext(AuthContext)
     const [newMessage, setNewMessage] = useState('')
     const [totalPages, setTotalPages] = useState(1)
     const page = useRef(1)
     const hasMore = useRef(true)
     const [imageOpen, setImageOpen] = useState('')
-
     useEffect(() => {
         page.current = 1
         hasMore.current = true
         const getData = async () => {
             if (!idChatCurrent) return;
-            const data = await getListMessageInChat(idChatCurrent, page)
+            const data = await getListMessageInChat(idChatCurrent, page, accessToken)
             setListMessageInChat(data.messages)
             setTotalPages(data.totalPages)
         }
@@ -34,7 +36,7 @@ const MessageProvider = ({ children }) => {
             totalPages,
             page,
             hasMore,
-            imageOpen, 
+            imageOpen,
             setImageOpen
         }}>
             {children}

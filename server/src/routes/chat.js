@@ -5,16 +5,20 @@ const { createChatBetweenTwoUsers,
     addParticipantToChat,
     deleteChat,
     getChatById,
-    leaveGroupChat } = require('../controller/chatController')
+    leaveGroupChat,
+    blockChat
+} = require('../controller/chatController')
+const auth = require('../middleware/auth')
 
 const router = express.Router()
 
-router.post('/create', createChatBetweenTwoUsers)
-router.post('/create/group', createGroupChat)
-router.post('/add/group', addParticipantToChat)
-router.put('/leave/group', leaveGroupChat)
-router.delete('/delete/:chatId', deleteChat)
-router.get('/list/:userId', getChatsForUser)
-router.get('/info/:chatId/:userId', getChatById)
+router.post('/create', auth, createChatBetweenTwoUsers)
+router.post('/create/group', auth, createGroupChat)
+router.post('/add/group', auth, addParticipantToChat)
+router.put('/leave/group', auth, leaveGroupChat)
+router.delete('/delete/:chatId', auth, deleteChat)
+router.get('/list/:userId', auth, getChatsForUser)
+router.get('/info/:chatId/:userId',auth, getChatById)
+router.patch('/block', auth, blockChat)
 
 module.exports = router

@@ -16,13 +16,14 @@ import NameChat from '../../../common/NameChat'
 import { AuthContext } from '../../../../context/AuthContext'
 import ActionPopup from '../../../components/ActionPopup'
 import Avatar from '../../../components/Avatar'
+import { getUserWithoutUserCr } from '../../../../utils/getIdWithoutUser'
 
 
 const ChatMenu = () => {
     const { isOpenMenu,
-            setIsOpenMenu,
-            isPopup,
-            setIsPopup } = useContext(CommonContext)
+        setIsOpenMenu,
+        isPopup,
+        setIsPopup } = useContext(CommonContext)
     const { infoChatCurrent } = useContext(ChatContext)
     const { userCurrent } = useContext(AuthContext)
     const [actionOption, setActionOption] = useState(null)
@@ -111,7 +112,9 @@ const ChatMenu = () => {
                 </div>
                 <div className="menu-options__info">
                     <div className="avatar">
-                        <Avatar avatar={avatar} />
+                        {infoChatCurrent &&
+                            <Avatar avatar={getUserWithoutUserCr(infoChatCurrent, userCurrent)?.avatarURL ? getUserWithoutUserCr(infoChatCurrent, userCurrent)?.avatarURL : avatar} />
+                        }
                     </div>
                     <div className="name">
                         {infoChatCurrent &&
@@ -130,15 +133,21 @@ const ChatMenu = () => {
                                     <Wraper item={item} key={index} action={item.action} />
                                 )
                             }
-                            if (!infoChatCurrent.isGroup && item.type === 2) {
+                            if (!infoChatCurrent.isGroup && item.type === 2 && infoChatCurrent?.avaiable) {
                                 return (
                                     <Wraper item={item} key={index} action={item.action} />
                                 )
                             }
-                            if (item.type === 1)
-                                return (
-                                    <Wraper item={item} key={index} action={item.action} />
-                                )
+                            if (item.type === 1) {
+                                if (item.action === "BLOCK_USER" && !infoChatCurrent?.avaiable)
+                                    return
+                                else
+                                    return (
+                                        <Wraper item={item} key={index} action={item.action} />
+                                    )
+
+                            }
+
                         })
                     }
                 </div>

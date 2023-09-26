@@ -53,3 +53,18 @@ export const forgotPassword = async (email) => {
         return error.response
     }
 }
+
+
+export const blockUser = async (idUserBlock, token) => {
+    try {
+        const res = await axios.patch("user/block", { idUserBlock },
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+        return res
+    } catch (error) {
+        return error.response
+    }
+}

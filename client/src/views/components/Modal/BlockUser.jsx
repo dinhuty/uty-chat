@@ -1,28 +1,36 @@
 import React, { useContext } from 'react'
 import { CommonContext } from '../../../context/CommonContext';
 import { ChatContext } from '../../../context/ChatContext';
-import { deleteChat } from '../../../services/Api/chat';
+import { blockChat, deleteChat } from '../../../services/Api/chat';
 import { PiWarning, PiXBold } from "react-icons/pi";
 import { AuthContext } from '../../../context/AuthContext';
+import { blockUser } from '../../../services/Api/auth';
+import { getIdWithoutUser } from '../../../utils/getIdWithoutUser';
 
-export const DeleteChat = () => {
+export const BlockUser = () => {
     const { setIsPopup,
         setIsOpenMenu,
         deleteHandle,
-        setDeleteHandle
+        setDeleteHandle,
+        blockHandle,
+        setBlockHandle
     } = useContext(CommonContext)
-    const { idChatCurrent } = useContext(ChatContext)
-    const { accessToken } = useContext(AuthContext)
+    const { infoChatCurrent, idChatCurrent } = useContext(ChatContext)
+    const { accessToken, userCurrent, setUserCurrent } = useContext(AuthContext)
 
-    const handleDeleteChat = async () => {
-        const deleteAChat = await deleteChat(idChatCurrent, accessToken)
+    console.log(infoChatCurrent)
+    const handleBlockUser = async () => {
+        if (infoChatCurrent?.isGroup) return
+        const idBlock = getIdWithoutUser(infoChatCurrent, userCurrent)
+        const blockAUser = await blockUser(idBlock, accessToken)
+        const blockAChat = await blockChat(idChatCurrent, accessToken)
         setIsPopup(false)
         setIsOpenMenu(false)
-        setDeleteHandle(!deleteHandle)
+        setBlockHandle(!blockHandle)
 
     }
     return (
-        <section className='wrapper-delete__popup'>
+        <section className='wrapper-block__popup'>
             <header>
                 <div className="header-top">
                     <div className="icon" onClick={() => {
@@ -37,10 +45,10 @@ export const DeleteChat = () => {
                     </div>
                     <div className="main">
                         <div className="title">
-                            Bạn chắc chắn muốn xóa cuộc trò chuyện này
+                            Bạn chắc chắn muốn chặn người dùng này
                         </div>
                         <div className="sub-title">
-                            Bạn sẽ không thể khôi phục
+                            Bạn sẽ không thể nhận được tin nhắn
                         </div>
                     </div>
                 </div>
@@ -54,8 +62,8 @@ export const DeleteChat = () => {
                 >
                     Hủy bỏ
                 </button>
-                <button className="btn-delete" onClick={handleDeleteChat}>
-                    Xóa
+                <button className="btn-delete" onClick={handleBlockUser}>
+                    Chặn
                 </button>
             </div>
         </section>

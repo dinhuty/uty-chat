@@ -11,6 +11,8 @@ import { MessageContext } from '../../../../context/MessageContext'
 import { maskAllMessageRead } from '../../../../services/Api/message'
 import NameChat from '../../../common/NameChat'
 import { getListIdCurrent } from '../../../../utils/getListIdCurrent'
+import Avatar from '../../../components/Avatar'
+import { getUserWithoutUserCr } from '../../../../utils/getIdWithoutUser'
 
 const ChatSide = () => {
     const sliderRef = useRef(null);
@@ -21,7 +23,7 @@ const ChatSide = () => {
         onlineUsers,
         setListChatForUser,
     } = useContext(ChatContext);
-    const { userCurrent } = useContext(AuthContext)
+    const { userCurrent, accessToken } = useContext(AuthContext)
     const { idChatCurrent } = useContext(ChatContext)
     const { listMessageInChat } = useContext(MessageContext)
 
@@ -42,7 +44,7 @@ const ChatSide = () => {
             user1Id: userCurrent._id,
             user2Id: id
         }
-        const createAChat = await createChat(data)
+        const createAChat = await createChat(data, accessToken)
         if (createAChat?.status === 200) {
             setIdChatCurrent(createAChat?.data?.chat?._id)
         } else if (createAChat?.status === 201) {
@@ -71,7 +73,7 @@ const ChatSide = () => {
                                 {listNewUser.map((item) => (
                                     <div className="search-list__item" key={item._id} onClick={() => hanldeCreateChat(item._id)}>
                                         <div className="avatar">
-                                            <img className="w-10 h-10 rounded-full" src={avatar} alt="Rounded avatar" />
+                                            <Avatar avatar={item?.avatarURL ? item?.avatarURL : avatar} />
                                             <div className="avatar-status"></div>
                                         </div>
                                         <div className="desc">
@@ -102,7 +104,7 @@ const ChatSide = () => {
                         >
                             <div className="item__left">
                                 <div className="avatar">
-                                    <img className="w-10 h-10 rounded-full" src={avatar} alt="Rounded avatar" />
+                                    <Avatar avatar={getUserWithoutUserCr(item, userCurrent)?.avatarURL ? getUserWithoutUserCr(item, userCurrent)?.avatarURL : avatar} />
                                     {checkOnlineStatus(onlineUsers, item, userCurrent) && <div className="avatar-status">
                                     </div>}
                                 </div>

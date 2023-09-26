@@ -10,7 +10,7 @@ import { CommonContext } from '../../../../context/CommonContext'
 
 
 const SideMenu = () => {
-    const { setUserCurrent } = useContext(AuthContext);
+    const { setUserCurrent, userCurrent } = useContext(AuthContext);
     const { isProfileOpen, setIsProfileOpen } = useContext(CommonContext)
     const navigate = useNavigate()
     const hanldeLogout = () => {
@@ -23,7 +23,7 @@ const SideMenu = () => {
     return (
         <div className='side-menu'>
             <div className="side-menu__top" onClick={() => setIsProfileOpen(true)}>
-                <Avatar avatar={avatar} />
+                <Avatar avatar={userCurrent?.avatarURL ? userCurrent?.avatarURL : avatar} />
             </div>
             <div className="side-menu__main">
                 <div className="side-menu__item active">

@@ -103,8 +103,8 @@
             .form__submit {
                 width: 100%;
                 height: 45px;
-                background-color: getColor(blue);
-                color: getColor(white);
+                background-color: getColor(Cblue);
+                color: getColor(Cwhite);
                 font-weight: 600;
                 margin-top: 12px;
                 border-radius: 5px;
@@ -129,16 +129,16 @@
             @include flex-center;
             width: 100%;
             height: 45px;
-            background-color: getColor(white);
-            color: getColor(blue);
-            border: 2px solid getColor(blue);
+            background-color: getColor(Cwhite);
+            color: getColor(Cblue);
+            border: 2px solid getColor(Cblue);
             font-weight: 600;
             border-radius: 5px;
             transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
 
             &:hover {
-                background-color: getColor(blue);
-                color: getColor(white);
+                background-color: getColor(Cblue);
+                color: getColor(Cwhite);
             }
         }
 

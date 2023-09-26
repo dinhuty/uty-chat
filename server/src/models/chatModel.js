@@ -9,6 +9,10 @@ const chatSchema = mongoose.Schema({
         type: Boolean,
         default: false, // Giá trị mặc định là false
     },
+    avaiable: {
+        type: Boolean,
+        default: true, // Giá trị mặc định là false
+    },
     participants: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

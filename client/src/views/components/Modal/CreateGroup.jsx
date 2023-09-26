@@ -20,14 +20,14 @@ const CreateGroup = () => {
     } = useContext(CommonContext)
     const [listSearch, setListSearch] = useState(null)
     const { infoChatCurrent, setIdChatCurrent } = useContext(ChatContext)
-    const { userCurrent } = useContext(AuthContext)
+    const { userCurrent, accessToken } = useContext(AuthContext)
     const [listCheck, setListCheck] = useState(null)
     const hanldeCreateGroupChat = async () => {
         const data = {
             name: "",
             participantIds: listCheck
         }
-        const res = await createGroupChat(data)
+        const res = await createGroupChat(data, accessToken)
         console.log(res)
         setIdChatCurrent(res.data.chat._id)
         setSearchText('')

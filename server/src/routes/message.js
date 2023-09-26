@@ -1,4 +1,5 @@
 const express = require('express')
+const auth = require('../middleware/auth')
 const { createMessage,
     getMessagesInChat,
     getMessageById,
@@ -7,11 +8,9 @@ const { createMessage,
 
 const router = express.Router()
 
-router.post('/create', createMessage)
-router.get('/list/:chatId', getMessagesInChat)
-router.get('/info/:messageId', getMessageById)
-router.put('/update-read/:chatId', markAllMessagesAsRead)
-
-
+router.post('/create', auth, createMessage)
+router.get('/list/:chatId',auth, getMessagesInChat)
+router.get('/info/:messageId',auth, getMessageById)
+router.put('/update-read/:chatId', auth, markAllMessagesAsRead)
 
 module.exports = router

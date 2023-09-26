@@ -8,6 +8,11 @@
         height: 30px;
         width: 30px;
         align-self: end;
+        img{
+            height: 100%;
+            width: 100%;
+        }
+    
     }
 
     .message-content {
@@ -96,10 +101,10 @@
                 p {
                     border: unset;
                     width: fit-content;
-                    color: getColor(white);
+                    color: getColor(Cwhite);
                     border-end-start-radius: 15px;
                     border-end-end-radius: 4px;
-                    background-color: getColor(blue);
+                    background-color: getColor(Cblue);
                 }
             }
 
