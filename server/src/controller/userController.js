@@ -34,13 +34,14 @@ const signin = async (req, res, next) => {
         const refreshToken = await user.generateRefreshToken()
         const updateUser = await User.findByIdAndUpdate(user._id, {
             refreshToken: refreshToken
-        })
+        }, { new: true })
+        await updateUser.save()
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
             maxAge: 72 * 60 * 60 * 1000
         })
         // mailer(email, `<h1>Hi ${user.name}! Ban vua dang nhap he thong</h1>`)
-        res.status(200).json({ user, token })
+        res.status(200).json({ user: updateUser, token })
     } catch (error) {
         console.log(error)
         res.status(500).json({ status: "Error" })
@@ -185,6 +186,23 @@ const blockUser = async (req, res, next) => {
         res.status(500).json({ error: "Lỗi server" })
     }
 }
+const refreshToken = async (req, res, next) => {
+    try {
+        const { refreshToken } = req.body
+        console.log(refreshToken)
+        // const cookie = req.cookies
+        // if (!cookie?.refreshToken) throw new Error('No Refesh Token in Cookie')
+        // const refreshToken = cookie.refreshToken
+        const user = await User.findOne({ refreshToken })
+        if (!user) throw new Error('No RefresToken present in db or no match')
+        const data = jwt.verify(refreshToken, process.env.JWT_KEY)
+        const accessToken = await user.generateAuthToken()
+
+        res.status(200).json({ accessToken })
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+}
 module.exports = {
     signin,
     signup,
@@ -196,5 +214,6 @@ module.exports = {
     resetPasswordForm,
     resetPassword,
     changeAvatar,
-    blockUser
+    blockUser,
+    refreshToken
 }

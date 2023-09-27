@@ -10,15 +10,9 @@ import { CommonContext } from '../../../../context/CommonContext'
 
 
 const SideMenu = () => {
-    const { setUserCurrent, userCurrent } = useContext(AuthContext);
-    const { isProfileOpen, setIsProfileOpen } = useContext(CommonContext)
-    const navigate = useNavigate()
-    const hanldeLogout = () => {
-        localStorage.removeItem('user');
-        localStorage.removeItem('token')
-        setUserCurrent(null)
-        navigate('/login')
-    }
+    const { userCurrent } = useContext(AuthContext);
+    const { setIsProfileOpen } = useContext(CommonContext)
+
 
     return (
         <div className='side-menu'>
@@ -48,10 +42,6 @@ const SideMenu = () => {
                 </div>
             </div>
             <div className="side-menu__bottom">
-                {/* <div className="side-menu__item" onClick={hanldeLogout}>
-                    <FontAwesomeIcon icon={faArrowRightFromBracket} />
-
-                </div> */}
             </div>
         </div>
     )

@@ -63,7 +63,7 @@ const ChatMenu = () => {
             type: 1,
             icon: reportIcon,
             name: "Thông báo",
-            action: "",
+            action: "NOTIFICATION",
         },
         {
             type: 1,
@@ -78,9 +78,13 @@ const ChatMenu = () => {
             action: "DELETE_CHAT",
         }
     ]
+
+
+
     const Wraper = ({ item, action }) => {
         return (
             <div className="menu__item" onClick={() => {
+                if (action === "NOTIFICATION") return
                 setActionOption(action)
                 setIsPopup(true)
             }}>
@@ -92,9 +96,19 @@ const ChatMenu = () => {
                         {item.name}
                     </div>
                 </div>
-                <div className="item__right">
-                    <img src={rightArrowIcon} alt="" />
-                </div>
+                {action === "NOTIFICATION" ?
+                    <div className="item__right">
+                        <label className="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" value="" className="sr-only peer" defaultChecked={true} />
+                            <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                        </label>
+                    </div>
+                    :
+                    <div className="item__right">
+                        <img src={rightArrowIcon} alt="" />
+                    </div>
+                }
+
             </div>
         )
     }

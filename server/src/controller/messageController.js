@@ -81,9 +81,8 @@ const getMessageById = async (req, res) => {
 
 const markMessageAsRead = async (req, res) => {
     try {
-        const messageId = req.params.messageId; // Lấy ID của tin nhắn từ URL hoặc tham số yêu cầu
+        const messageId = req.params.messageId; 
 
-        // Tìm và cập nhật tin nhắn
         const updatedMessage = await messageModel.findByIdAndUpdate(
             messageId,
             { isRead: true },

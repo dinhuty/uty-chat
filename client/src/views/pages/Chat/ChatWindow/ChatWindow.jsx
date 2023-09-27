@@ -9,17 +9,16 @@ import { checkOnlineStatus } from '../../../../utils/checkOnlineStatus'
 import { IoCallOutline, IoVideocamOutline, IoEllipsisVerticalOutline } from "react-icons/io5";
 import Avatar from '../../../components/Avatar'
 import { LuSendHorizonal } from "react-icons/lu";
-import { ImAttachment } from "react-icons/im";
 import { CommonContext } from '../../../../context/CommonContext'
 import NameChat from '../../../common/NameChat'
 import InfiniteScroll from "react-infinite-scroll-component"
 import { LoadMoreMessages } from '../../Loading/LoadMoreMessages'
 import { EndMessage } from '../../../components/Message/EndMessage'
 import { BiImageAdd } from "react-icons/bi";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { PiWarning, PiXBold } from 'react-icons/pi'
 import { checkAvaiableChat } from '../../../../utils/checkAvaiableChat'
 import { getUserWithoutUserCr } from '../../../../utils/getIdWithoutUser'
+import { getInfoChat } from '../../../../services/Api/chat'
 
 const ChatWindow = () => {
     const {
@@ -28,7 +27,8 @@ const ChatWindow = () => {
         socket,
         sentRef,
         setSent,
-        onlineUsers
+        onlineUsers,
+        setInfoChatCurrent
     } = useContext(ChatContext)
     const { userCurrent, accessToken } = useContext(AuthContext)
     const {
@@ -91,6 +91,7 @@ const ChatWindow = () => {
         const recipientIds = infoChatCurrent?.participants.filter((user) => user._id !== userCurrent._id)
         socket.emit("sendMessage", { newMessage, recipientIds })
     }, [newMessage])
+
     useEffect(() => {
         if (socket === null) return
         socket.on("getMessage", res => {
@@ -105,6 +106,18 @@ const ChatWindow = () => {
             sentRef.current = !sentRef.current
             setSent(sentRef.current)
         })
+        socket.on("hasBlock", res => {
+            if (idChatCurrent === res) {
+
+                const getChat = async (idChatCurrent) => {
+                    const result = await getInfoChat(idChatCurrent, userCurrent._id, accessToken)
+                    setInfoChatCurrent(result?.chatInfo)
+
+                }
+                getChat()
+            }
+        })
+
         return () => {
             socket.off("getMessage")
         }
@@ -175,14 +188,16 @@ const ChatWindow = () => {
                                 className='chat__display'
                                 scrollableTarget="scrollableDiv"
                                 loader={<LoadMoreMessages />}
-                                endMessage={<EndMessage />}
+                                endMessage={<EndMessage
+                                    chat={infoChatCurrent}
+                                    userCurrent={userCurrent}
+                                />}
                             >
                                 {
                                     listMessageInChat?.slice().map((message, index) => {
                                         const isLastMessageFromSender = lastSenderId !== message?.sender?._id;
                                         const shouldDisplayAvatar = isLastMessageFromSender;
                                         lastSenderId = message?.sender?._id;
-                                        console.log(message)
                                         return (
                                             <Message
                                                 key={index}
@@ -212,7 +227,7 @@ const ChatWindow = () => {
                                         placeholder='Nhập tin nhắn'
                                         value={contentMessage}
                                         onChange={(e) => setContentMessage(e.target.value)}
-                                    />{console.log(checkAvaiableChat(infoChatCurrent, userCurrent))}
+                                    />
                                     <div className="btn-icon-file">
                                         {fileSlected && <div className="preview">
                                             <div className="icon" onClick={() => {

@@ -11,7 +11,7 @@ export const DeleteChat = () => {
         deleteHandle,
         setDeleteHandle
     } = useContext(CommonContext)
-    const { idChatCurrent } = useContext(ChatContext)
+    const { idChatCurrent, listChatForUser, setIdChatCurrent } = useContext(ChatContext)
     const { accessToken } = useContext(AuthContext)
 
     const handleDeleteChat = async () => {

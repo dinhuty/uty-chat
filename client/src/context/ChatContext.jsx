@@ -35,6 +35,8 @@ const ChatProvider = ({ children }) => {
             setListChatForUser(data?.chats)
             if (data?.chats.length > 0) {
                 setIdChatCurrent(data?.chats[0]?._id)
+            }else{
+                setIdChatCurrent(null)
             }
             setLoading(false)
         }

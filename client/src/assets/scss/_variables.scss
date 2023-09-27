@@ -5,10 +5,11 @@ $colors:(primary: #fff,
     Cgreen: #00A400,
     Cwhite: #fff,
     Cblue: rgba(58, 141, 245),
+    Cgray: #c1c1c1,
     text-primary: #000,
     text-secondary: #9A99A2,
     text-third: rgba(58, 141, 245),
-    border-primary: rgba(205, 205, 205, 0.6),
+    border-primary: rgba(228, 224, 224, 0.492),
     border-secondary: #000,
 
 );
@@ -20,6 +21,7 @@ $colors-dark:(primary: #1e1e1e,
     Cgreen: #00A400,
     Cwhite: #fff,
     Cblue: rgba(58, 141, 245),
+    Cgray: #363636,
     text-primary: #fff,
     text-secondary: #9A99A2,
     text-third: rgba(58, 141, 245),
@@ -56,16 +58,11 @@ $primary-color: rgba(58, 141, 245);
 $secondary-color: #fff;
 $third-color: #151618;
 $four-color: #00A400;
-
 $text-primary-color: #1a1c21;
 $text-secondary-color: #969696;
-
-
 $primary-bg-color: #fff;
 $secondary-bg-color:#f0f0f0;
-
 $border-layout-color:#e6e6e6;
 $border-color: #e6e6e6;
-
 $offset: 160;
 $duration: 1s;

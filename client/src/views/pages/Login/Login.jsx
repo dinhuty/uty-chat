@@ -7,14 +7,13 @@ import { AppLoading } from '../Loading/AppLoading'
 const Login = () => {
 
   const navigate = useNavigate();
-  const { setUserCurrent, setAccessToken } = useContext(AuthContext)
+  const { setUserCurrent, setAccessToken, setRefreshToken } = useContext(AuthContext)
   const [errorLogin, setErrorLogin] = useState('')
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState({
     email: "",
     password: "",
   });
-
   const handleChange = (event) => {
     setData({ ...data, [event.target.name]: event.target.value });
   };
@@ -29,10 +28,9 @@ const Login = () => {
     setLoading(true)
     const userLogin = await login(data);
     if (userLogin.status === 200) {
-      localStorage.setItem('user', JSON.stringify(userLogin.data.user));
-      localStorage.setItem('token', userLogin.data.token);
       setUserCurrent(userLogin.data.user)
       setAccessToken(userLogin.data.token)
+      setRefreshToken(userLogin.data.user.refreshToken)
       navigate('/')
       setLoading(false)
     } else {

@@ -1,4 +1,4 @@
-import axios from "../../utils/services"
+import axios from "../axios"
 
 export const searchUser = async (keyword,excludedIds) => {
     try {

@@ -6,7 +6,10 @@ import { addUserToGroupChat } from '../../../services/Api/chat'
 import avatar from '../../../assets/svg/avatar-boy.svg'
 import leftArrowIcon from '../../../assets/svg/left-arrow-backup-2-svgrepo-com.svg'
 import Avatar from '../Avatar'
+import radioCheck from '../../../assets/svg/gui-form-radio-svgrepo-com.svg'
+import radioChecked from '../../../assets/svg/gui-form-radio-checked-svgrepo-com.svg'
 import { searchUser } from '../../../services/Api/search'
+import Image from '../../common/Image'
 
 export const AddUserToGroup = () => {
     const [searchText, setSearchText] = useState('')
@@ -105,7 +108,11 @@ export const AddUserToGroup = () => {
                                 </div>
                             </div>
                             <div className="item-check" >
-                                {listCheck && listCheck?.includes(user._id) ? "✓" : "◻"}
+                                {listCheck && listCheck?.includes(user._id) ?
+                                    <Image image={radioChecked} className="image" />
+                                    :
+                                    <Image image={radioCheck} className="image" />}
+
                             </div>
                         </div>
                     ))}

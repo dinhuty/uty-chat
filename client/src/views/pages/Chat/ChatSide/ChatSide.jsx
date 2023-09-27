@@ -17,7 +17,7 @@ import { getUserWithoutUserCr } from '../../../../utils/getIdWithoutUser'
 const ChatSide = () => {
     const sliderRef = useRef(null);
     const [keyword, setKeyword] = useState('')
-    const [listNewUser, setListNewUser] = useState(null)
+    const [listNewUser, setListNewUser] = useState([])
     const { listChatForUser,
         setIdChatCurrent,
         onlineUsers,
@@ -26,6 +26,7 @@ const ChatSide = () => {
     const { userCurrent, accessToken } = useContext(AuthContext)
     const { idChatCurrent } = useContext(ChatContext)
     const { listMessageInChat } = useContext(MessageContext)
+    const [findAction, setFindAction] = useState(false)
 
     useEffect(() => {
         if (!keyword.trim()) {
@@ -52,6 +53,7 @@ const ChatSide = () => {
             setListChatForUser((prev => [...prev, createAChat?.data.chat]))
         }
         setKeyword('')
+        setFindAction(false)
     }
 
     return (
@@ -61,86 +63,92 @@ const ChatSide = () => {
                     Chat
                 </div>
                 <div className="search-box">
-                    <input
+                    <input className={findAction ? 'focus' : ''}
                         type="text"
-                        placeholder='Tìm kiếm tin nhắn '
+                        placeholder='Tìm kiếm tin nhắn mới '
                         value={keyword}
                         onChange={(e) => setKeyword(e.target.value)}
+                        onFocus={() => setFindAction(true)}
                     />
-                    {listNewUser !== null && (
-                        listNewUser?.length > 0 && (
-                            <div className='search-list'>
-                                {listNewUser.map((item) => (
-                                    <div className="search-list__item" key={item._id} onClick={() => hanldeCreateChat(item._id)}>
-                                        <div className="avatar">
-                                            <Avatar avatar={item?.avatarURL ? item?.avatarURL : avatar} />
-                                            <div className="avatar-status"></div>
-                                        </div>
-                                        <div className="desc">
-                                            <div className="desc__name">
-                                                <span>{item.lastName}</span>
-                                                <span>{item.firstName}</span>
-                                            </div>
-                                            <div className="desc__email">
-                                                <p>{item.email}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        )
-                    )}
-
+                    {findAction && <button onClick={() => setFindAction(false)}>Đóng</button>}
                 </div>
-                {/* <HorizontalSlider /> */}
             </div>
-
-            <div className="chat-side__list">
-                {listChatForUser?.length > 0 ? listChatForUser.map((item, index) => {
-                    return (
-                        <div className={item._id === idChatCurrent ? "chat-list__item active" : "chat-list__item"}
-                            key={item._id}
-                            onClick={() => setIdChatCurrent(item._id)}
-                        >
-                            <div className="item__left">
+            {findAction ?
+                <div className="chat-side__list">
+                    {listNewUser?.length > 0 ?
+                        listNewUser.map((item) => (
+                            <div className="search-list__item" key={item._id} onClick={() => {
+                                hanldeCreateChat(item._id)
+                            }}>
                                 <div className="avatar">
-                                    <Avatar avatar={getUserWithoutUserCr(item, userCurrent)?.avatarURL ? getUserWithoutUserCr(item, userCurrent)?.avatarURL : avatar} />
-                                    {checkOnlineStatus(onlineUsers, item, userCurrent) && <div className="avatar-status">
-                                    </div>}
+                                    <Avatar avatar={item?.avatarURL ? item?.avatarURL : avatar} />
+                                    <div className="avatar-status"></div>
                                 </div>
                                 <div className="desc">
-                                    <NameChat
-                                        chat={item}
-                                        userCurrent={userCurrent}
-                                        onlineUsers={onlineUsers}
-                                    />
-                                    <div className={item.messages.length > 0 && item?.messages[0]?.isRead === true ? "desc-message--recent" : "desc-message--recent unread"}>
-                                        {item.messages.length > 0
-                                            && (item?.messages[0]?.sender?._id === userCurrent._id ? <span>Bạn:</span>
-                                                :
-                                                <span>{item?.messages[0]?.sender?.lastName}:</span>)
-                                        }
-                                        <span>{item?.messages[0]?.content}</span>
+                                    <div className="desc__name">
+                                        <span>{item.lastName}</span>
+                                        <span>{item.firstName}</span>
+                                    </div>
+                                    <div className="desc__email">
+                                        <p>{item.email}</p>
                                     </div>
                                 </div>
                             </div>
-                            <div className="item__right">
-                                <div>
-                                    {item.messages.length > 0 && <>{formatTime(item?.messages[0]?.createdAt)}</>}
+                        ))
+                        :
+                        <div className="chat-list__item empty">
+                            Tìm kiếm tin nhắn
+                        </div>
+                    }
+                </div> :
+                <div className="chat-side__list">
+                    {listChatForUser?.length > 0 ? listChatForUser.map((item, index) => {
+                        return (
+                            <div className={item._id === idChatCurrent ? "chat-list__item active" : "chat-list__item"}
+                                key={item._id}
+                                onClick={() => setIdChatCurrent(item._id)}
+                            >
+                                <div className="item__left">
+                                    <div className="avatar">
+                                        <Avatar avatar={getUserWithoutUserCr(item, userCurrent)?.avatarURL ? getUserWithoutUserCr(item, userCurrent)?.avatarURL : avatar} />
+                                        {checkOnlineStatus(onlineUsers, item, userCurrent) && <div className="avatar-status">
+                                        </div>}
+                                    </div>
+                                    <div className="desc">
+                                        <NameChat
+                                            chat={item}
+                                            userCurrent={userCurrent}
+                                            onlineUsers={onlineUsers}
+                                        />
+                                        <div className={item.messages.length > 0 && item?.messages[0]?.isRead === true ? "desc-message--recent" : "desc-message--recent unread"}>
+                                            {item.messages.length > 0
+                                                && (item?.messages[0]?.sender?._id === userCurrent._id ? <span>Bạn:</span>
+                                                    :
+                                                    <span>{item?.messages[0]?.sender?.lastName}:</span>)
+                                            }
+                                            <span>{item?.messages[0]?.content}</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className={item.messages.length > 0 && item?.messages[0]?.isRead ? 'item__right-icon' : 'item__right-icon active'}>
+                                <div className="item__right">
+                                    <div>
+                                        {item.messages.length > 0 && <>{formatTime(item?.messages[0]?.createdAt)}</>}
+                                    </div>
+                                    <div className={item.messages.length > 0 && item?.messages[0]?.isRead ? 'item__right-icon' : 'item__right-icon active'}>
 
+                                    </div>
                                 </div>
                             </div>
+                        )
+                    })
+                        :
+                        <div className="chat-list__item empty">
+                            No Convervation
                         </div>
-                    )
-                })
-                    :
-                    <div className="chat-list__item">
-                        No Convervation
-                    </div>
-                }
-            </div>
+                    }
+                </div>
+            }
+
         </div>
     )
 }

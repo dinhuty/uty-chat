@@ -57,7 +57,7 @@ const getChatById = async (req, res) => {
             return res.status(404).json({ status: 'Chat not found' });
         }
 
-        const chatInfo = await ChatModel.populate(chat, { path: 'participants', select: 'firstName lastName email avatarURL' });
+        const chatInfo = await ChatModel.populate(chat, { path: 'participants', select: 'firstName lastName email avatarURL address' });
 
         res.status(200).json({ chatInfo });
     } catch (error) {

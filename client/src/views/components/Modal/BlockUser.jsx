@@ -10,23 +10,29 @@ import { getIdWithoutUser } from '../../../utils/getIdWithoutUser';
 export const BlockUser = () => {
     const { setIsPopup,
         setIsOpenMenu,
-        deleteHandle,
-        setDeleteHandle,
         blockHandle,
         setBlockHandle
     } = useContext(CommonContext)
-    const { infoChatCurrent, idChatCurrent } = useContext(ChatContext)
+    const { infoChatCurrent, idChatCurrent, socket } = useContext(ChatContext)
     const { accessToken, userCurrent, setUserCurrent } = useContext(AuthContext)
 
     console.log(infoChatCurrent)
     const handleBlockUser = async () => {
-        if (infoChatCurrent?.isGroup) return
-        const idBlock = getIdWithoutUser(infoChatCurrent, userCurrent)
-        const blockAUser = await blockUser(idBlock, accessToken)
-        const blockAChat = await blockChat(idChatCurrent, accessToken)
-        setIsPopup(false)
-        setIsOpenMenu(false)
-        setBlockHandle(!blockHandle)
+        try {
+            if (infoChatCurrent?.isGroup) return
+            const idBlock = getIdWithoutUser(infoChatCurrent, userCurrent)
+            const blockAUser = await blockUser(idBlock, accessToken)
+            const blockAChat = await blockChat(idChatCurrent, accessToken)
+            if (socket !== null) {
+                console.log(idBlock)
+                socket.emit('blockChat', { idBlock, idChatCurrent })
+            }
+            setIsPopup(false)
+            setIsOpenMenu(false)
+            setBlockHandle(!blockHandle)
+        } catch (error) {
+            alert("Block Error")
+        }
 
     }
     return (

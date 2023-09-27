@@ -22,18 +22,14 @@ import { BsCamera } from "react-icons/bs";
 
 const Profile = () => {
     const {
-        isProfileOpen,
         setIsProfileOpen,
-        darkMode,
-        setDarkMode,
         isActionProfile,
         setIsActionProfile,
-        imageChangeAvatar,
         setImageChangeAvatar,
         theme,
         setTheme
     } = useContext(CommonContext)
-    const { userCurrent, setUserCurrent } = useContext(AuthContext)
+    const { userCurrent, setUserCurrent, setAccessToken, setRefreshToken } = useContext(AuthContext)
     const navigate = useNavigate()
     const [action, setAction] = useState(null)
     const [fileInputAvatar, setFileInputAvatar] = useState('')
@@ -41,8 +37,8 @@ const Profile = () => {
     let componentToRender = null;
 
     const hanldeLogout = () => {
-        localStorage.removeItem('user');
-        localStorage.removeItem('token')
+        setAccessToken('')
+        setRefreshToken('')
         setUserCurrent(null)
         setIsProfileOpen(false)
         navigate('/login')
