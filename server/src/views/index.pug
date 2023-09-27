@@ -2,7 +2,7 @@ html
   head
     title Rest Password
   body
-    h1 Mày có 5 phút để đổi mật khẩu 
+    h1 Nhập mật khẩu mới của bạn
     form(action=`/api/user/resetpassword/${id}/${token}` method='post')
       input(type='password' name='password' placeholder='Nhập mật khẩu mới')
       input(type='submit' value='Xác nhận')

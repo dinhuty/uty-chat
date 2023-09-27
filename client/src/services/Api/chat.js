@@ -37,10 +37,7 @@ export const getChatForUser = async (idUser, token) => {
 }
 export const deleteChat = async (idChat, token) => {
     try {
-        console.log(idChat)
-        console.log(token)
         const deleteAChat = await axios.delete(`chat/delete/${idChat}`)
-
         return deleteAChat.data
     } catch (error) {
         console.log(error)

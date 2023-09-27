@@ -2,7 +2,7 @@
     width: 65px;
     height: 100%;
     box-shadow: 0 3px 20px rgba(0, 0, 0, .043137254901960784);
-    background-color: getColor(secondary);
+    background-color: getColor(Cblue);
     display: none;
     flex-direction: column;
     color: $third-color;
@@ -11,7 +11,8 @@
     border-right: 1px solid getColor(border-primary);
     padding: 40px 0px;
     align-items: center;
-    color: getColor(text-secondary);
+    color: getColor(Cwhite);
+    border-radius: 0px 20px 20px 0px;
 
     @include min-sm {
         display: flex;
@@ -46,14 +47,14 @@
             transition: all .4s ease-in cubic-bezier(0.075, 0.82, 0.165, 1);
 
             &.active {
-                color: getColor(text-third);
+                color: getColor(Cwhite);
                 text-shadow: 2px 2px 2px rgba(230, 83, 64, 0.3),
                     0px -2px 2px rgba(158, 47, 3, 0.3);
                 background-color: getColor(third);
             }
 
             &:hover {
-                color: getColor(text-third);
+                color: getColor(Cwhite);
                 text-shadow: 2px 2px 2px rgba(230, 83, 64, 0.3),
                     0px -2px 2px rgba(158, 47, 3, 0.3);
                 background-color: getColor(third);

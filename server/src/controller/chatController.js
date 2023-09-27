@@ -12,7 +12,13 @@ const createChatBetweenTwoUsers = async (req, res) => {
         });
         if (existingChat && existingChat.isGroup == false) {
 
-            const chatInfo = await ChatModel.populate(chat, { path: 'participants', select: 'firstName lastName email' });
+            const chatInfo = await ChatModel.populate(
+                chat,
+                {
+                    path: 'participants',
+                    select: 'firstName lastName email'
+                }
+            );
 
             return res.status(200).json({ status: 'Chat exists', chat: chatInfo });
         }
@@ -21,7 +27,13 @@ const createChatBetweenTwoUsers = async (req, res) => {
         });
         const savedChat = await chat.save();
 
-        const chatInfo = await ChatModel.populate(chat, { path: 'participants', select: 'firstName lastName email' });
+        const chatInfo = await ChatModel.populate(
+            chat,
+            {
+                path: 'participants',
+                select: 'firstName lastName email'
+            }
+        );
         res.status(201).json({ status: 'Success', chat: chatInfo });
     } catch (error) {
         console.error(error);
@@ -38,7 +50,6 @@ const createGroupChat = async (req, res) => {
             participants: participantIds,
             isGroup: true,
         });
-        console.log(participantIds)
         const savedChat = await chat.save();
         res.status(201).json({ status: 'Success', chat: savedChat });
     } catch (error) {
@@ -57,7 +68,12 @@ const getChatById = async (req, res) => {
             return res.status(404).json({ status: 'Chat not found' });
         }
 
-        const chatInfo = await ChatModel.populate(chat, { path: 'participants', select: 'firstName lastName email avatarURL address' });
+        const chatInfo = await ChatModel.populate(
+            chat,
+            {
+                path: 'participants',
+                select: 'firstName lastName email avatarURL address'
+            });
 
         res.status(200).json({ chatInfo });
     } catch (error) {
@@ -99,7 +115,13 @@ const getChatsForUser = async (req, res) => {
             .sort({ updatedAt: -1 })
             .lean();
         const populatedChats = await Promise.all(chats.map(async (chat) => {
-            const populatedChat = await ChatModel.populate(chat, { path: 'participants', select: 'firstName lastName email avatarURL' });
+            const populatedChat = await ChatModel.populate(
+                chat,
+                {
+                    path: 'participants',
+                    select: 'firstName lastName email avatarURL'
+                }
+            );
             const latestMessage = await MessageModel
                 .findOne({ chat: chat._id })
                 .sort({ createdAt: -1 })
@@ -192,5 +214,5 @@ module.exports = {
     leaveGroupChat,
     getChatById,
     blockChat,
-    
+
 };
