@@ -195,6 +195,10 @@
                 height: 100%;
                 color: getColor(text-secondary);
 
+                @include min-sm {
+                    gap: 12px;
+
+                }
 
                 &-icon {
                     height: 10px;
