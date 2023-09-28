@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { getToken, getRefreshToken, updateToken } from './token'
-// export const baseURL = "http://localhost:3001/api"
-export const baseURL = "https://uty-chat-api.vercel.app/api"
+
 
 const instance = axios.create({
     // baseURL: "http://localhost:3001/api"
@@ -10,7 +9,6 @@ const instance = axios.create({
 instance.interceptors.request.use(
     (config) => {
         const token = getToken();
-        console.log(token)
         if (token) {
             config.headers["Authorization"] = 'Bearer ' + token;
         }

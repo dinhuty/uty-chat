@@ -13,13 +13,16 @@
 @import "./views/components/horizontalSlider";
 @import "./views/components/message";
 @import "./views/components/profile";
-@import "./views/components/addUserGroup"
+@import "./views/components/acctionMenu"
 ;
 @import "./views/components/Modal/createGroup.scss";
 @import "./views/components/Modal/addUserToGroup.scss";
 @import "./views/components/Modal/deleteChat.scss";
 @import "./views/components/Modal/leaveGroupChat.scss";
 @import "./views/components/Modal/blockUser";
+@import "./views/components/Modal/themeMessage.scss";
+@import "./views/components/Modal/viewParticipants.scss";
+@import "./views/components/Modal/editNameGroup.scss";
 
 @import "./views/components/ProfileAction/changePassword";
 @import "./views/components/ProfileAction/generalSetting";

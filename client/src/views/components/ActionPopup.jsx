@@ -5,6 +5,9 @@ import { AddUserToGroup } from './Modal/AddUserToGroup'
 import { DeleteChat } from './Modal/DeleteChat'
 import { LeaveChat } from './Modal/LeaveChat'
 import { BlockUser } from './Modal/BlockUser'
+import { ThemeMessage } from './Modal/ThemeMessage'
+import { Participants } from './Modal/Participants'
+import { EditNameGroup } from './Modal/EditNameGroup'
 
 const ActionPopup = ({ action }) => {
     const { setIsPopup } = useContext(CommonContext)
@@ -13,6 +16,9 @@ const ActionPopup = ({ action }) => {
     switch (action) {
         case "CREATE_GROUP_CHAT":
             componentToRender = <CreateGroup />;
+            break;
+        case "VIEW_PARTICIPANTS":
+            componentToRender = <Participants />;
             break;
         case "ADD_USER_GROUP":
             componentToRender = <AddUserToGroup />;
@@ -23,8 +29,14 @@ const ActionPopup = ({ action }) => {
         case "OUT_GROUP":
             componentToRender = <LeaveChat />;
             break;
+        case "EDIT_NAME":
+            componentToRender = <EditNameGroup />;
+            break;
         case "BLOCK_USER":
             componentToRender = <BlockUser />;
+            break;
+        case "CUSTOM_THEME":
+            componentToRender = <ThemeMessage />;
             break;
         default:
             componentToRender = <CreateGroup />;

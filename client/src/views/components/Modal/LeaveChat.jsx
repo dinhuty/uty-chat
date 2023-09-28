@@ -10,7 +10,8 @@ export const LeaveChat = () => {
     const { setIsPopup,
         setIsOpenMenu,
         leaveGroupHandle,
-        setLeaveGroupHandle
+        setLeaveGroupHandle,
+        setIsChatting
     } = useContext(CommonContext)
     const { idChatCurrent } = useContext(ChatContext)
     const { userCurrent, accessToken } = useContext(AuthContext)
@@ -23,6 +24,7 @@ export const LeaveChat = () => {
         )
         setIsPopup(false)
         setIsOpenMenu(false)
+        setIsChatting(false)
         setLeaveGroupHandle(!leaveGroupHandle)
     }
     return (

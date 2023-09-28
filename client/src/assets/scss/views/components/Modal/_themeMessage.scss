@@ -1,0 +1,68 @@
+.wrapper-theme__modal {
+    height: 350px;
+    width: 350px;
+    background-color: getColor(primary);
+    color: getColor(text-primary);
+    z-index: 28;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-radius: 20px;
+    overflow: auto;
+    border: 1px solid getColor(secondary);
+
+    header {
+        display: flex;
+        position: relative;
+        justify-content: center;
+        padding: 10px 0;
+
+        .popup__back {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translate(-50%, -50%);
+
+            img {
+                height: 22px;
+                width: 22px;
+            }
+        }
+
+        span {
+            font-size: 16px;
+            font-weight: 500;
+            color: getColor(Cblue);
+        }
+    }
+
+    .theme-box {
+        padding: 20px;
+        display: flex;
+
+        .theme-item {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+
+            .theme-color {
+                height: 40px;
+                width: 40px;
+                border-radius: 50%;
+                background-color: getColor(third);
+
+                &:hover {
+                    opacity: .8;
+                    cursor: pointer;
+                }
+            }
+
+            .theme-name {
+                font-size: 13px;
+                font-weight: 500;
+                color: getColor(text-secondary);
+            }
+        }
+    }
+}

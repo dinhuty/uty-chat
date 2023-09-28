@@ -1,15 +1,9 @@
 import React, { useContext, useState } from 'react'
-import { IoEllipsisVerticalOutline } from 'react-icons/io5'
 import Avatar from './Avatar'
 import avatar from '../../assets/svg/avatar-boy.svg'
-import settingIcon from '../../assets/svg/setting-svgrepo-com.svg'
-import nightIcon from '../../assets/svg/night-mode-svgrepo-com.svg'
-import statusIcon from '../../assets/svg/status-1-svgrepo-com.svg'
-import notificationIcon from '../../assets/svg/notification-unread-lines-svgrepo-com.svg'
 import rightArrowIcon from '../../assets/svg/right-arrow-backup-2-svgrepo-com.svg'
-import languageIcon from '../../assets/svg/language-svgrepo-com.svg'
-import passwordIcon from '../../assets/svg/password-svgrepo-com.svg'
 import homeIcon from '../../assets/svg/home-page-svgrepo-com.svg'
+import { preferences } from '../../features/preferences'
 import { AuthContext } from '../../context/AuthContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons'
@@ -29,7 +23,10 @@ const Profile = () => {
         theme,
         setTheme
     } = useContext(CommonContext)
-    const { userCurrent, setUserCurrent, setAccessToken, setRefreshToken } = useContext(AuthContext)
+    const { userCurrent,
+        setUserCurrent,
+        setAccessToken,
+        setRefreshToken } = useContext(AuthContext)
     const navigate = useNavigate()
     const [action, setAction] = useState(null)
     const [fileInputAvatar, setFileInputAvatar] = useState('')
@@ -56,45 +53,7 @@ const Profile = () => {
         const newTheme = theme === 'light' ? 'dark' : 'light';
         setTheme(newTheme);
     }
-    const preferences = [
-        {
-            icon: settingIcon,
-            name: "Chung",
-            action: "GENERAL_SETTING",
-            setPage: true,
-        },
-        {
-            icon: notificationIcon,
-            name: "Thông báo",
-            action: "NOTIFICATION__ACTION",
-            setPage: false,
-        },
-        {
-            icon: statusIcon,
-            name: "Trạng thái hoạt động",
-            action: "STATUS_ACTION",
-            setPage: false,
 
-        },
-        {
-            icon: nightIcon,
-            name: "Giao diện tối",
-            action: "THEME_ACTION",
-            setPage: false,
-        },
-        {
-            icon: passwordIcon,
-            name: "Đổi mật khẩu",
-            action: "CHANGE_PASSWORD",
-            setPage: true,
-        },
-        {
-            icon: languageIcon,
-            name: "Ngôn ngữ",
-            action: "CHAGNE_LANGUAGE",
-            setPage: true,
-        }
-    ]
     switch (action) {
         case "GENERAL_SETTING":
             componentToRender = <GeneralSetting />;

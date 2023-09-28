@@ -28,7 +28,6 @@ const CreateGroup = () => {
             participantIds: listCheck
         }
         const res = await createGroupChat(data, accessToken)
-        console.log(res)
         setIdChatCurrent(res.data.chat._id)
         setSearchText('')
         setIsPopup(false)

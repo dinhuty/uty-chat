@@ -12,7 +12,6 @@ import { CommonContext } from './context/CommonContext'
 function App() {
   const { userCurrent } = useContext(AuthContext);
   const { theme, setTheme } = useContext(CommonContext)
-  console.log(theme)
 
   return (
     <div className='uty-app' data-theme={theme}>

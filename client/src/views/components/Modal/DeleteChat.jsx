@@ -9,7 +9,8 @@ export const DeleteChat = () => {
     const { setIsPopup,
         setIsOpenMenu,
         deleteHandle,
-        setDeleteHandle
+        setDeleteHandle,
+        setIsChatting
     } = useContext(CommonContext)
     const { idChatCurrent, listChatForUser, setIdChatCurrent } = useContext(ChatContext)
     const { accessToken } = useContext(AuthContext)
@@ -18,6 +19,7 @@ export const DeleteChat = () => {
         const deleteAChat = await deleteChat(idChatCurrent, accessToken)
         setIsPopup(false)
         setIsOpenMenu(false)
+        setIsChatting(false)
         setDeleteHandle(!deleteHandle)
 
     }

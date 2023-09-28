@@ -13,6 +13,8 @@ import NameChat from '../../../common/NameChat'
 import { getListIdCurrent } from '../../../../utils/getListIdCurrent'
 import Avatar from '../../../components/Avatar'
 import { getUserWithoutUserCr } from '../../../../utils/getIdWithoutUser'
+import SideMenu from '../SideMenu/SideMenu'
+import { CommonContext } from '../../../../context/CommonContext'
 
 const ChatSide = () => {
     const sliderRef = useRef(null);
@@ -23,9 +25,9 @@ const ChatSide = () => {
         onlineUsers,
         setListChatForUser,
     } = useContext(ChatContext);
+    const { isChatting, setIsChatting } = useContext(CommonContext)
     const { userCurrent, accessToken } = useContext(AuthContext)
     const { idChatCurrent } = useContext(ChatContext)
-    const { listMessageInChat } = useContext(MessageContext)
     const [findAction, setFindAction] = useState(false)
 
     useEffect(() => {
@@ -57,10 +59,10 @@ const ChatSide = () => {
     }
 
     return (
-        <div className='chat-side'>
+        <div className={isChatting ? 'chat-side mobile' : 'chat-side'}>
             <div className="chat-side__top">
                 <div className="title">
-                    Chat
+                    Message
                 </div>
                 <div className="search-box">
                     <input className={findAction ? 'focus' : ''}
@@ -70,7 +72,10 @@ const ChatSide = () => {
                         onChange={(e) => setKeyword(e.target.value)}
                         onFocus={() => setFindAction(true)}
                     />
-                    {findAction && <button onClick={() => setFindAction(false)}>Đóng</button>}
+                    {findAction && <button onClick={() => {
+                        setFindAction(false)
+                        setKeyword('')
+                    }}>Đóng</button>}
                 </div>
             </div>
             {findAction ?
@@ -106,7 +111,10 @@ const ChatSide = () => {
                         return (
                             <div className={item._id === idChatCurrent ? "chat-list__item active" : "chat-list__item"}
                                 key={item._id}
-                                onClick={() => setIdChatCurrent(item._id)}
+                                onClick={() => {
+                                    setIdChatCurrent(item._id)
+                                    setIsChatting(true)
+                                }}
                             >
                                 <div className="item__left">
                                     <div className="avatar">
@@ -148,7 +156,9 @@ const ChatSide = () => {
                     }
                 </div>
             }
-
+            <div className="chat-side__bottom">
+                <SideMenu />
+            </div>
         </div>
     )
 }

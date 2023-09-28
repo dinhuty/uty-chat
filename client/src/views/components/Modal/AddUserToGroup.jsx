@@ -21,10 +21,8 @@ export const AddUserToGroup = () => {
     } = useContext(CommonContext)
     const [listSearch, setListSearch] = useState(null)
     const { infoChatCurrent,
-        setIdChatCurrent,
         idChatCurrent,
         sentRef,
-        sent,
         setSent,
     } = useContext(ChatContext)
     const { userCurrent, accessToken } = useContext(AuthContext)

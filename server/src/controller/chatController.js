@@ -176,6 +176,30 @@ const deleteChat = async (req, res) => {
     }
 };
 
+const renameGroup = async (req, res) => {
+    try {
+        const { chatId, newName } = req.body;
+        const chat = await ChatModel.findByIdAndUpdate(chatId, {
+            name: newName
+        }, { new: true });
+        await chat.save()
+        const populatedChat = await ChatModel.populate(
+            chat,
+            {
+                path: 'participants',
+                select: 'firstName lastName email avatarURL'
+            }
+        );
+        if (!chat) {
+            return res.status(404).json({ status: 'Chat not found' });
+        }
+        res.status(200).json({ populatedChat });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ status: 'Error' });
+    }
+};
+
 const blockChat = async (req, res) => {
     try {
         const chatId = req.body.chatId;
@@ -214,5 +238,6 @@ module.exports = {
     leaveGroupChat,
     getChatById,
     blockChat,
+    renameGroup
 
 };

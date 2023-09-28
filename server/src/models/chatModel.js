@@ -7,11 +7,11 @@ const chatSchema = mongoose.Schema({
     },
     isGroup: {
         type: Boolean,
-        default: false, // Giá trị mặc định là false
+        default: false, 
     },
     avaiable: {
         type: Boolean,
-        default: true, // Giá trị mặc định là false
+        default: true, 
     },
     participants: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -22,7 +22,7 @@ const chatSchema = mongoose.Schema({
         // },
         // left: {
         //     type: Boolean,
-        //     default: false, // Mặc định là false (chưa rời)
+        //     default: false,
         // },
     }],
     messages: [{

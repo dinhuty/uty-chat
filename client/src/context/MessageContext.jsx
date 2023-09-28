@@ -21,7 +21,6 @@ const MessageProvider = ({ children }) => {
         const getData = async () => {
             if (!idChatCurrent) return;
             const data = await getListMessageInChat(idChatCurrent, page, accessToken)
-            console.log(data?.messages[0]?.sender._id)
             if (data?.messages[0]?.sender._id !== userCurrent?._id) {
                 const result = await maskAllMessageRead(idChatCurrent, accessToken)
             }

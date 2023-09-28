@@ -9,7 +9,6 @@ export const ImagePreview = () => {
     const { accessToken, setUserCurrent } = useContext(AuthContext)
     const [loading, setLoading] = useState(false)
     const handleChangeAvatar = async () => {
-        console.log("Acction Change: ", accessToken)
         setLoading(true)
         const result = await changeAvatar(imageChangeAvatar, accessToken)
         setUserCurrent(result.data.user)

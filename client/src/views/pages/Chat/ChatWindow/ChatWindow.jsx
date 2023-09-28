@@ -39,7 +39,7 @@ const ChatWindow = () => {
         totalPages,
         page,
     } = useContext(MessageContext)
-    const { setIsOpenMenu } = useContext(CommonContext)
+    const { setIsOpenMenu, isChatting, setIsChatting } = useContext(CommonContext)
     const [contentMessage, setContentMessage] = useState('')
     const [fileSlected, setFileSelected] = useState('')
     const [fileInput, setFileInput] = useState('')
@@ -146,12 +146,12 @@ const ChatWindow = () => {
     }
 
     return (
-        <div className='chat-window'>
+        <div className={isChatting ? 'chat-window mobile' : 'chat-window'}>
             {idChatCurrent ?
                 <div className='chat-window__main'>
                     <div className="header" >
                         <div className="header__left">
-                            <div className="user-avatar">
+                            <div className="user-avatar" onClick={() => setIsChatting(false)}>
                                 {infoChatCurrent &&
                                     <Avatar avatar={getUserWithoutUserCr(infoChatCurrent, userCurrent)?.avatarURL ? getUserWithoutUserCr(infoChatCurrent, userCurrent)?.avatarURL : avatar} />
                                 }

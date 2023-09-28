@@ -4,6 +4,32 @@
     position: relative;
     background-color: getColor(primary);
 
+    .app-chat__menu {
+        display: none;
+        height: 100%;
+
+        @include min-sm {
+            display: block;
+        }
+    }
+
+    .app-chat__side {
+        width: 100%;
+        height: 100%;
+
+        &.mobile {
+            display: none;
+        }
+
+        @include min-sm {
+            width: 360px;
+
+            &.desktop {
+                display: block;
+            }
+        }
+    }
+
     .chat__header {
         height: 65px;
         background-color: #fff;

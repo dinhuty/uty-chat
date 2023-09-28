@@ -4,11 +4,11 @@
     background-color: getColor(primary);
     color: getColor(text-primary);
     z-index: 28;
-    padding: 10px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     gap: 20px;
-    border-radius: 10px;
+    border-radius: 20px;
     overflow: auto;
     border: 1px solid getColor(secondary);
 
@@ -115,8 +115,8 @@
                 }
 
                 .item-check {
-                    height: 20px;
-                    width: 20px;
+                    height: 15px;
+                    width: 15px;
 
                 }
             }

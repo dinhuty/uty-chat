@@ -68,3 +68,12 @@ export const blockChat = async (chatId, token) => {
         return error.response
     }
 }
+
+export const renameGroup = async (chatId, newName) => {
+    try {
+        const res = await axios.patch("chat/rename-group", { chatId, newName })
+        return res
+    } catch (error) {
+        return error.response
+    }
+}

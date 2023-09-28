@@ -13,13 +13,14 @@ export const BlockUser = () => {
         blockHandle,
         setBlockHandle
     } = useContext(CommonContext)
-    const { infoChatCurrent, idChatCurrent, socket } = useContext(ChatContext)
+    const { infoChatCurrent, idChatCurrent, socket, setLoading } = useContext(ChatContext)
     const { accessToken, userCurrent, setUserCurrent } = useContext(AuthContext)
 
     console.log(infoChatCurrent)
     const handleBlockUser = async () => {
         try {
             if (infoChatCurrent?.isGroup) return
+            setLoading(true)
             const idBlock = getIdWithoutUser(infoChatCurrent, userCurrent)
             const blockAUser = await blockUser(idBlock, accessToken)
             const blockAChat = await blockChat(idChatCurrent, accessToken)
@@ -30,8 +31,10 @@ export const BlockUser = () => {
             setIsPopup(false)
             setIsOpenMenu(false)
             setBlockHandle(!blockHandle)
+            setLoading(false)
         } catch (error) {
-            alert("Block Error")
+            alert("error")
+            setLoading(false)
         }
 
     }

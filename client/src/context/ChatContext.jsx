@@ -22,7 +22,6 @@ const ChatProvider = ({ children }) => {
             if (!userCurrent) return
             const data = await getChatForUser(userCurrent?._id, accessToken)
             setListChatForUser(data?.chats)
-            console.log(data?.chats)
         }
         getData()
     }, [sent, idChatCurrent])
@@ -35,7 +34,7 @@ const ChatProvider = ({ children }) => {
             setListChatForUser(data?.chats)
             if (data?.chats.length > 0) {
                 setIdChatCurrent(data?.chats[0]?._id)
-            }else{
+            } else {
                 setIdChatCurrent(null)
             }
             setLoading(false)
@@ -96,6 +95,7 @@ const ChatProvider = ({ children }) => {
             sent,
             setSent,
             loading,
+            setLoading
         }}>
             {children}
         </ChatContext.Provider>
