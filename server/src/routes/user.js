@@ -18,7 +18,7 @@ const auth = require('../middleware/auth')
 const router = express.Router()
 
 router.post('/signup', signup)
-router.post('/signin', signin)
+router.post('/login', signin)
 router.post('/refresh-token', refreshToken)
 router.get('/findbyemail/:email', findUserByEmail)
 router.get('/findbykeyword', findUsersByEmailKeyword)
